@@ -1,6 +1,8 @@
+import '../styles/Header.css';
+
 const Header = () => {
     return (
-        <div>
+        <div className="Header">
             Spark Header
         </div>
     );
