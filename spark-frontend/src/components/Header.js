@@ -3,7 +3,7 @@ import '../styles/Header.css';
 const Header = () => {
     return (
         <div className="Header">
-            Spark Header
+            [TOP SECRET] Highest previledge admin dashboard
         </div>
     );
 }
