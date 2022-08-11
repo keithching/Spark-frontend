@@ -42,3 +42,12 @@
     flex-direction: column;
     gap: 10px;
   }
+
+  .close-btn {
+    cursor: pointer;
+    font-size: 20px;
+  }
+
+  .close-btn:hover {
+    opacity: 0.5;
+  }

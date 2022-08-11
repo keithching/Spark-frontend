@@ -46,11 +46,23 @@ const createEvent = async (event) => {
     }
 };
 
+const updateEvent = async (event, id) => {
+    console.log(event);
+    console.log(id);
+
+    try {
+        await axios.patch(`${EVENT_URL}/${id}`, event).then(res => console.log(res));
+    } catch (err) {
+        console.error(err);
+    }
+};
+
 export {
     getEventProviders,
     getEventCategories,
     getEvents,
     getAllRegions,
     getAllPrefectures,
-    createEvent
+    createEvent,
+    updateEvent
 };
