@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import jpPrefecture from 'jp-prefecture';
-import { createEvent, updateEvent } from '../utils/helper';
+import { createEvent, updateEvent, deleteEvent } from '../utils/helper';
 import "../styles/Modal.css";
 import { IoClose } from 'react-icons/io5';
 
@@ -9,55 +9,56 @@ const Modal = (props) => {
         modalContent,
         events,
         selectedEvent,
+        showModal,
         setShowModal, 
         eventProviders, 
         eventCategories, 
         regions, 
-        prefectures, 
-        setPrefectures 
+        // prefectures, 
+        // setPrefectures 
     } = props;
+    const [ prefectures, setPrefectures ] = useState([]);
     const [ region, setRegion ] = useState('');
-
-    const handleClick = () => {
-        setPrefectures([]); // reset
-        setShowModal((prev) => !prev);
-      };
-    
-    const handleFormSubmission = async (e) => {
-        e.preventDefault();
-        const titleInput = document.getElementById('title-input').value;
-        const providerInput = document.getElementById('provider-input').value;
-        const categoryInput = document.getElementById('category-input').value;
-        const regionInput = document.getElementById('region-input').value;
-        const prefectureInput = document.getElementById('prefecture-input').value;
-
-        const eventData = {
-            title: titleInput,
-            eventProvider: providerInput,
-            eventCategory: categoryInput,
-            location: prefectureInput + ', ' + regionInput
-        };
-        // frontend form validation before creating event
-        try {
-            if (modalContent.operation === 'create') {
-                await createEvent(eventData);
-            } else if (modalContent.operation === 'edit') {
-                // TODO. update an event
-                await updateEvent(eventData, selectedEvent);
-            } else if (modalContent.operation === 'delete') {
-                // TODO. delete an event
-            }
-        } catch (err) {
-            console.error(err);
-        }
-        setShowModal((prev) => !prev);
-    };
-
     useEffect(() => {
         if (region) {
             setPrefectures(jpPrefecture.prefFindByRegion(region, "name"));
         }
     }, [region]);
+
+    const handleFormSubmission = async (e) => {
+        e.preventDefault();
+        try {
+            if (modalContent.operation === 'delete') {
+                // TODO. delete an event
+                await deleteEvent(selectedEvent);
+            } else if (modalContent.operation === 'create' ||
+                modalContent.operation === 'edit') {
+                // TODO. frontend form validation before creating event
+                const titleInput = document.getElementById('title-input').value;
+                const providerInput = document.getElementById('provider-input').value;
+                const categoryInput = document.getElementById('category-input').value;
+                const regionInput = document.getElementById('region-input').value;
+                const prefectureInput = document.getElementById('prefecture-input').value;
+        
+                const eventData = {
+                    title: titleInput,
+                    eventProvider: providerInput,
+                    eventCategory: categoryInput,
+                    location: prefectureInput + ', ' + regionInput
+                };
+
+                if (modalContent.operation === 'create') {
+                    await createEvent(eventData);
+                } else if (modalContent.operation === 'edit') {
+                    await updateEvent(eventData, selectedEvent);
+                }
+            }
+        } catch (err) {
+            console.error(err);
+        }
+
+        setShowModal((prev) => !prev);
+    };
 
     const [ eventToDisplay, setEventToDisplay ] = useState(null);
     useEffect(() => {
@@ -72,6 +73,11 @@ const Modal = (props) => {
     }, [eventToDisplay, modalContent]);
 
     const ModalHeader = () => {
+        const handleClick = () => {
+            setPrefectures([]); // reset
+            setShowModal((prev) => !prev);
+        };
+
         return (
             <div className="modal-header">
                 <div></div>
@@ -83,6 +89,12 @@ const Modal = (props) => {
 
     const ModalMain = () => {
         const TitleInput = () => {
+            const [ title, setTitle ] = useState(
+                eventToDisplay && modalContent.operation === 'edit' ? 
+                eventToDisplay.title 
+                : ''
+            );
+
             return (
                 <>
                     <label htmlFor="title-input">*Title</label>
@@ -91,11 +103,8 @@ const Modal = (props) => {
                         placeholder="title"
                         id="title-input"
                         autoComplete='off'
-                        defaultValue={
-                            eventToDisplay && modalContent.operation === 'edit' ? 
-                            eventToDisplay.title 
-                            : ""
-                        }
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                     />
                 </>
             );
@@ -162,6 +171,7 @@ const Modal = (props) => {
         };
 
         const RegionInput = () => {
+
             return (
                 <>
                     <label htmlFor="region-input">*Region</label>
@@ -214,11 +224,15 @@ const Modal = (props) => {
                     className="modal-form"
                     onSubmit={handleFormSubmission} 
                 >
-                    <TitleInput />
-                    <ProviderInput />
-                    <CategoryInput />
-                    <RegionInput />
-                    <PrefectureInput />
+                    {modalContent.operation !== 'delete' ?
+                        <>
+                            <TitleInput />
+                            <ProviderInput />
+                            <CategoryInput />
+                            <RegionInput />
+                            <PrefectureInput />
+                        </>
+                    : null}
                     <button 
                         type="submit" 
                         id="form-submit-btn"
@@ -230,8 +244,12 @@ const Modal = (props) => {
         );
     }
       
+    const modalStyle = {
+        top: `${window.scrollY}px`
+    };
+
     return (
-        <div className="modal">
+        <div className="modal" style={modalStyle}>
         <div className="modal-content">
             { modalContent ?
             <>

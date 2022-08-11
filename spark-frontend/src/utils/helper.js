@@ -47,11 +47,16 @@ const createEvent = async (event) => {
 };
 
 const updateEvent = async (event, id) => {
-    console.log(event);
-    console.log(id);
-
     try {
         await axios.patch(`${EVENT_URL}/${id}`, event).then(res => console.log(res));
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+const deleteEvent = async (id) => {
+    try {
+        await axios.delete(`${EVENT_URL}/${id}`).then(res => console.log(res));
     } catch (err) {
         console.error(err);
     }
@@ -64,5 +69,6 @@ export {
     getAllRegions,
     getAllPrefectures,
     createEvent,
-    updateEvent
+    updateEvent,
+    deleteEvent
 };

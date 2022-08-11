@@ -15,18 +15,25 @@ import { RiDeleteBinLine } from 'react-icons/ri';
 // https://react-icons.github.io/react-icons
 
 const Main = () => {
+    const [ showModal, setShowModal ] = useState(false);
+    useEffect(() => {
+      if (showModal) {
+        document.body.classList.add('stop-scrolling');
+      } else {
+        document.body.classList.remove('stop-scrolling');
+      }
+    }, [showModal]);
+
     const [ eventProviders, setEventProviders ] = useState([]);
     const [ eventCategories, setEventCategories ] = useState([]);
     const [ events, setEvents ] = useState([]);
     const [ regions, setRegions ] = useState([]);
-    const [ prefectures, setPrefectures ] = useState([]);
-    
-    const [ showModal, setShowModal ] = useState(false);
+    // const [ prefectures, setPrefectures ] = useState([]);
+
     const [ modalContent, setModalContent ] = useState({
         title: "", // title for the modal
         operation: "" // create, edit, delete
     });
-    // const [ showEditEventModal, setShowEditEventModal ] = useState(false);
     const [ selectedEvent, setSelectedEvent ] = useState(null);
 
     useEffect(() => {
@@ -47,9 +54,9 @@ const Main = () => {
         updateData();
     }, [showModal]);
 
-    useEffect(() => {
-        if (selectedEvent) console.log(selectedEvent);
-    }, [selectedEvent]);
+    // useEffect(() => {
+    //     if (selectedEvent) console.log(selectedEvent);
+    // }, [selectedEvent]);
 
     const Loading = () => {
         return (
@@ -80,6 +87,15 @@ const Main = () => {
             setShowModal((prev) => !prev);
         };
 
+        const handleDeleteEventClick = () => {
+            setSelectedEvent(event.id);
+            setModalContent({
+                title: "Delete Event",
+                operation: "delete"
+            });
+            setShowModal((prev) => !prev);
+        };
+
         return (
             <div className="event-card">
                 <div>Title: {event.title}</div>
@@ -88,30 +104,18 @@ const Main = () => {
                 <div>Location: {event.location}</div>
                 <div>Date: {event.dateStart} ~ {event.dateEnd}</div>
                 <div className="event-function-btn-container">
-                    <FiEdit className='edit-event-btn' onClick={handleEditEventClick}/>
-                    <RiDeleteBinLine className='delete-event-btn' />
+                    <FiEdit 
+                        className='edit-event-btn' 
+                        onClick={handleEditEventClick}
+                    />
+                    <RiDeleteBinLine 
+                        className='delete-event-btn' 
+                        onClick={handleDeleteEventClick}
+                    />
                 </div>
             </div>
         );
     }
-
-    const EventProviders = () => {
-        return (
-            <>
-            <h1>Event Providers</h1>
-            { eventProviders.length > 0 ? 
-                eventProviders.map(eventProvider => {
-                    return (
-                        <EventProvider 
-                            eventProvider={eventProvider} 
-                            key={eventProvider.id} 
-                        />
-                    );
-                })
-            : <Loading /> }
-            </>
-        );
-    };
 
     const Events = () => {
         const handleAddEventClick = () => {
@@ -140,6 +144,24 @@ const Main = () => {
                         })
                     : <Loading /> }
                 </div>
+            </>
+        );
+    };
+
+    const EventProviders = () => {
+        return (
+            <>
+            <h1>Event Providers</h1>
+            { eventProviders.length > 0 ? 
+                eventProviders.map(eventProvider => {
+                    return (
+                        <EventProvider 
+                            eventProvider={eventProvider} 
+                            key={eventProvider.id} 
+                        />
+                    );
+                })
+            : <Loading /> }
             </>
         );
     };
@@ -181,12 +203,13 @@ const Main = () => {
                     modalContent={modalContent}
                     events={events}
                     selectedEvent={selectedEvent}
+                    showModal={showModal}
                     setShowModal={setShowModal} 
                     eventProviders={eventProviders}
                     eventCategories={eventCategories}
                     regions={regions}
-                    prefectures={prefectures}
-                    setPrefectures={setPrefectures}
+                    // prefectures={prefectures}
+                    // setPrefectures={setPrefectures}
                 /> 
                 : null }
         </div>

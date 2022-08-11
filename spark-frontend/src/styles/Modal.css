@@ -22,6 +22,7 @@
   
   .modal-content {
     background-color: white;
+    border-radius: 20px;
     padding: 1rem;
     width: 50vw;
     height: 50vh;
@@ -50,4 +51,17 @@
 
   .close-btn:hover {
     opacity: 0.5;
+  }
+
+  #form-submit-btn {
+    border-style: none;
+    padding: 5px 10px;
+    background-color: rgb(164, 255, 164);
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  #form-submit-btn:hover {
+    opacity: 0.8;
   }
