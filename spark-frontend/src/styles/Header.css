@@ -1,13 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+.Header .brand {
+    font-family: 'Dancing Script', cursive;
+    font-size: 30px;
+}
+
 .Header {
     flex: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(0,0,0,0.2);
-    padding: 10px;
+    background-color: white;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    padding: 10px 100px;
+    position: sticky;
+    top: 0;
 }
 
 .Header .nav-utilities {
     display: flex;
+    align-items: center;
     gap: 10px;
+}
+
+.Header .nav-utilities button {
+    border-style: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#signup-btn {
+    background-color: black;
+    color: white;
+}
+
+#login-btn {
+    background-color: rgb(218, 254, 218);
+    /* color: white; */
+}
+
+.Header .nav-utilities button:hover {
+    opacity: 0.8;
+}
+
+.Header a {
+    text-decoration: none;
+    color: inherit;
 }

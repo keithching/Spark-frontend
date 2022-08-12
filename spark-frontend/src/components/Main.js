@@ -5,7 +5,6 @@ import {
     getEventCategories, 
     getEvents, 
     getAllRegions, 
-    getAllPrefectures,
 } from '../utils/helper';
 import Modal from './Modal';
 // import EditEventModal from './EditEventModal';

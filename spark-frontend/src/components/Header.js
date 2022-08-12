@@ -4,7 +4,6 @@ import { useAuth } from '../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
-    const VIEW = '[TOP SECRET] Highest previledge admin dashboard';
     // to implement:
     // view for event provider
     // view for user
@@ -29,13 +28,17 @@ const Header = () => {
             <Link className="brand" to="/">Spark</Link>
             <div className="nav-utilities">
                 {error && <span>{error}</span>}
-                {currentUser ? currentUser.email : "not yet sign in"}
+                {currentUser ? currentUser.email : "こんにちは！"}
                 {currentUser ? 
-                    <button onClick={handleLogout}>Log Out</button>
+                    <>
+                        <button><Link to="/dashboard">Dashboard</Link></button>
+                        <button><Link to="/profile">Profile</Link></button>
+                        <button onClick={handleLogout}>Log Out</button>
+                    </>
                     :
                     <>
-                        <button><Link to="/login">Log In</Link></button>
-                        <button><Link to="/signup">Sign Up</Link></button>
+                        <button id="login-btn"><Link to="/login">Log In</Link></button>
+                        <button id="signup-btn"><Link to="/signup">Sign Up</Link></button>
                     </>
                 }
             </div>

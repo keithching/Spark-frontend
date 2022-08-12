@@ -1,0 +1,30 @@
+.Home {
+    flex: 1;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+
+.event-card-display-container {
+    padding: 50px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+}
+
+.event-card-display h1 {
+    margin: 0;
+}
+
+.event-card-display {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 20px;
+    background-color: white;
+}
+
+.event-image {
+    width: auto;
+    background-color: lightgrey;
+    height: 400px;
+}

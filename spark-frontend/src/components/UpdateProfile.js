@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import '../styles/Signup.css';
+import '../styles/UpdateProfile.css';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -42,11 +42,11 @@ export default function UpdateProfile() {
     }
 
     return (
-    <div className="signup-container">
-        <div className="signup-card">
+    <div className="update-profile-container">
+        <div className="update-profile-card">
             <h2>Update Profile</h2>
             {error && <span>{error}</span>}
-            <form action="" className="signup-form" 
+            <form action="" className="update-profile-form" 
             onSubmit={handleSubmit}
             >
                 <label htmlFor="emailInput">Email</label>
@@ -62,7 +62,7 @@ export default function UpdateProfile() {
             </form>
         </div>
         <div>
-            <Link to="/">Cancel</Link>
+            <Link to="/profile">Cancel</Link>
         </div>
     </div>
   )

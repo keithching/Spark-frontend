@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
 import { AuthProvider } from '../contexts/AuthContext';
 import Header from './Header';
-import Main from './Main';
+// import Main from './Main';
 import Footer from './Footer';
 import Signup from './Signup';
 import '../styles/App.css';
@@ -11,6 +10,8 @@ import Login from './Login';
 import PrivateRoute from './PrivateRoute';
 import ForgotPassword from './ForgotPassword';
 import UpdateProfile from './UpdateProfile';
+import Profile from './Profile';
+import Home from './Home';
 
 function App() {
   return (
@@ -20,10 +21,7 @@ function App() {
             <Header />
             <Routes>
               <Route index path="/" element={
-                <>
-                  <Main />
-                  <Footer />
-                </>
+                <Home />
               } />
               <Route 
                 path="/dashboard" 
@@ -33,6 +31,11 @@ function App() {
                   </PrivateRoute>
                 } 
               />
+              <Route path="/profile" element={
+                  <PrivateRoute>
+                    <Profile />
+                  </PrivateRoute>
+                }/>
               <Route 
                 path="/update-profile"
                 element={
@@ -45,6 +48,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
             </Routes>
+            <Footer />
           </AuthProvider>
         </Router>
       </div>

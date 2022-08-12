@@ -9,7 +9,7 @@ const Modal = (props) => {
         modalContent,
         events,
         selectedEvent,
-        showModal,
+        // showModal,
         setShowModal, 
         eventProviders, 
         eventCategories, 
