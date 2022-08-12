@@ -3,7 +3,7 @@ import '../styles/Footer.css';
 const Footer = () => {
     return (
         <div className="Footer">
-            Footer
+            Keith 2022
         </div>
     );
 }

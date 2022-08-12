@@ -3,11 +3,10 @@ import '../styles/Signup.css';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function Signup() {
+export default function Login() {
     const emailRef = useRef();
     const passwordRef = useRef();
-    const passwordConfirmRef = useRef();
-    const { signup } = useAuth();
+    const { login } = useAuth();
     const [ error, setError ] = useState('');
     const [ loading, setLoading ] = useState(false);
     const navigate = useNavigate();
@@ -15,17 +14,13 @@ export default function Signup() {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-            return setError('Password do not match');
-        }
-
         try {
             setError('');
             setLoading(true);
-            await signup(emailRef.current.value, passwordRef.current.value);
+            await login(emailRef.current.value, passwordRef.current.value);
             navigate('/dashboard');
         } catch {
-            setError('Failed to create an account');
+            setError('Failed to sign in');
         }
 
         setLoading(false);
@@ -34,20 +29,19 @@ export default function Signup() {
     return (
     <div className="signup-container">
         <div className="signup-card">
-            <h2>Sign Up</h2>
+            <h2>Log In</h2>
             {error && <span>{error}</span>}
             <form action="" className="signup-form" onSubmit={handleSubmit}>
                 <label htmlFor="emailInput">Email</label>
                 <input type="text" ref={emailRef} id="emailInput" />
                 <label htmlFor="passwordInput">Password</label>
-                <input type="password" ref={passwordRef} id="passwordInput" />
-                <label htmlFor="passwordConfirmInput">Password Confirmation</label>
-                <input type="password" ref={passwordConfirmRef} id="passwordConfirmInput" />
-                <button disabled={loading} type="submit">Sign Up</button>
+                <input type="password" ref={passwordRef} id="passwordInput" />    
+                <button disabled={loading} type="submit">Log In</button>
             </form>
+            <Link to="/forgot-password">Fogot Password?</Link>
         </div>
         <div>
-            Already have an account? <Link to="/login">Log In</Link>
+            Need an account? <Link to="/signup">Sign Up</Link>
         </div>
     </div>
   )
