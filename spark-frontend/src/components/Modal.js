@@ -14,8 +14,6 @@ const Modal = (props) => {
         eventProviders, 
         eventCategories, 
         regions, 
-        // prefectures, 
-        // setPrefectures 
     } = props;
     const [ prefectures, setPrefectures ] = useState([]);
     const [ region, setRegion ] = useState('');
@@ -66,11 +64,6 @@ const Modal = (props) => {
             setEventToDisplay(events.find(event => event.id === selectedEvent));
         }
     }, [events, selectedEvent]);
-
-    useEffect(() => {
-        // if (eventToDisplay) console.log(eventToDisplay.title);
-        // if (modalContent) console.log(modalContent);
-    }, [eventToDisplay, modalContent]);
 
     const ModalHeader = () => {
         const handleClick = () => {

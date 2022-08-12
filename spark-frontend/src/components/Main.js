@@ -208,8 +208,6 @@ const Main = () => {
                     eventProviders={eventProviders}
                     eventCategories={eventCategories}
                     regions={regions}
-                    // prefectures={prefectures}
-                    // setPrefectures={setPrefectures}
                 /> 
                 : null }
         </div>
