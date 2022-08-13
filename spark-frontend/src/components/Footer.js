@@ -6,17 +6,17 @@ import twitter from '../asset/twitter.png';
 const Footer = () => {
     return (
         <div className="Footer">
-            <div class="link">
+            <div className="link">
                 <a href="https://github.com/keithching" target="_blank" rel="noreferrer">
                     <img src={github} alt="github" />
                 </a>
             </div>
-            <div class="link">
+            <div className="link">
                 <a href="https://twitter.com/KeithNgPC" target="_blank" rel="noreferrer">
                     <img src={twitter} alt="twitter" />
                 </a>
             </div>
-            <div class="link">
+            <div className="link">
                 <a href="https://www.linkedin.com/in/keith-pak-chung-ng/" target="_blank" rel="noreferrer">
                     <img src={linkedin} alt="linkedin" />
                 </a>

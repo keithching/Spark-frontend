@@ -30,6 +30,11 @@ const getEvents = async () => {
     return events;
 };
 
+const getEventsByEmail = async (email) => {
+    const events = await axios.get(`${EVENT_URL}/${email}`).then(res => res.data);
+    return events;
+};
+
 const getAllRegions = () => {
     return jpPrefecture.getAllRegion("name");
 };
@@ -37,6 +42,22 @@ const getAllRegions = () => {
 const getAllPrefectures = () => {
     return jpPrefecture.getAllPref("name");
 };
+
+const createEventProvider = async (eventProvider) => {
+    try {
+        await axios.post(EVENT_PROVIDER_URL, eventProvider).then(res => console.log(res));
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+const updateEventProviderByEmail = async (email, eventProvider) => {
+    try {
+        await axios.patch(`${EVENT_PROVIDER_URL}/${email}`, eventProvider).then(res => console.log(res));
+    } catch (err) {
+        console.error(err);
+    }
+}
 
 const createEvent = async (event) => {
     try {
@@ -66,8 +87,11 @@ export {
     getEventProviders,
     getEventCategories,
     getEvents,
+    getEventsByEmail,
     getAllRegions,
     getAllPrefectures,
+    createEventProvider,
+    updateEventProviderByEmail,
     createEvent,
     updateEvent,
     deleteEvent

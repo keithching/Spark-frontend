@@ -28,7 +28,7 @@ const Header = () => {
             <Link className="brand" to="/">Spark</Link>
             <div className="nav-utilities">
                 {error && <span>{error}</span>}
-                {currentUser ? currentUser.email : "こんにちは！"}
+                {currentUser ?  `👋 ${currentUser.displayName}` : "こんにちは！"}
                 {currentUser ? 
                     <>
                         <button><Link to="/dashboard">Dashboard</Link></button>

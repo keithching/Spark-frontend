@@ -3,6 +3,7 @@ import jpPrefecture from 'jp-prefecture';
 import { createEvent, updateEvent, deleteEvent } from '../utils/helper';
 import "../styles/Modal.css";
 import { IoClose } from 'react-icons/io5';
+import { useAuth } from '../contexts/AuthContext';
 
 const Modal = (props) => {
     const { 
@@ -15,8 +16,10 @@ const Modal = (props) => {
         eventCategories, 
         regions, 
     } = props;
+    const { currentUser, adminEmail } = useAuth();
     const [ prefectures, setPrefectures ] = useState([]);
-    const [ region, setRegion ] = useState('');
+    const [ region, setRegion ] = useState(regions[0] || '');
+
     useEffect(() => {
         if (region) {
             setPrefectures(jpPrefecture.prefFindByRegion(region, "name"));
@@ -44,6 +47,8 @@ const Modal = (props) => {
                     eventCategory: categoryInput,
                     location: prefectureInput + ', ' + regionInput
                 };
+
+                console.log(eventData);
 
                 if (modalContent.operation === 'create') {
                     await createEvent(eventData);
@@ -98,6 +103,7 @@ const Modal = (props) => {
                         autoComplete='off'
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
+                        required
                     />
                 </>
             );
@@ -111,12 +117,16 @@ const Modal = (props) => {
                         name="provider" 
                         id="provider-input"
                         defaultValue={
-                            eventToDisplay && modalContent.operation === 'edit' ? 
-                            eventToDisplay.eventProvider
-                            : ""
+                            currentUser && currentUser.email !== adminEmail ? currentUser.displayName :
+                                eventToDisplay && modalContent.operation === 'edit' ? 
+                                eventToDisplay.eventProvider
+                                : ""
                         }
                     >
-                        { eventProviders.length > 0 ? 
+
+                        { currentUser && currentUser.email !== adminEmail ? <option value={currentUser.displayName}>{currentUser.displayName}</option>
+                            :
+                        eventProviders.length > 0 ? 
                             eventProviders.map(eventProvider => {
                                 return (
                                     <option 

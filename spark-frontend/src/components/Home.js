@@ -5,6 +5,7 @@ import { parseISO } from 'date-fns';
 
 export default function Home() {
     const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchData() {
@@ -15,6 +16,7 @@ export default function Home() {
             }
         }
         fetchData();
+        setLoading(false);
     }, []);
   
     const Event = ({ event }) => {
@@ -30,6 +32,14 @@ export default function Home() {
         );
     };
 
+    const Loading = () => {
+        return (
+            <div>
+                loading...
+            </div>
+        );
+    }
+
     return (
     <div className="Home">
         <div className='event-card-display-container'>
@@ -41,7 +51,9 @@ export default function Home() {
                         </div>
                     );
                 })
-            : <span>Loading...</span>}
+                : !loading && events.length === 0 ?
+                <span>null</span>
+                : <Loading />}
         </div>
     </div>
   )

@@ -8,7 +8,8 @@ import {
     signInWithEmailAndPassword, 
     signOut,
     updateEmail as firebaseUpdateEmail,
-    updatePassword as firebaseUpdatePassword
+    updatePassword as firebaseUpdatePassword,
+    updateProfile
 } from 'firebase/auth';
 
 // https://www.youtube.com/watch?v=PKwu15ldZ7k
@@ -20,6 +21,7 @@ export function useAuth() {
 
 // https://www.youtube.com/watch?v=5LrDIWkK_Bc
 export function AuthProvider({ children }) {
+    const adminEmail = process.env.REACT_APP_ADMIN_EMAIL;
     const [ currentUser, setCurrentUser ] = useState()
     const [ loading, setLoading ] = useState(true);
 
@@ -47,6 +49,10 @@ export function AuthProvider({ children }) {
         return firebaseUpdatePassword(auth.currentUser, password);
     }
 
+    function updateDisplayName(name) {
+        return updateProfile(auth.currentUser, { displayName:name });
+    }
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, user => {
             setCurrentUser(user);
@@ -57,13 +63,15 @@ export function AuthProvider({ children }) {
     }, []);
 
     const value = {
+        adminEmail,
         currentUser,
         login,
         signup,
         logout,
         resetPassword,
         updateEmail,
-        updatePassword
+        updatePassword,
+        updateDisplayName
     }
 
     return (

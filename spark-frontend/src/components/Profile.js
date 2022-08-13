@@ -20,10 +20,11 @@ export default function Profile() {
 
   return (
     <div className='profile'>
-        <h1>Dashboard Page</h1>
+        <h1>Profile Page</h1>
         <div>Profile</div>
         {error && <span>{error}</span>}
-        Email: {currentUser.email}
+        <div>Email: {currentUser.email}</div>
+        <div>name: {currentUser.displayName}</div>
         <Link to="/update-profile" className="">
             Update Profile
         </Link>

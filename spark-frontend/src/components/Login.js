@@ -33,7 +33,7 @@ export default function Login() {
             {error && <span>{error}</span>}
             <form action="" className="signup-form" onSubmit={handleSubmit}>
                 <label htmlFor="emailInput">Email</label>
-                <input type="text" ref={emailRef} id="emailInput" />
+                <input type="text" ref={emailRef} id="emailInput" autoComplete="off" />
                 <label htmlFor="passwordInput">Password</label>
                 <input type="password" ref={passwordRef} id="passwordInput" />    
                 <button disabled={loading} type="submit">Log In</button>

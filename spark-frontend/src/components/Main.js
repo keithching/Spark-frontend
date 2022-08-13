@@ -3,7 +3,8 @@ import '../styles/Main.css';
 import { 
     getEventProviders, 
     getEventCategories, 
-    getEvents, 
+    getEvents,
+    getEventsByEmail,
     getAllRegions, 
 } from '../utils/helper';
 import Modal from './Modal';
@@ -12,6 +13,7 @@ import { GrAddCircle } from 'react-icons/gr';
 import { FiEdit } from 'react-icons/fi';
 import { RiDeleteBinLine } from 'react-icons/ri';
 // https://react-icons.github.io/react-icons
+import { useAuth } from '../contexts/AuthContext';
 
 const Main = () => {
     const [ showModal, setShowModal ] = useState(false);
@@ -23,11 +25,12 @@ const Main = () => {
       }
     }, [showModal]);
 
+    const { currentUser, adminEmail } = useAuth();
     const [ eventProviders, setEventProviders ] = useState([]);
     const [ eventCategories, setEventCategories ] = useState([]);
     const [ events, setEvents ] = useState([]);
     const [ regions, setRegions ] = useState([]);
-    // const [ prefectures, setPrefectures ] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const [ modalContent, setModalContent ] = useState({
         title: "", // title for the modal
@@ -39,23 +42,28 @@ const Main = () => {
         async function fetchData () {
             setEventProviders(await getEventProviders());
             setEventCategories(await getEventCategories());
-            setEvents(await getEvents());
+            setEvents(currentUser && currentUser.email !== adminEmail ? 
+                await getEventsByEmail(currentUser.email)
+                :
+                await getEvents()
+            );
             setRegions(await getAllRegions());
-            // setPrefectures(await getAllPrefectures());
         }
         fetchData();
+        setLoading(false);
     }, []);
 
     useEffect(() => { // update the event divs in the DOM
         async function updateData () {
-            setEvents(await getEvents());
+            setEvents(
+                currentUser && currentUser.email !== adminEmail ? 
+                await getEventsByEmail(currentUser.email)
+                :
+                await getEvents()
+            );
         }
         updateData();
-    }, [showModal]);
-
-    // useEffect(() => {
-    //     if (selectedEvent) console.log(selectedEvent);
-    // }, [selectedEvent]);
+    }, [showModal, currentUser]);
 
     const Loading = () => {
         return (
@@ -132,7 +140,7 @@ const Main = () => {
                     <GrAddCircle onClick={handleAddEventClick} id="add-event-btn"/>
                 </header>
                 <div className='event-cards'>
-                    { events.length > 0 ? 
+                    { !loading && events.length > 0 ? 
                         events.map(event => {
                             return (
                                 <Event 
@@ -141,6 +149,8 @@ const Main = () => {
                                 />
                             );
                         })
+                    : !loading && currentUser && events.length === 0 ?
+                        <span>Create your first event</span>
                     : <Loading /> }
                 </div>
             </>
@@ -160,7 +170,9 @@ const Main = () => {
                         />
                     );
                 })
-            : <Loading /> }
+                : !loading && currentUser && eventProviders.length === 0 ?
+                <span>null</span>
+                : <Loading />  }
             </>
         );
     };
@@ -194,8 +206,11 @@ const Main = () => {
 
     return (
         <div className='Main'>
-            <EventProviders />
-            <EventCategories />
+            {currentUser && currentUser.email === adminEmail ? 
+            <>
+                <EventProviders />
+                <EventCategories />
+            </> : null}
             <Events />
             {showModal && Object.keys(modalContent).length > 0 ? 
                 <Modal
