@@ -1,6 +1,7 @@
 // https://firebase.google.com/docs/auth/web/start
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
+import { getStorage } from "firebase/storage";
 
 const app = initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -13,3 +14,4 @@ const app = initializeApp({
 
 export default app;
 export const auth = getAuth(app);
+export const storage = getStorage(app); // Initialize Cloud Storage and get a reference to the service
