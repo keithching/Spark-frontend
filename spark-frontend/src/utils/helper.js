@@ -2,8 +2,8 @@ import axios from 'axios';
 import jpPrefecture from 'jp-prefecture';
 // https://github.com/wadackel/jp-prefecture
 
-// const URL = 'https://spark-backend-app.herokuapp.com/api';
-const URL = 'http://localhost:4000/api';
+const URL = 'https://spark-backend-app.herokuapp.com/api';
+// const URL = 'http://localhost:4000/api';
 
 // spark backend 
 const EVENT_PROVIDER_URL = `${URL}/event_providers`;
