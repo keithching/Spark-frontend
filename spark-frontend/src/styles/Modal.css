@@ -34,14 +34,38 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
   }
   
   .modal-form {
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+
+  .modal-form-content {
+    display: flex;
+    gap: 10px;
+    width: auto;
+  }
+
+  .modal-form-content-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-form-content-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-form-content-right > img {
+    width: 100%;
   }
 
   .close-btn {

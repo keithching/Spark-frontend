@@ -2,13 +2,13 @@ import axios from 'axios';
 import jpPrefecture from 'jp-prefecture';
 // https://github.com/wadackel/jp-prefecture
 
-// spark backend 
-const EVENT_PROVIDER_URL = 'https://spark-backend-app.herokuapp.com/api/event_providers';
-const EVENT_CATEGORY_URL = 'https://spark-backend-app.herokuapp.com/api/event_categories';
-const EVENT_URL = 'https://spark-backend-app.herokuapp.com/api/events';
+// const URL = 'https://spark-backend-app.herokuapp.com/api';
+const URL = 'http://localhost:4000/api';
 
-// http://localhost:3000/api/events
-// https://spark-backend-app.herokuapp.com/api/events
+// spark backend 
+const EVENT_PROVIDER_URL = `${URL}/event_providers`;
+const EVENT_CATEGORY_URL = `${URL}/event_categories`;
+const EVENT_URL = `${URL}/events`;
 
 // external public API
 // const JAPAN_PREFECTURE_URL = 'https://opendata.resas-portal.go.jp/api/v1/prefectures';

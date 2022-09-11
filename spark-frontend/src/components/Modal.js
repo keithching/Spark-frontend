@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import jpPrefecture from 'jp-prefecture';
 import { createEvent, updateEvent, deleteEvent } from '../utils/helper';
 import "../styles/Modal.css";
 import { IoClose } from 'react-icons/io5';
 import { useAuth } from '../contexts/AuthContext';
+import { uploadImageAsync } from '../utils/imageUpload';
 
 const Modal = (props) => {
     const { 
         modalContent,
         events,
         selectedEvent,
-        // showModal,
         setShowModal, 
         eventProviders, 
         eventCategories, 
@@ -19,6 +19,14 @@ const Modal = (props) => {
     const { currentUser, adminEmail } = useAuth();
     const [ prefectures, setPrefectures ] = useState([]);
     const [ region, setRegion ] = useState(regions[0] || '');
+    const [ photoURL, setPhotoURL ] = useState(null); // problem
+
+    const titleRef = useRef();
+    const providerRef = useRef();
+    const categoryRef= useRef();
+    const regionRef = useRef();
+    const prefectureRef = useRef();
+    const photoRef = useRef();
 
     useEffect(() => {
         if (region) {
@@ -30,17 +38,18 @@ const Modal = (props) => {
         e.preventDefault();
         try {
             if (modalContent.operation === 'delete') {
-                // TODO. delete an event
                 await deleteEvent(selectedEvent);
             } else if (modalContent.operation === 'create' ||
                 modalContent.operation === 'edit') {
                 // TODO. frontend form validation before creating event
-                const titleInput = document.getElementById('title-input').value;
-                const providerInput = document.getElementById('provider-input').value;
-                const categoryInput = document.getElementById('category-input').value;
-                const regionInput = document.getElementById('region-input').value;
-                const prefectureInput = document.getElementById('prefecture-input').value;
-        
+                const titleInput = titleRef.current.value;
+                const providerInput = providerRef.current.value;
+                const categoryInput = categoryRef.current.value;
+                const regionInput = regionRef.current.value;
+                const prefectureInput = prefectureRef.current.value;
+                
+                // TODO. photo to be included
+
                 const eventData = {
                     title: titleInput,
                     eventProvider: providerInput,
@@ -48,11 +57,25 @@ const Modal = (props) => {
                     location: prefectureInput + ', ' + regionInput
                 };
 
-                console.log(eventData);
+                // console.log(eventData);
 
                 if (modalContent.operation === 'create') {
-                    await createEvent(eventData);
+                    // upload photo to firebase.
+                    try {
+                        const downloadURL = await uploadImageAsync(photoURL);
+                        console.log(downloadURL);
+                        // TODO. the data should include the photo. The backend endpoint should be able to pick up a photo
+                        eventData.imageURL = downloadURL; // append to event data before sending
+                        await createEvent(eventData); 
+                    } catch(err) {
+                        console.log(err);
+                    }
+                    // if success: grab the download URL. then createEvent
+                        // if success: everything is fine. do a console log maybe for now
+                        // if fail: delete the photo in firebase
                 } else if (modalContent.operation === 'edit') {
+                    const downloadURL = await uploadImageAsync(photoURL);
+                    eventData.imageURL = downloadURL; // append to event data before sending
                     await updateEvent(eventData, selectedEvent);
                 }
             }
@@ -102,6 +125,7 @@ const Modal = (props) => {
                         id="title-input"
                         autoComplete='off'
                         value={title}
+                        ref={titleRef}
                         onChange={(e) => setTitle(e.target.value)}
                         required
                     />
@@ -116,6 +140,7 @@ const Modal = (props) => {
                     <select 
                         name="provider" 
                         id="provider-input"
+                        ref={providerRef}
                         defaultValue={
                             currentUser && currentUser.email !== adminEmail ? currentUser.displayName :
                                 eventToDisplay && modalContent.operation === 'edit' ? 
@@ -150,6 +175,7 @@ const Modal = (props) => {
                     <select 
                         name="category" 
                         id="category-input"
+                        ref={categoryRef}
                         defaultValue={
                             eventToDisplay && modalContent.operation === 'edit' ? 
                             eventToDisplay.eventCategory
@@ -174,13 +200,13 @@ const Modal = (props) => {
         };
 
         const RegionInput = () => {
-
             return (
                 <>
                     <label htmlFor="region-input">*Region</label>
                     <select 
                         name="region" 
-                        id="region-input" 
+                        id="region-input"
+                        ref={regionRef}
                         onChange={(e) => setRegion(e.target.value)}
                         value={region}
                     >
@@ -205,6 +231,7 @@ const Modal = (props) => {
                     <select 
                         name="prefecture" 
                         id="prefecture-input"
+                        ref={prefectureRef}
                     >
                         { prefectures.length > 0 ? 
                             prefectures.map(prefecture => {
@@ -220,6 +247,54 @@ const Modal = (props) => {
             );
         };
 
+        // photo component
+        const PhotoInput = () => {
+            const [ photoFile, setPhotoFile ] = useState(null);
+            const handlePhotoInputChange = (e) => {
+                // console.log(photoRef.current.files[0]);
+
+                // https://stackoverflow.com/questions/16215771/how-to-open-select-file-dialog-via-js
+                let reader = new FileReader();
+                reader.readAsDataURL(photoRef.current.files[0]);
+                setPhotoFile(photoRef.current.files[0]); // is this state necessary?
+    
+                reader.onload = readerEvent => {
+                    // console.log(readerEvent.target.result);
+                    // problem: setting state also causes re-rendering
+                    setPhotoURL(readerEvent.target.result); // data url for the file    
+                }
+            };
+
+            useEffect(() => {
+                if (photoFile) console.log(photoFile);
+            }, [photoFile]);
+
+            return (
+                <>
+                    <input 
+                        type="file" 
+                        name="photoInput" 
+                        id="photoInput" 
+                        ref={photoRef}
+                        onChange={handlePhotoInputChange}
+                    />
+                </>
+            );
+        };
+
+        const PhotoPreview = () => {
+            return (
+                eventToDisplay && modalContent.operation === 'edit' ?
+                    !photoURL && eventToDisplay.imageURL !== null ?
+                        <img src={eventToDisplay.imageURL} alt="" /> :
+                        photoURL ? <img src={photoURL} alt="" /> :
+                        'photo not available'
+                : photoURL ? 
+                    <img src={photoURL} alt="" /> :
+                    'upload a photo'
+            );
+        };
+
         return (
             <div className="modal-main">
                 <form 
@@ -228,13 +303,19 @@ const Modal = (props) => {
                     onSubmit={handleFormSubmission} 
                 >
                     {modalContent.operation !== 'delete' ?
-                        <>
-                            <TitleInput />
-                            <ProviderInput />
-                            <CategoryInput />
-                            <RegionInput />
-                            <PrefectureInput />
-                        </>
+                        <div className="modal-form-content">
+                            <div className="modal-form-content-left">
+                                <TitleInput />
+                                <ProviderInput />
+                                <CategoryInput />
+                                <RegionInput />
+                                <PrefectureInput />
+                                <PhotoInput />
+                            </div>
+                            <div className="modal-form-content-right">
+                                <PhotoPreview />
+                            </div>
+                        </div>
                     : null}
                     <button 
                         type="submit" 

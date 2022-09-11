@@ -18,11 +18,13 @@ export default function Home() {
         fetchData();
         setLoading(false);
     }, []);
-  
+
     const Event = ({ event }) => {
         return (
             <div className="event-card-display">
-                <div className="event-image"></div>
+                <div className="event-image">
+                    <img src={event.imageURL} alt="" />
+                </div>
                 <h1>{event.title}</h1>
                 <div>{event.eventProvider}</div>
                 <div>{event.eventCategory}</div>
