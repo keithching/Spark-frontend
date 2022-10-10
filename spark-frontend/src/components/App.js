@@ -12,6 +12,7 @@ import ForgotPassword from './ForgotPassword';
 import UpdateProfile from './UpdateProfile';
 import Profile from './Profile';
 import Home from './Home';
+import Event from './Event';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route index path="/" element={
                 <Home />
               } />
+              <Route path="event/:eventId" element={<Event />} />
               <Route 
                 path="/dashboard" 
                 element={

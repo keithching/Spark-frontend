@@ -5,7 +5,6 @@ import { parseISO } from 'date-fns';
 
 export default function Home() {
     const [events, setEvents] = useState([]);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchData() {
@@ -16,12 +15,22 @@ export default function Home() {
             }
         }
         fetchData();
-        setLoading(false);
     }, []);
 
     const Event = ({ event }) => {
+        const { id } = event;
+        const navigateToEventPage = (id) => {
+            // console.log(id);
+            // https://developer.mozilla.org/en-US/docs/Web/API/History/pushState
+            window.history.pushState({eventId: `${id}`}, `${event.title}`, `/event/${id}/`);
+            window.history.go(0); // go to the currrent point in history
+        };
+
         return (
-            <div className="event-card-display">
+            <div 
+                className="event-card-display"
+                onClick={() => navigateToEventPage(id)}
+            >
                 <div className="event-image">
                     <img src={event.imageURL} alt="" />
                 </div>
@@ -34,18 +43,10 @@ export default function Home() {
         );
     };
 
-    const Loading = () => {
-        return (
-            <div>
-                loading...
-            </div>
-        );
-    }
-
     return (
     <div className="Home">
         <div className='event-card-display-container'>
-            {events.length > 0 ?
+            {events.length > 0 &&
                 events.map(event => {
                     return (
                         <div key={event.id}>
@@ -53,9 +54,7 @@ export default function Home() {
                         </div>
                     );
                 })
-                : !loading && events.length === 0 ?
-                <span>null</span>
-                : <Loading />}
+            }
         </div>
     </div>
   )

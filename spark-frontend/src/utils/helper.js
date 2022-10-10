@@ -35,6 +35,11 @@ const getEventsByEmail = async (email) => {
     return events;
 };
 
+const getEventByEventId = async (id) => {
+    const event = await axios.get(`${EVENT_URL}/${id}`).then(res => res.data);
+    return event;
+};
+
 const getAllRegions = () => {
     return jpPrefecture.getAllRegion("name");
 };
@@ -88,6 +93,7 @@ export {
     getEventCategories,
     getEvents,
     getEventsByEmail,
+    getEventByEventId,
     getAllRegions,
     getAllPrefectures,
     createEventProvider,
