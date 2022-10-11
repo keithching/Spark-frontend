@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import '../styles/Home.css';
+import homeStyles from '../styles/home.module.css';
 import { getEvents } from '../utils/helper';
 import { parseISO } from 'date-fns';
+import { useRouter } from 'next/router';
 
 export default function Home() {
+    const router = useRouter();
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
@@ -22,16 +24,17 @@ export default function Home() {
         const navigateToEventPage = (id) => {
             // console.log(id);
             // https://developer.mozilla.org/en-US/docs/Web/API/History/pushState
-            window.history.pushState({eventId: `${id}`}, `${event.title}`, `/event/${id}/`);
-            window.history.go(0); // go to the currrent point in history
+            // window.history.pushState({eventId: `${id}`}, `${event.title}`, `/event/${id}/`);
+            // window.history.go(0); // go to the currrent point in history
+            router.push(`/events/${id}/`);
         };
 
         return (
             <div 
-                className="event-card-display"
+                className={homeStyles["event-card-display"]}
                 onClick={() => navigateToEventPage(id)}
             >
-                <div className="event-image">
+                <div className={homeStyles["event-image"]}>
                     <img src={event.imageURL} alt="" />
                 </div>
                 <h1>{event.title}</h1>
@@ -44,8 +47,8 @@ export default function Home() {
     };
 
     return (
-    <div className="Home">
-        <div className='event-card-display-container'>
+    <div className={homeStyles.Home}>
+        <div className={homeStyles["event-card-display-container"]}>
             {events.length > 0 &&
                 events.map(event => {
                     return (

@@ -1,8 +1,12 @@
+import Head from 'next/head';
 import React, { useRef, useState } from 'react';
-import '../styles/UpdateProfile.css';
+import updateProfileStyles from '../styles/updateProfile.module.css';
 import { useAuth } from '../contexts/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+// import { Link, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { getEventProviders, updateEventProviderByEmail } from '../utils/helper';
+import Layout from '../components/layout';
 
 export default function UpdateProfile() {
     const nameRef = useRef();
@@ -12,7 +16,8 @@ export default function UpdateProfile() {
     const { currentUser, updatePassword, updateEmail, updateDisplayName } = useAuth();
     const [ error, setError ] = useState('');
     const [ loading, setLoading ] = useState(false);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
+    const router = useRouter();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -52,7 +57,8 @@ export default function UpdateProfile() {
         }
 
         Promise.all(promises).then(() => {
-            navigate('/dashboard');
+            // navigate('/dashboard');
+            router.push('/dashboard');
         }).catch(() => {
             setError('Failed to update account');
         }).finally(() => {
@@ -63,31 +69,36 @@ export default function UpdateProfile() {
     }
 
     return (
-    <div className="update-profile-container">
-        <div className="update-profile-card">
-            <h2>Update Profile</h2>
-            {error && <span>{error}</span>}
-            <form action="" className="update-profile-form" 
-            onSubmit={handleSubmit}
-            >
-                <label htmlFor="nameInput">Name</label>
-                <input type="text" ref={nameRef} id="nameInput" 
-                    required defaultValue={currentUser.displayName}/>
-                <label htmlFor="emailInput">Email</label>
-                <input type="text" ref={emailRef} id="emailInput" 
-                    required defaultValue={currentUser.email}/>
-                <label htmlFor="passwordInput">Password</label>
-                <input type="password" ref={passwordRef} id="passwordInput" 
-                    placeholder="Leave blank to keep the same" />
-                <label htmlFor="passwordConfirmInput">Password Confirmation</label>
-                <input type="password" ref={passwordConfirmRef} id="passwordConfirmInput" 
-                    placeholder="Leave blank to keep the same" />
-                <button disabled={loading} type="submit">Update</button>
-            </form>
-        </div>
-        <div>
-            <Link to="/profile">Cancel</Link>
-        </div>
-    </div>
+        <Layout>
+            <Head>
+                <title>Update Profile</title>
+            </Head>
+            <div className={updateProfileStyles["update-profile-container"]}>
+                <div className={updateProfileStyles["update-profile-card"]}>
+                    <h2>Update Profile</h2>
+                    {error && <span>{error}</span>}
+                    <form action="" className={updateProfileStyles["update-profile-form"]} 
+                    onSubmit={handleSubmit}
+                    >
+                        <label htmlFor="nameInput">Name</label>
+                        <input type="text" ref={nameRef} id="nameInput" 
+                            required defaultValue={currentUser.displayName}/>
+                        <label htmlFor="emailInput">Email</label>
+                        <input type="text" ref={emailRef} id="emailInput" 
+                            required defaultValue={currentUser.email}/>
+                        <label htmlFor="passwordInput">Password</label>
+                        <input type="password" ref={passwordRef} id="passwordInput" 
+                            placeholder="Leave blank to keep the same" />
+                        <label htmlFor="passwordConfirmInput">Password Confirmation</label>
+                        <input type="password" ref={passwordConfirmRef} id="passwordConfirmInput" 
+                            placeholder="Leave blank to keep the same" />
+                        <button disabled={loading} type="submit">Update</button>
+                    </form>
+                </div>
+                <div>
+                    <Link href="/profile">Cancel</Link>
+                </div>
+            </div>
+        </Layout>
   )
 }

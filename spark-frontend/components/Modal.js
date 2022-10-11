@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import jpPrefecture from 'jp-prefecture';
 import { createEvent, updateEvent, deleteEvent } from '../utils/helper';
-import "../styles/Modal.css";
+import modalStyles from "../styles/modal.module.css";
 import { IoClose } from 'react-icons/io5';
 import { useAuth } from '../contexts/AuthContext';
 import { uploadImageAsync } from '../utils/imageUpload';
@@ -100,10 +100,10 @@ const Modal = (props) => {
         };
 
         return (
-            <div className="modal-header">
+            <div className={modalStyles["modal-header"]}>
                 <div></div>
                 <header>{modalContent.title}</header>
-                <IoClose onClick={handleClick} className="close-btn" />
+                <IoClose onClick={handleClick} className={modalStyles["close-btn"]} />
           </div>
         );
     }
@@ -296,15 +296,15 @@ const Modal = (props) => {
         };
 
         return (
-            <div className="modal-main">
+            <div className={modalStyles["modal-main"]}>
                 <form 
                     action="" 
-                    className="modal-form"
+                    className={modalStyles["modal-form"]}
                     onSubmit={handleFormSubmission} 
                 >
                     {modalContent.operation !== 'delete' ?
-                        <div className="modal-form-content">
-                            <div className="modal-form-content-left">
+                        <div className={modalStyles["modal-form-content"]}>
+                            <div className={modalStyles["modal-form-content-left"]}>
                                 <TitleInput />
                                 <ProviderInput />
                                 <CategoryInput />
@@ -312,7 +312,7 @@ const Modal = (props) => {
                                 <PrefectureInput />
                                 <PhotoInput />
                             </div>
-                            <div className="modal-form-content-right">
+                            <div className={modalStyles["modal-form-content-right"]}>
                                 <PhotoPreview />
                             </div>
                         </div>
@@ -333,8 +333,8 @@ const Modal = (props) => {
     };
 
     return (
-        <div className="modal" style={modalStyle}>
-        <div className="modal-content">
+        <div className={modalStyles["modal"]} style={modalStyle}>
+        <div className={modalStyles["modal-content"]}>
             { modalContent ?
             <>
                 <ModalHeader />

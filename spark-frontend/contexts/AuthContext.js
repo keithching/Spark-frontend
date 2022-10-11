@@ -21,7 +21,7 @@ export function useAuth() {
 
 // https://www.youtube.com/watch?v=5LrDIWkK_Bc
 export function AuthProvider({ children }) {
-    const adminEmail = process.env.REACT_APP_ADMIN_EMAIL;
+    const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
     const [ currentUser, setCurrentUser ] = useState()
     const [ loading, setLoading ] = useState(true);
 

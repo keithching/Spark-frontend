@@ -30,6 +30,18 @@ const getEvents = async () => {
     return events;
 };
 
+const getAllEventIds = async () => {
+    const events = await axios.get(EVENT_URL).then(res => res.data);
+    const ids = events.map(event => {
+        return {
+            params: {
+                id: event.id.toString()
+            }
+        }
+    });
+    return ids;
+}
+
 const getEventsByEmail = async (email) => {
     const events = await axios.get(`${EVENT_URL}/${email}`).then(res => res.data);
     return events;
@@ -37,7 +49,7 @@ const getEventsByEmail = async (email) => {
 
 const getEventByEventId = async (id) => {
     const event = await axios.get(`${EVENT_URL}/${id}`).then(res => res.data);
-    return event;
+    return event[0];
 };
 
 const getAllRegions = () => {
@@ -92,6 +104,7 @@ export {
     getEventProviders,
     getEventCategories,
     getEvents,
+    getAllEventIds,
     getEventsByEmail,
     getEventByEventId,
     getAllRegions,

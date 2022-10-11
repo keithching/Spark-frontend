@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import '../styles/Main.css';
+import mainStyles from '../styles/main.module.css';
 import { 
     getEventProviders, 
     getEventCategories, 
@@ -104,19 +104,19 @@ const Main = () => {
         };
 
         return (
-            <div className="event-card">
+            <div className={mainStyles["event-card"]}>
                 <div>Title: {event.title}</div>
                 <div>Provider: {event.eventProvider}</div>
                 <div>Category: {event.eventCategory}</div>
                 <div>Location: {event.location}</div>
                 <div>Date: {event.dateStart} ~ {event.dateEnd}</div>
-                <div className="event-function-btn-container">
+                <div className={mainStyles["event-function-btn-container"]}>
                     <FiEdit 
-                        className='edit-event-btn' 
+                        className={mainStyles["edit-event-btn"]} 
                         onClick={handleEditEventClick}
                     />
                     <RiDeleteBinLine 
-                        className='delete-event-btn' 
+                        className={mainStyles["delete-event-btn"]}
                         onClick={handleDeleteEventClick}
                     />
                 </div>
@@ -135,11 +135,11 @@ const Main = () => {
 
         return (
             <>
-                <header className="events-header">
+                <header className={mainStyles["events-header"]}>
                     <h1>Events</h1>
                     <GrAddCircle onClick={handleAddEventClick} id="add-event-btn"/>
                 </header>
-                <div className='event-cards'>
+                <div className={mainStyles["event-cards"]}>
                     { !loading && events.length > 0 ? 
                         events.map(event => {
                             return (
@@ -205,7 +205,7 @@ const Main = () => {
     }
 
     return (
-        <div className='Main'>
+        <div className={mainStyles.Main}>
             {currentUser && currentUser.email === adminEmail ? 
             <>
                 <EventProviders />
