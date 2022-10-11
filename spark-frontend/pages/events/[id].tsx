@@ -2,12 +2,22 @@ import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
 import { getEventByEventId, getAllEventIds } from '../../utils/helper';
 import eventStyles from '../../styles/event.module.css';
-// import { GetStaticProps, GetStaticPaths } from 'next';
+import { GetStaticProps, GetStaticPaths } from 'next';
 import Image from 'next/image';
 import Layout from '../../components/layout';
 
 export default function Event({
     eventData
+}: {
+    eventData: {
+        title: string
+        eventProvider: string
+        eventCategory: string
+        location: string
+        dateStart: string
+        dateEnd: string
+        imageURL: string
+    }
 }) {
     return (
         <Layout>
@@ -39,7 +49,7 @@ export default function Event({
     );
 }
 
-export const getStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
     const paths = await getAllEventIds();
     return {
         paths,
@@ -47,8 +57,8 @@ export const getStaticPaths = async () => {
     }
 }
 
-export const getStaticProps = async ({ params }) => {
-    const eventData = await getEventByEventId(params.id);
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    const eventData = await getEventByEventId(params.id as string);
     return {
         props: {
             eventData,

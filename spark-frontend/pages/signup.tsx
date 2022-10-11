@@ -2,21 +2,19 @@ import Head from 'next/head';
 import React, { useRef, useState } from 'react';
 import signupStyles from '../styles/signup.module.css';
 import { useAuth } from '../contexts/AuthContext';
-// import { Link, useNavigate } from 'react-router-dom';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { getEventProviders, createEventProvider } from '../utils/helper';
 import Layout from '../components/layout';
 
 export default function Signup() {
-    const emailRef = useRef();
-    const passwordRef = useRef();
-    const passwordConfirmRef = useRef();
-    const nameRef = useRef();
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const passwordConfirmRef = useRef<HTMLInputElement>(null);
+    const nameRef = useRef<HTMLInputElement>(null);
     const { signup, updateDisplayName } = useAuth();
-    const [ error, setError ] = useState('');
-    const [ loading, setLoading ] = useState(false);
-    // const navigate = useNavigate();
+    const [ error, setError ] = useState<string>('');
+    const [ loading, setLoading ] = useState<boolean>(false);
     const router = useRouter();
 
     async function handleSubmit(e) {
@@ -47,7 +45,6 @@ export default function Signup() {
                 password: passwordRef.current.value
             });
 
-            // navigate('/dashboard');
             router.push('/dashboard');
         } catch(err) {
             console.error(err);

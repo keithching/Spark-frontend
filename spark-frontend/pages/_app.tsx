@@ -2,9 +2,10 @@
 import { AuthProvider } from '../contexts/AuthContext';
 import '../styles/global.css';
 import Head from 'next/head';
+import { AppProps } from 'next/app';
 
 // https://nextjs.org/docs/advanced-features/custom-app
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }: AppProps) {
     return (
         <AuthProvider>
             <Head>

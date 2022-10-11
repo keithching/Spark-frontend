@@ -3,10 +3,13 @@ import homeStyles from '../styles/home.module.css';
 import { getEvents } from '../utils/helper';
 import { parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
+import {
+    EventProps
+} from '../lib/customProp';
 
 export default function Home() {
     const router = useRouter();
-    const [events, setEvents] = useState([]);
+    const [events, setEvents] = useState<EventProps[]>([]);
 
     useEffect(() => {
         async function fetchData() {
@@ -22,10 +25,6 @@ export default function Home() {
     const Event = ({ event }) => {
         const { id } = event;
         const navigateToEventPage = (id) => {
-            // console.log(id);
-            // https://developer.mozilla.org/en-US/docs/Web/API/History/pushState
-            // window.history.pushState({eventId: `${id}`}, `${event.title}`, `/event/${id}/`);
-            // window.history.go(0); // go to the currrent point in history
             router.push(`/events/${id}/`);
         };
 

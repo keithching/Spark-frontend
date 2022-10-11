@@ -8,7 +8,7 @@ import Layout from '../components/layout';
 
 export default function Profile() {
     const router = useRouter();
-    const [error, setError] = useState("");
+    const [error, setError] = useState<string>("");
     const { currentUser, logout } = useAuth();
 
     async function handleLogout() {

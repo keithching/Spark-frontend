@@ -8,15 +8,23 @@ import {
     getAllRegions, 
 } from '../utils/helper';
 import Modal from './Modal';
-// import EditEventModal from './EditEventModal';
+// import EditEventModal from './EditEventModal';   
 import { GrAddCircle } from 'react-icons/gr';
 import { FiEdit } from 'react-icons/fi';
 import { RiDeleteBinLine } from 'react-icons/ri';
 // https://react-icons.github.io/react-icons
 import { useAuth } from '../contexts/AuthContext';
+import {
+    EventProviderProps, EventCategoryProps, EventProps, JpRegionProps
+} from '../lib/customProp';
+
+interface ModalProps {
+    title: string
+    operation: string
+}
 
 const Main = () => {
-    const [ showModal, setShowModal ] = useState(false);
+    const [ showModal, setShowModal ] = useState<boolean>(false);
     useEffect(() => {
       if (showModal) {
         document.body.classList.add('stop-scrolling');
@@ -26,17 +34,17 @@ const Main = () => {
     }, [showModal]);
 
     const { currentUser, adminEmail } = useAuth();
-    const [ eventProviders, setEventProviders ] = useState([]);
-    const [ eventCategories, setEventCategories ] = useState([]);
-    const [ events, setEvents ] = useState([]);
-    const [ regions, setRegions ] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [ eventProviders, setEventProviders ] = useState<EventProviderProps[]>([]);
+    const [ eventCategories, setEventCategories ] = useState<EventCategoryProps[]>([]);
+    const [ events, setEvents ] = useState<EventProps[]>([]);
+    const [ regions, setRegions ] = useState<JpRegionProps[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
-    const [ modalContent, setModalContent ] = useState({
+    const [ modalContent, setModalContent ] = useState<ModalProps>({
         title: "", // title for the modal
         operation: "" // create, edit, delete
     });
-    const [ selectedEvent, setSelectedEvent ] = useState(null);
+    const [ selectedEvent, setSelectedEvent ] = useState<number>(null);
 
     useEffect(() => {
         async function fetchData () {

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import headerStyles from '../styles/header.module.css';
 import { useAuth } from '../contexts/AuthContext';
-// import { Link, useNavigate } from 'react-router-dom';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -13,15 +12,13 @@ const Header = () => {
     // view for user
     // a state for controlling views
 
-    const [error, setError] = useState("");
+    const [error, setError] = useState<string>("");
     const { currentUser, logout } = useAuth();
-    // const navigate = useNavigate();
 
     async function handleLogout() {
         setError('');
         try {
             await logout();
-            // navigate('/');
             router.push('/');
         } catch {
             setError('Failed to log out');
