@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { getEventProviders, createEventProvider } from '../utils/helper';
-import Layout from '../../components/layout';
+import Layout from '../components/layout';
 
 export default function Signup() {
     const emailRef = useRef();
@@ -63,10 +63,10 @@ export default function Signup() {
                 <title>Signup</title>
             </Head>
             <div className={signupStyles["signup-container"]}>
-                <div className={signupStyles.signup-card}>
+                <div className={signupStyles["signup-card"]}>
                     <h2>Sign Up</h2>
                     {error && <span>{error}</span>}
-                    <form action="" className={signupStyles.signup-form} onSubmit={handleSubmit}>
+                    <form action="" className={signupStyles["signup-form"]} onSubmit={handleSubmit}>
                         <label htmlFor="nameInput">Name</label>
                         <input type="text" ref={nameRef} id="nameInput" required autoComplete="off" />
                         <label htmlFor="emailInput">Email</label>
