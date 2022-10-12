@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "contexts/AuthContext.js"  ],
+, "contexts/AuthContext.ts"  ],
   "exclude": [
     "node_modules"
   ]
