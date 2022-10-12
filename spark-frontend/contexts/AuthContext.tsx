@@ -24,8 +24,8 @@ interface AuthContextType {
     updateEmail: (email: string) => void
     updatePassword: (password: string) => void
     updateDisplayName: (name: string) => void
+    isLoading: boolean
 }
-
 
 // https://www.youtube.com/watch?v=PKwu15ldZ7k
 // https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-
@@ -39,7 +39,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
     const adminEmail: string = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
     const [ currentUser, setCurrentUser ] = useState<User | null | undefined>(undefined);
-    const [ loading, setLoading ] = useState<boolean>(true);
+    const [ isLoading, setIsLoading ] = useState<boolean>(true);
 
     function signup(email, password) {
         return createUserWithEmailAndPassword(auth, email, password);
@@ -72,7 +72,7 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, user => {
             setCurrentUser(user);
-            setLoading(false);
+            setIsLoading(false);
         });
 
         return unsubscribe;
@@ -87,12 +87,14 @@ export function AuthProvider({ children }) {
         resetPassword,
         updateEmail,
         updatePassword,
-        updateDisplayName
+        updateDisplayName,
+        isLoading
     }
 
     return (
         <AuthContext.Provider value={value}>
-            {!loading && children}
+            {/* {!loading &&  */}
+            {children}
         </AuthContext.Provider>
     )
 }

@@ -13,7 +13,7 @@ const Header = () => {
     // a state for controlling views
 
     const [error, setError] = useState<string>("");
-    const { currentUser, logout } = useAuth();
+    const { isLoading, currentUser, logout } = useAuth();
 
     async function handleLogout() {
         setError('');
@@ -29,19 +29,23 @@ const Header = () => {
         <div className={headerStyles.Header}>
             <Link className={headerStyles.brand} href="/">Spark</Link>
             <div className={headerStyles["nav-utilities"]}>
-                {error && <span>{error}</span>}
-                {currentUser ?  `👋 ${currentUser.displayName}` : "こんにちは！"}
-                {currentUser ? 
-                    <>
-                        <button><Link href="/dashboard">Dashboard</Link></button>
-                        <button><Link href="/profile">Profile</Link></button>
-                        <button onClick={handleLogout}>Log Out</button>
-                    </>
-                    :
-                    <>
-                        <button id="login-btn"><Link href="/login">Log In</Link></button>
-                        <button id="signup-btn"><Link href="/signup">Sign Up</Link></button>
-                    </>
+                {!isLoading && 
+                <>
+                    {error && <span>{error}</span>}
+                    {currentUser ?  `👋 ${currentUser.displayName}` : "こんにちは！"}
+                    {currentUser ? 
+                        <>
+                            <button><Link href="/dashboard">Dashboard</Link></button>
+                            <button><Link href="/profile">Profile</Link></button>
+                            <button onClick={handleLogout}>Log Out</button>
+                        </>
+                        :
+                        <>
+                            <button id="login-btn"><Link href="/login">Log In</Link></button>
+                            <button id="signup-btn"><Link href="/signup">Sign Up</Link></button>
+                        </>
+                    }
+                </>
                 }
             </div>
         </div>
