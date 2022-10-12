@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 // import { getAuth } from "firebase/auth";
 import { auth } from '../firebase';
+import { User } from 'firebase/auth';
 import { 
     createUserWithEmailAndPassword, 
     onAuthStateChanged, 
@@ -12,8 +13,23 @@ import {
     updateProfile
 } from 'firebase/auth';
 
+interface AuthContextType {
+    adminEmail: string
+    // https://qiita.com/mtitg/items/3f1b6e61cee2f01f04a8
+    currentUser: User | null | undefined
+    login: (email: string, password: string) => void
+    signup: (email: string, password: string) => void
+    logout: () => void
+    resetPassword: (email: string) => void
+    updateEmail: (email: string) => void
+    updatePassword: (password: string) => void
+    updateDisplayName: (name: string) => void
+    isLoading: boolean
+}
+
 // https://www.youtube.com/watch?v=PKwu15ldZ7k
-const AuthContext = React.createContext();
+// https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-
+const AuthContext = React.createContext<AuthContextType | undefined>(undefined!);
 
 export function useAuth() {
     return useContext(AuthContext) ;
@@ -21,9 +37,9 @@ export function useAuth() {
 
 // https://www.youtube.com/watch?v=5LrDIWkK_Bc
 export function AuthProvider({ children }) {
-    const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
-    const [ currentUser, setCurrentUser ] = useState()
-    const [ loading, setLoading ] = useState(true);
+    const adminEmail: string = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
+    const [ currentUser, setCurrentUser ] = useState<User | null | undefined>(undefined);
+    const [ isLoading, setIsLoading ] = useState<boolean>(true);
 
     function signup(email, password) {
         return createUserWithEmailAndPassword(auth, email, password);
@@ -56,7 +72,7 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, user => {
             setCurrentUser(user);
-            setLoading(false);
+            setIsLoading(false);
         });
 
         return unsubscribe;
@@ -71,12 +87,14 @@ export function AuthProvider({ children }) {
         resetPassword,
         updateEmail,
         updatePassword,
-        updateDisplayName
+        updateDisplayName,
+        isLoading
     }
 
     return (
         <AuthContext.Provider value={value}>
-            {!loading && children}
+            {/* {!loading &&  */}
+            {children}
         </AuthContext.Provider>
     )
 }

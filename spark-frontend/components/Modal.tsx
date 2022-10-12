@@ -21,12 +21,12 @@ const Modal = (props) => {
     const [ region, setRegion ] = useState(regions[0] || '');
     const [ photoURL, setPhotoURL ] = useState(null); // problem
 
-    const titleRef = useRef();
-    const providerRef = useRef();
-    const categoryRef= useRef();
-    const regionRef = useRef();
-    const prefectureRef = useRef();
-    const photoRef = useRef();
+    const titleRef = useRef<HTMLInputElement>(null);
+    const providerRef = useRef<HTMLSelectElement>(null);
+    const categoryRef= useRef<HTMLSelectElement>(null);
+    const regionRef = useRef<HTMLSelectElement>(null);
+    const prefectureRef = useRef<HTMLSelectElement>(null);
+    const photoRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (region) {
@@ -54,7 +54,8 @@ const Modal = (props) => {
                     title: titleInput,
                     eventProvider: providerInput,
                     eventCategory: categoryInput,
-                    location: prefectureInput + ', ' + regionInput
+                    location: prefectureInput + ', ' + regionInput,
+                    imageURL: null
                 };
 
                 // console.log(eventData);
@@ -288,10 +289,10 @@ const Modal = (props) => {
                     !photoURL && eventToDisplay.imageURL !== null ?
                         <img src={eventToDisplay.imageURL} alt="" /> :
                         photoURL ? <img src={photoURL} alt="" /> :
-                        'photo not available'
+                        <div>photo not available</div>
                 : photoURL ? 
                     <img src={photoURL} alt="" /> :
-                    'upload a photo'
+                    <div>upload a photo</div>
             );
         };
 

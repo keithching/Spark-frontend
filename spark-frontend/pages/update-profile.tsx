@@ -2,21 +2,19 @@ import Head from 'next/head';
 import React, { useRef, useState } from 'react';
 import updateProfileStyles from '../styles/updateProfile.module.css';
 import { useAuth } from '../contexts/AuthContext';
-// import { Link, useNavigate } from 'react-router-dom';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { getEventProviders, updateEventProviderByEmail } from '../utils/helper';
 import Layout from '../components/layout';
 
 export default function UpdateProfile() {
-    const nameRef = useRef();
-    const emailRef = useRef();
-    const passwordRef = useRef();
-    const passwordConfirmRef = useRef();
+    const nameRef = useRef<HTMLInputElement>(null);
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const passwordConfirmRef = useRef<HTMLInputElement>(null);
     const { currentUser, updatePassword, updateEmail, updateDisplayName } = useAuth();
-    const [ error, setError ] = useState('');
-    const [ loading, setLoading ] = useState(false);
-    // const navigate = useNavigate();
+    const [ error, setError ] = useState<string>('');
+    const [ loading, setLoading ] = useState<boolean>(false);
     const router = useRouter();
 
     async function handleSubmit(e) {
@@ -57,7 +55,6 @@ export default function UpdateProfile() {
         }
 
         Promise.all(promises).then(() => {
-            // navigate('/dashboard');
             router.push('/dashboard');
         }).catch(() => {
             setError('Failed to update account');

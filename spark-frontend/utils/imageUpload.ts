@@ -6,7 +6,7 @@ import {
 import { v4 as uuidv4 } from 'uuid'; // https://www.npmjs.com/package/uuid
 import { storage } from '../firebase';
 
-export async function uploadImageAsync(uri) {
+export async function uploadImageAsync(uri: string) {
     // Why are we using XMLHttpRequest? See:
     // https://github.com/expo/expo/issues/2402#issuecomment-443726662
     try {

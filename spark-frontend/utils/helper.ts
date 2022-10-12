@@ -42,12 +42,12 @@ const getAllEventIds = async () => {
     return ids;
 }
 
-const getEventsByEmail = async (email) => {
+const getEventsByEmail = async (email: string) => {
     const events = await axios.get(`${EVENT_URL}/${email}`).then(res => res.data);
     return events;
 };
 
-const getEventByEventId = async (id) => {
+const getEventByEventId = async (id: string | number) => {
     const event = await axios.get(`${EVENT_URL}/${id}`).then(res => res.data);
     return event[0];
 };
@@ -60,7 +60,7 @@ const getAllPrefectures = () => {
     return jpPrefecture.getAllPref("name");
 };
 
-const createEventProvider = async (eventProvider) => {
+const createEventProvider = async (eventProvider: string) => {
     try {
         await axios.post(EVENT_PROVIDER_URL, eventProvider).then(res => console.log(res));
     } catch (err) {
@@ -68,7 +68,7 @@ const createEventProvider = async (eventProvider) => {
     }
 };
 
-const updateEventProviderByEmail = async (email, eventProvider) => {
+const updateEventProviderByEmail = async (email: string, eventProvider: string) => {
     try {
         await axios.patch(`${EVENT_PROVIDER_URL}/${email}`, eventProvider).then(res => console.log(res));
     } catch (err) {
@@ -76,7 +76,7 @@ const updateEventProviderByEmail = async (email, eventProvider) => {
     }
 }
 
-const createEvent = async (event) => {
+const createEvent = async (event: string) => {
     try {
         await axios.post(EVENT_URL, event).then(res => console.log(res));
     } catch (err) {
@@ -84,7 +84,7 @@ const createEvent = async (event) => {
     }
 };
 
-const updateEvent = async (event, id) => {
+const updateEvent = async (event, id: string | number) => {
     try {
         await axios.patch(`${EVENT_URL}/${id}`, event).then(res => console.log(res));
     } catch (err) {
@@ -92,7 +92,7 @@ const updateEvent = async (event, id) => {
     }
 };
 
-const deleteEvent = async (id) => {
+const deleteEvent = async (id: string | number) => {
     try {
         await axios.delete(`${EVENT_URL}/${id}`).then(res => console.log(res));
     } catch (err) {
