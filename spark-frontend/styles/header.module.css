@@ -32,12 +32,12 @@
     cursor: pointer;
 }
 
-#signup-btn {
+.signup-btn {
     background-color: black;
     color: white;
 }
 
-#login-btn {
+.login-btn {
     background-color: rgb(218, 254, 218);
     /* color: white; */
 }

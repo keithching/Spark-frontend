@@ -41,8 +41,8 @@ const Header = () => {
                         </>
                         :
                         <>
-                            <button id="login-btn"><Link href="/login">Log In</Link></button>
-                            <button id="signup-btn"><Link href="/signup">Sign Up</Link></button>
+                            <button className={headerStyles["login-btn"]}><Link href="/login">Log In</Link></button>
+                            <button className={headerStyles["signup-btn"]}><Link href="/signup">Sign Up</Link></button>
                         </>
                     }
                 </>
