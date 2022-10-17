@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import {
     EventProps
 } from '../lib/customProp';
+import EventCategory from './EventCategory';
 
 export default function Home() {
     const router = useRouter();
@@ -36,11 +37,11 @@ export default function Home() {
                 <div className={homeStyles["event-image"]}>
                     <img src={event.imageURL} alt="" />
                 </div>
-                <h1>{event.title}</h1>
-                <div>{event.eventProvider}</div>
-                <div>{event.eventCategory}</div>
-                <div>{event.location}</div>
-                <div>{event.dateStart} ~ {event.dateEnd}</div>
+                <div className={homeStyles["event-title"]}>{event.title}</div>
+                {/* <div>{event.eventProvider}</div> */}
+                <EventCategory category={event.eventCategory} />
+                {/* <div>{event.location}</div> */}
+                {/* <div>{event.dateStart} ~ {event.dateEnd}</div> */}
             </div>
         );
     };

@@ -17,6 +17,9 @@ code {
   overflow: hidden;
 }
 
+/* Define CSS Variables here */
 :root {
   --main-padding: 20px;
+  --event-background-color: rgba(0,0,0,0.1);
+  --background-color-flavor: rgb(218, 254, 218);
 }

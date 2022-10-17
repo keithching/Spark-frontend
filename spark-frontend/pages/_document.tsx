@@ -14,6 +14,8 @@ export default function Document() {
         />
         <link rel="apple-touch-icon" href="/logo192.png" />
         <link rel="manifest" href="/manifest.json" />
+        {/* https://nextjs.org/docs/basic-features/font-optimization */}
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
       </Head>
       <body>
         <Main />

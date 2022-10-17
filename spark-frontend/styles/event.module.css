@@ -1,20 +1,38 @@
 .Event {
-    flex: 1;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+
+    /* height: 100vh; */
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     place-items: center;
+    /* place-content: center; */
 }
 
-/* .left {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.left > h1 {
+    font-size: 4rem;
 }
 
-.left {
+.left > section {
+    margin-bottom: 1rem;
+}
+
+.left > section > .title {
+    font-size: 2rem;
+}
+
+.right {
+    border: 1px solid var(--event-background-color);
+    height: 400px;
+    width: 400px;
+}
+
+
+.functions {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-} */
+    align-items: center;
+}

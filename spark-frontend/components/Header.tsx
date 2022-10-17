@@ -27,7 +27,9 @@ const Header = () => {
 
     return (
         <div className={headerStyles.Header}>
-            <Link className={headerStyles.brand} href="/">Spark</Link>
+            <nav className={headerStyles.brand}>
+                <Link href="/">Spark</Link>
+            </nav>
             <div className={headerStyles["nav-utilities"]}>
                 {!isLoading && 
                 <>

@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
-
-.Header .brand {
+.Header nav a {
     font-family: 'Dancing Script', cursive;
     font-size: 30px;
 }
@@ -38,8 +36,7 @@
 }
 
 .login-btn {
-    background-color: rgb(218, 254, 218);
-    /* color: white; */
+    background-color: var(--background-color-flavor);
 }
 
 .Header .nav-utilities button:hover {
