@@ -122,8 +122,12 @@
 
 .right {
     border: 1px solid var(--event-background-color);
+}
+
+.event-image {
     height: 400px;
     width: 400px;
+    object-fit: cover;
 }
 
 .categoryContent {

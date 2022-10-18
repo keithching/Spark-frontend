@@ -51,14 +51,13 @@ export default function Event({
                         </div> */}
                     </div>
                     <div className={eventStyles.right}>
-                        <div className={eventStyles["event-image"]}>
-                            {eventData.imageURL && <Image 
-                                src={eventData.imageURL} 
-                                width={400}
-                                height={400}
-                                alt=""
-                            />}
-                        </div>
+                        {eventData.imageURL && <Image 
+                            src={eventData.imageURL} 
+                            className={eventStyles["event-image"]}
+                            width={400}
+                            height={400}
+                            alt=""
+                        />}
                     </div>
                 </div>
             </>
