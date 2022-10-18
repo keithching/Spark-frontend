@@ -7,6 +7,7 @@ export default function Document() {
       <Head>
         <meta charSet="utf-8" />
         {/* https://stackoverflow.com/questions/56213019/how-to-add-a-favicon-to-a-next-js-static-site */}
+        {/* https://github.com/vercel/next.js/blob/deprecated-main/errors/static-dir-deprecated.md */}
         <link rel="icon" href="/static/favicon.ico" />
         <meta name="theme-color" content="#000000" />
         <meta
