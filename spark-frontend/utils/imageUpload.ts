@@ -10,7 +10,7 @@ export async function uploadImageAsync(uri: string) {
     // Why are we using XMLHttpRequest? See:
     // https://github.com/expo/expo/issues/2402#issuecomment-443726662
     try {
-        const blob = await new Promise((resolve, reject) => {
+        const blob: Blob | Uint8Array | ArrayBuffer = await new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.onload = function () {
                 resolve(xhr.response);
