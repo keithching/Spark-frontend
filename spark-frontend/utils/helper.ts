@@ -76,7 +76,7 @@ const updateEventProviderByEmail = async (email: string, eventProvider: string) 
     }
 }
 
-const createEvent = async (event: string) => {
+const createEvent = async (event) => {
     try {
         await axios.post(EVENT_URL, event).then(res => console.log(res));
     } catch (err) {
