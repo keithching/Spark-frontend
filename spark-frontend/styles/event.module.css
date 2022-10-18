@@ -1,13 +1,7 @@
 .Event {
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-items: center; */
-
-    /* height: 100vh; */
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     place-items: center;
-    /* place-content: center; */
 }
 
 .left > h1 {

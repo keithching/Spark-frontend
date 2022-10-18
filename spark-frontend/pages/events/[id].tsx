@@ -5,6 +5,7 @@ import eventStyles from '../../styles/event.module.css';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Image from 'next/image';
 import Layout from '../../components/layout';
+import { parseISO, formatISO } from 'date-fns';
 
 export default function Event({
     eventData
@@ -28,21 +29,23 @@ export default function Event({
                 <div className={eventStyles.Event}>
                     <div className={eventStyles.left}>
                         <h1>{eventData.title}</h1>
-                        <section>
+                        <section className={eventStyles.providerContainer}>
                             <div className={eventStyles.title}>Provider</div>
                             <div>{eventData.eventProvider}</div>
                         </section>
-                        <section>
+                        <section className={eventStyles.categoryContainer}>
                             <div className={eventStyles.title}>Category</div>
                             <div className={eventStyles.eventCategory}>{eventData.eventCategory}</div>
                         </section>
-                        <section>
+                        <section className={eventStyles.locationContainer}>
                             <div className={eventStyles.title}>Location</div>
                             <div>{eventData.location}</div>
                         </section>
-                        <section>
-                            <div className={eventStyles.title}>Time</div>
-                            <div>{eventData.dateStart} ~ {eventData.dateEnd}</div> 
+                        <section className={eventStyles.dateContainer}>
+                            <div className={eventStyles.title}>Date</div>
+                            <div>
+                                {formatISO(parseISO(eventData.dateStart), { representation: 'date' })} ~ {formatISO(parseISO(eventData.dateEnd), { representation: 'date' })}
+                            </div> 
                         </section>
                     </div>
                     <div className={eventStyles.right}>
