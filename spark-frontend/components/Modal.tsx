@@ -5,6 +5,7 @@ import modalStyles from "../styles/modal.module.css";
 import { IoClose } from 'react-icons/io5';
 import { useAuth } from '../contexts/AuthContext';
 import { uploadImageAsync } from '../utils/imageUpload';
+import Image from 'next/image';
 
 const Modal = (props) => {
     const { 
@@ -287,11 +288,11 @@ const Modal = (props) => {
             return (
                 eventToDisplay && modalContent.operation === 'edit' ?
                     !photoURL && eventToDisplay.imageURL !== null ?
-                        <img src={eventToDisplay.imageURL} alt="" /> :
-                        photoURL ? <img src={photoURL} alt="" /> :
+                        <Image src={eventToDisplay.imageURL} alt="" /> :
+                        photoURL ? <Image src={photoURL} alt="" /> :
                         <div>photo not available</div>
                 : photoURL ? 
-                    <img src={photoURL} alt="" /> :
+                    <Image src={photoURL} alt="" /> :
                     <div>upload a photo</div>
             );
         };

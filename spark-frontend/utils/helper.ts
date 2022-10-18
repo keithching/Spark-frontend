@@ -60,7 +60,7 @@ const getAllPrefectures = () => {
     return jpPrefecture.getAllPref("name");
 };
 
-const createEventProvider = async (eventProvider: string) => {
+const createEventProvider = async (eventProvider: object) => {
     try {
         await axios.post(EVENT_PROVIDER_URL, eventProvider).then(res => console.log(res));
     } catch (err) {
