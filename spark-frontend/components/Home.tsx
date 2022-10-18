@@ -43,7 +43,12 @@ export default function Home() {
                 onClick={() => navigateToEventPage(id)}
             >
                 <div className={homeStyles["event-image"]}>
-                    <Image src={event.imageURL} alt="" />
+                    <Image src={event.imageURL} 
+                    alt="" 
+                    width={400}
+                    height={400}
+                    objectFit='cover'
+                    />
                 </div>
                 <div className={homeStyles["event-title"]}>{event.title}</div>
                 {/* <div className={homeStyles.eventProvider}>{event.eventProvider}</div> */}

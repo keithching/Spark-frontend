@@ -288,11 +288,27 @@ const Modal = (props) => {
             return (
                 eventToDisplay && modalContent.operation === 'edit' ?
                     !photoURL && eventToDisplay.imageURL !== null ?
-                        <Image src={eventToDisplay.imageURL} alt="" /> :
-                        photoURL ? <Image src={photoURL} alt="" /> :
+                        <Image 
+                            src={eventToDisplay.imageURL} 
+                            alt="" 
+                            width={400}
+                            height={400}
+                        /> :
+                        photoURL ? 
+                            <Image 
+                                src={photoURL} 
+                                alt="" 
+                                width={400}
+                                height={400}
+                            /> :
                         <div>photo not available</div>
                 : photoURL ? 
-                    <Image src={photoURL} alt="" /> :
+                    <Image 
+                        src={photoURL} 
+                        alt="" 
+                        width={400}
+                        height={400}
+                    /> :
                     <div>upload a photo</div>
             );
         };
