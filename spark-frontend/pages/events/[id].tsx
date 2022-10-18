@@ -5,7 +5,7 @@ import eventStyles from '../../styles/event.module.css';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Image from 'next/image';
 import Layout from '../../components/layout';
-import EventCategory from '../../components/EventCategory';
+import { parseISO, formatISO } from 'date-fns';
 
 export default function Event({
     eventData
@@ -29,37 +29,36 @@ export default function Event({
                 <div className={eventStyles.Event}>
                     <div className={eventStyles.left}>
                         <h1>{eventData.title}</h1>
-                        <section>
-                            <div className={eventStyles.title}>Provider</div>
-                            <div>{eventData.eventProvider}</div>
-                        </section>
-                        <section>
-                            <div className={eventStyles.title}>Category</div>
-                            <EventCategory category={eventData.eventCategory} />
-                        </section>
-                        <section>
-                            <div className={eventStyles.title}>Location</div>
-                            <div>{eventData.location}</div>
-                        </section>
-                        <section>
-                            <div className={eventStyles.title}>Time</div>
-                            <div>{eventData.dateStart} ~ {eventData.dateEnd}</div> 
-                        </section>
+                        <div className={eventStyles.providerTitle}>Provider</div>
+                        <div className={eventStyles.providerContent}>{eventData.eventProvider}</div>
+                        <div className={eventStyles.categoryTitle}>Category</div>
+                        <div className={eventStyles.categoryContent}>{eventData.eventCategory}</div>
+                        <div className={eventStyles.locationTitle}>Location</div>
+                        <div className={eventStyles.locationContent}>{eventData.location}</div>
+                        <div className={eventStyles.dateTitle}>Date</div>
+                        <div className={eventStyles.dateContent}>
+                            {formatISO(parseISO(eventData.dateStart), { representation: 'date' })} ~ {formatISO(parseISO(eventData.dateEnd), { representation: 'date' })}
+                        </div> 
+                        {/* <div className={eventStyles.interestedTitle}>Interested</div>
+                        <div className={eventStyles.interestedContent}>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <div className={eventStyles.functions}>
+                            <button>Add to List</button>
+                            <button>Chat</button>
+                        </div> */}
                     </div>
                     <div className={eventStyles.right}>
-                        <div className={eventStyles["event-image"]}>
-                            {eventData.imageURL && <Image 
-                                src={eventData.imageURL} 
-                                width={400}
-                                height={400}
-                                alt=""
-                            />}
-                        </div>
+                        {eventData.imageURL && <Image 
+                            src={eventData.imageURL} 
+                            className={eventStyles["event-image"]}
+                            width={400}
+                            height={400}
+                            alt=""
+                        />}
                     </div>
-                </div>
-                <div className={eventStyles.functions}>
-                    <p>if user is a consumer: show options for add event to wishlist, join, favourite, etc</p>
-                    <p>if user is a provider: show options for editing this event</p>
                 </div>
             </>
         </Layout>

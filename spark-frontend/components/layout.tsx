@@ -12,7 +12,11 @@ export default function Layout({
    return (
      <div className={layoutStyles.layout}>
         <Header />
-        <main style={{flex: 1, display: 'flex', flexDirection: 'column'}}>{children}</main>
+        <main style={{
+          flex: 1, 
+          display: 'flex', 
+          flexDirection: 'column'
+        }}>{children}</main>
         <Footer />
      </div>
    );
