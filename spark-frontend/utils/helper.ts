@@ -68,7 +68,7 @@ const createEventProvider = async (eventProvider: object) => {
     }
 };
 
-const updateEventProviderByEmail = async (email: string, eventProvider: string) => {
+const updateEventProviderByEmail = async (email: string, eventProvider: object) => {
     try {
         await axios.patch(`${EVENT_PROVIDER_URL}/${email}`, eventProvider).then(res => console.log(res));
     } catch (err) {
