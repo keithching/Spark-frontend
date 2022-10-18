@@ -5,7 +5,6 @@ import eventStyles from '../../styles/event.module.css';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Image from 'next/image';
 import Layout from '../../components/layout';
-import EventCategory from '../../components/EventCategory';
 
 export default function Event({
     eventData
@@ -35,7 +34,7 @@ export default function Event({
                         </section>
                         <section>
                             <div className={eventStyles.title}>Category</div>
-                            <EventCategory category={eventData.eventCategory} />
+                            <div className={eventStyles.eventCategory}>{eventData.eventCategory}</div>
                         </section>
                         <section>
                             <div className={eventStyles.title}>Location</div>

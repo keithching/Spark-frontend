@@ -36,3 +36,12 @@
     justify-content: center;
     align-items: center;
 }
+
+.eventCategory {
+    width: 100px;
+    text-align: center;
+    border-radius: 20px;
+    padding: 5px;
+    background-color: var(--background-color-flavor);
+    font-size: 0.5rem;
+}
