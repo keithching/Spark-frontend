@@ -1,0 +1,30 @@
+.update-profile-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.update-profile-container > h2 {
+    margin: 0;
+}
+
+.update-profile-form {
+    display: flex; 
+    flex-direction: column;
+    gap: 10px;
+    border: 0.5px solid rgba(0,0,0,0.3);
+    padding: 20px;
+}
+
+.update-profile-form > input {
+    border: 0.5px solid rgba(0,0,0,0.5);
+}
+
+.update-profile-form > button {
+    border-style: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}

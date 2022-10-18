@@ -1,0 +1,140 @@
+.Event {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+    padding: 50px 0;
+}
+
+.left {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    align-items: center;
+}
+
+.left > h1 {
+    grid-column: 1 / -1;
+    grid-row: 1 / 2;
+    font-size: 4rem;
+}
+
+.providerTitle,
+.categoryTitle,
+.locationTitle,
+.dateTitle,
+.interestedTitle {
+    font-size: 1.5rem;
+}
+
+.providerContent,
+.categoryContent,
+.locationContent,
+.dateContent {
+    font-size: 1.5rem;
+}
+
+.providerTitle {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+
+.providerContent {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+
+.categoryTitle {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+}
+
+.categoryContent {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+}
+
+.locationTitle {
+    grid-column: 1 / 2;
+    grid-row: 4 / 5;
+}
+
+.locationContent {
+    grid-column: 2 / 3;
+    grid-row: 4 / 5;
+}
+
+.dateTitle {
+    grid-column: 1 / 2;
+    grid-row: 5 / 6;
+}
+
+.dateContent {
+    grid-column: 2 / 3;
+    grid-row: 5 / 6;
+}
+
+.interestedTitle {
+    grid-column: 1 / -1;
+    grid-row: 6 / 7;
+}
+
+.interestedContent {
+    grid-column: 1 / -1;
+    grid-row: 7 / 8;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    gap: 10px;
+}
+
+.interestedContent > div {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--background-color-flavor);
+}
+
+.functions {
+    grid-column: 1 / -1;
+    grid-row: 8 / 9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.functions > button {
+    border-style: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.left > section {
+    margin-bottom: 1rem;
+}
+
+.left > section > .title {
+    font-size: 1rem;
+}
+
+.right {
+    border: 1px solid var(--event-background-color);
+}
+
+.event-image {
+    height: 400px;
+    width: 400px;
+    object-fit: cover;
+}
+
+.categoryContent {
+    width: 100px;
+    text-align: center;
+    border-radius: 20px;
+    padding: 5px;
+    background-color: var(--background-color-flavor);
+    font-size: 0.5rem;
+}
