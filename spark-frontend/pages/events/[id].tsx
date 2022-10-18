@@ -29,24 +29,26 @@ export default function Event({
                 <div className={eventStyles.Event}>
                     <div className={eventStyles.left}>
                         <h1>{eventData.title}</h1>
-                        <section className={eventStyles.providerContainer}>
-                            <div className={eventStyles.title}>Provider</div>
-                            <div>{eventData.eventProvider}</div>
-                        </section>
-                        <section className={eventStyles.categoryContainer}>
-                            <div className={eventStyles.title}>Category</div>
-                            <div className={eventStyles.eventCategory}>{eventData.eventCategory}</div>
-                        </section>
-                        <section className={eventStyles.locationContainer}>
-                            <div className={eventStyles.title}>Location</div>
-                            <div>{eventData.location}</div>
-                        </section>
-                        <section className={eventStyles.dateContainer}>
-                            <div className={eventStyles.title}>Date</div>
-                            <div>
-                                {formatISO(parseISO(eventData.dateStart), { representation: 'date' })} ~ {formatISO(parseISO(eventData.dateEnd), { representation: 'date' })}
-                            </div> 
-                        </section>
+                        <div className={eventStyles.providerTitle}>Provider</div>
+                        <div className={eventStyles.providerContent}>{eventData.eventProvider}</div>
+                        <div className={eventStyles.categoryTitle}>Category</div>
+                        <div className={eventStyles.categoryContent}>{eventData.eventCategory}</div>
+                        <div className={eventStyles.locationTitle}>Location</div>
+                        <div className={eventStyles.locationContent}>{eventData.location}</div>
+                        <div className={eventStyles.dateTitle}>Date</div>
+                        <div className={eventStyles.dateContent}>
+                            {formatISO(parseISO(eventData.dateStart), { representation: 'date' })} ~ {formatISO(parseISO(eventData.dateEnd), { representation: 'date' })}
+                        </div> 
+                        {/* <div className={eventStyles.interestedTitle}>Interested</div>
+                        <div className={eventStyles.interestedContent}>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <div className={eventStyles.functions}>
+                            <button>Add to List</button>
+                            <button>Chat</button>
+                        </div> */}
                     </div>
                     <div className={eventStyles.right}>
                         <div className={eventStyles["event-image"]}>
@@ -58,10 +60,6 @@ export default function Event({
                             />}
                         </div>
                     </div>
-                </div>
-                <div className={eventStyles.functions}>
-                    <p>if user is a consumer: show options for add event to wishlist, join, favourite, etc</p>
-                    <p>if user is a provider: show options for editing this event</p>
                 </div>
             </>
         </Layout>

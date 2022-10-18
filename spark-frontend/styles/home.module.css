@@ -80,10 +80,10 @@
 
 .event-card-display:hover {
     transform: scale(1.02);
-    padding: 20px;
+    /* padding: 20px; */
     border-radius: 10px;
-    box-shadow: 0 0 5px 1px rgba(0,0,0,0.1);
-    background-color: var(--background-color-light);
+    /* box-shadow: 0 0 5px 1px rgba(0,0,0,0.1); */
+    /* background-color: var(--background-color-light); */
 }
 
 .event-title {
