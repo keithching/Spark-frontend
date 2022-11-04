@@ -61,17 +61,35 @@ export default function Signup() {
             </Head>
             <div className={signupStyles["signup-container"]}>
                 <div className={signupStyles["signup-card"]}>
-                    <h2>Sign Up</h2>
+                    <h2 className={signupStyles["signup-title"]}>Sign Up</h2>
                     {error && <span>{error}</span>}
                     <form action="" className={signupStyles["signup-form"]} onSubmit={handleSubmit}>
-                        <label htmlFor="nameInput">Name</label>
-                        <input type="text" ref={nameRef} id="nameInput" required autoComplete="off" />
-                        <label htmlFor="emailInput">Email</label>
-                        <input type="text" ref={emailRef} id="emailInput" required autoComplete="off" />
-                        <label htmlFor="passwordInput">Password</label>
-                        <input type="password" ref={passwordRef} id="passwordInput" required />
-                        <label htmlFor="passwordConfirmInput">Password Confirmation</label>
-                        <input type="password" ref={passwordConfirmRef} id="passwordConfirmInput" required />
+                        {/* <label htmlFor="nameInput">Name</label> */}
+                        <input 
+                            type="text" 
+                            ref={nameRef} 
+                            id="nameInput" 
+                            required autoComplete="off" 
+                            placeholder='name'
+                        />
+                        {/* <label htmlFor="emailInput">Email</label> */}
+                        <input 
+                            type="text" ref={emailRef} 
+                            id="emailInput" required autoComplete="off" 
+                            placeholder='email'    
+                        />
+                        {/* <label htmlFor="passwordInput">Password</label> */}
+                        <input 
+                            type="password" ref={passwordRef} 
+                            id="passwordInput" required 
+                            placeholder='password'    
+                        />
+                        {/* <label htmlFor="passwordConfirmInput">Password Confirmation</label> */}
+                        <input 
+                            type="password" ref={passwordConfirmRef} 
+                            id="passwordConfirmInput" required 
+                            placeholder='password again'
+                        />
                         <button disabled={loading} type="submit">Sign Up</button>
                     </form>
                 </div>
