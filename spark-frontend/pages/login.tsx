@@ -81,10 +81,12 @@ export default function Login() {
                             style={!isLoginButtonVisible ? {display: 'none'} : {display: 'block'}}
                         >Log In</button>
                     </form>
-                    {/* <Link href="/forgot-password">Fogot Password?</Link> */}
+                    <div className={signupStyles["forget-password-link"]}>
+                        <Link href="/forgot-password">Fogot Password?</Link>
+                    </div>
                 </div>
-                <div>
-                    {/* Need an account? <Link href="/signup">Sign Up</Link> */}
+                <div className={signupStyles["sign-up-link"]}>
+                    Need an account? <Link href="/signup">Sign Up</Link>
                 </div>
             </div>
         </Layout>

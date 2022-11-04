@@ -93,7 +93,7 @@ export default function Signup() {
                         <button disabled={loading} type="submit">Sign Up</button>
                     </form>
                 </div>
-                <div>
+                <div className={signupStyles["sign-up-link"]}>
                     Already have an account? <Link href="/login">Log In</Link>
                 </div>
             </div>

@@ -35,11 +35,11 @@
 .signup-form > input {
     caret-color: blue;
     border-style: none;
-    font-size: 2rem;
+    font-size: 1.5rem;
     background-color: rgba(0,0,0,0.05);
     border-radius: 0.5rem;
     padding: 5px 10px;
-    width: 30vw; /* to change */
+    width: 20vw; /* to change */
     color: var(--font-color-secondary);
     /* border: 0.5px solid rgba(0,0,0,0.5); */
 }
@@ -63,4 +63,26 @@
 .signup-form > button:hover {
     background-color: var(--background-color-flavor);
     color: var(--font-color-primary);
+}
+
+.forget-password-link a {
+    text-decoration: none;
+    color: var(--font-color-secondary);
+}
+
+.forget-password-link a:hover {
+    text-decoration: underline;
+}
+
+.sign-up-link {
+    color: var(--font-color-secondary);
+}
+
+.sign-up-link a {
+    text-decoration: none;
+    color: var(--font-color-primary);
+}
+
+.sign-up-link a:hover {
+    text-decoration: underline;
 }
