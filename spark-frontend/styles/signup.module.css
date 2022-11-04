@@ -7,24 +7,60 @@
     gap: 10px;
 }
 
-.signup-container > h2 {
+.signup-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.signup-title {
     margin: 0;
+    font-size: 2rem;
 }
 
 .signup-form {
     display: flex; 
     flex-direction: column;
-    gap: 10px;
-    border: 0.5px solid rgba(0,0,0,0.3);
+    align-items: center;
+    gap: 20px;
     padding: 20px;
 }
 
+.signup-form > label {
+    font-size: 1rem;
+}
+
 .signup-form > input {
-    border: 0.5px solid rgba(0,0,0,0.5);
+    caret-color: blue;
+    border-style: none;
+    font-size: 2rem;
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 0.5rem;
+    padding: 5px 10px;
+    width: 30vw; /* to change */
+    color: var(--font-color-secondary);
+    /* border: 0.5px solid rgba(0,0,0,0.5); */
+}
+
+/* https://stackoverflow.com/questions/1457849/how-to-remove-the-border-highlight-on-an-input-text-element */
+.signup-form > input:focus {
+    outline: none;
 }
 
 .signup-form > button {
     border-style: none;
-    padding: 5px 10px;
+    padding: 10px 20px;
     cursor: pointer;
+    width: auto;
+    font-size: 1.5rem;
+    background-color: var(--background-color-dark);
+    color: var(--font-color-tertiary);
+    transition: all 0.2s;
+}
+
+.signup-form > button:hover {
+    background-color: var(--background-color-flavor);
+    color: var(--font-color-primary);
 }
