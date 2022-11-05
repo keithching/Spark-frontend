@@ -30,22 +30,27 @@ export default function Login() {
         setLoading(false);
     }
 
-    // TODO
     // show password field if email is a valid email format
     const [email, setEmail] = useState("");
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     useEffect(() => {
-     if (email !== "") {
+     if (email !== "" && emailRef.current.validity.valid) {
         setIsPasswordVisible(true);
-     } else setIsPasswordVisible(false);
+     } 
+    //  else setIsPasswordVisible(false);
     }, [email]);
     const [password, setPassword] = useState("");
     const [isLoginButtonVisible, setIsLoginButtonVisible] = useState(false);
     useEffect(() => {
         if (password !== "" && email !== "") {
            setIsLoginButtonVisible(true);
-        } else setIsLoginButtonVisible(false);
+        } 
+        // else setIsLoginButtonVisible(false);
        }, [password, email]);
+
+    const handleEmailInputChange = () => {
+        setEmail(emailRef.current.value);
+    }
 
     return (
         <Layout>
@@ -58,13 +63,16 @@ export default function Login() {
                     {error && <span>{error}</span>}
                     <form action="" className={signupStyles["signup-form"]} onSubmit={handleSubmit}>
                         {/* <label htmlFor="emailInput">Email</label> */}
-                        <input type="text" ref={emailRef} 
+                        <input 
+                            type="email" 
+                            required
+                            ref={emailRef} 
                             id="emailInput" autoComplete="off" autoFocus={true}
                             onBlur={({ target }) => {
                                 if (!isPasswordVisible) target.focus()
                             }}
                             placeholder="email"
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={handleEmailInputChange}
                             value={email}
                         />
                         {/* <label htmlFor="passwordInput">Password</label> */}

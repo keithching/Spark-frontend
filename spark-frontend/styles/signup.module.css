@@ -68,6 +68,7 @@
 .forget-password-link a {
     text-decoration: none;
     color: var(--font-color-secondary);
+    font-weight: 500;
 }
 
 .forget-password-link a:hover {
@@ -81,6 +82,7 @@
 .sign-up-link a {
     text-decoration: none;
     color: var(--font-color-primary);
+    font-weight: 500;
 }
 
 .sign-up-link a:hover {
