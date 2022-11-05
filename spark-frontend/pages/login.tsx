@@ -79,6 +79,7 @@ export default function Login() {
                         <input type="password" ref={passwordRef} 
                             id="passwordInput" 
                             placeholder="password"
+                            required
                             style={!isPasswordVisible ? {display: 'none'} : {display: 'block'}}
                             onChange={(e) => setPassword(e.target.value)}
                             value={password}

@@ -42,7 +42,7 @@ export default function Signup() {
             await createEventProvider({
                 name: nameRef.current.value,
                 email: emailRef.current.value,
-                password: passwordRef.current.value
+                password: passwordRef.current.value // to refactor. take away password field from database. use firebase auth entirely instead
             });
 
             router.push('/dashboard');
@@ -74,9 +74,9 @@ export default function Signup() {
                         />
                         {/* <label htmlFor="emailInput">Email</label> */}
                         <input 
-                            type="text" ref={emailRef} 
+                            type="email" ref={emailRef} 
                             id="emailInput" required autoComplete="off" 
-                            placeholder='email'    
+                            placeholder='email'
                         />
                         {/* <label htmlFor="passwordInput">Password</label> */}
                         <input 
