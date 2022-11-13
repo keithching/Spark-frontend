@@ -61,23 +61,6 @@ const Main = () => {
         setLoading(false);
     }, [currentUser, adminEmail]);
 
-
-    // TESTING AND DEBUGGING ONLY
-    useEffect(() => {
-        (async () => {
-            try {
-                if (currentUser && currentUser.email !== adminEmail) {
-                    console.log(currentUser.email);
-                    const eventsTest = await getEventsByEmail(currentUser.email)
-                    console.log(eventsTest);
-                }
-            } catch (error) {
-                console.log("error is: ", error);
-            }
-        })();
-    }, [currentUser, adminEmail]);
-    ///
-
     useEffect(() => { // update the event divs in the DOM
         async function updateData () {
             setEvents(
