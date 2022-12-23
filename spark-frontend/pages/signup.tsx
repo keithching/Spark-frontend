@@ -45,7 +45,8 @@ export default function Signup() {
                 password: passwordRef.current.value // to refactor. take away password field from database. use firebase auth entirely instead
             });
 
-            router.push('/dashboard');
+            // router.push('/dashboard');
+            router.push('/profile'); // redirect to profile page for setting up 
         } catch(err) {
             console.error(err);
             setError('Failed to create an account');

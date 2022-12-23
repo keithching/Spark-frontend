@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import profileStyle from '../styles/profile.module.css';
 import Layout from '../components/layout';
+import Image from 'next/image';
 
 export default function Profile() {
     const router = useRouter();
@@ -27,15 +28,31 @@ export default function Profile() {
             <title>Profile Page</title>
         </Head>
         <div className={profileStyle.profile}>
-            <h1>Profile Page</h1>
-            <div>Profile</div>
-            {error && <span>{error}</span>}
-            <div>Email: {currentUser.email}</div>
-            <div>name: {currentUser.displayName}</div>
-            <Link href="/update-profile" className="">
-                Update Profile
-            </Link>
-            <button onClick={handleLogout}>Log Out</button>
+            <div className={profileStyle["profile-container"]}>
+                <div className={profileStyle["profile-info"]}>
+                    {error && <span>{error}</span>}
+                    <div>Name: {currentUser.displayName}</div>
+                    <div>Email: {currentUser.email}</div>
+                    <div>Phone: </div>
+                    <div>About: </div>
+                    <div className={profileStyle["function-buttons"]}>
+                        <Link href="/update-profile" className="">
+                            Update Profile
+                        </Link>
+                        <button onClick={handleLogout}>Log Out</button>
+                    </div>
+                </div>
+                <div className={profileStyle["profile-image"]}>
+                    <Image 
+                        // src={currentUser.imageURL} 
+                        src={""}
+                        alt="" 
+                        width={400}
+                        height={400}
+                        objectFit='cover'
+                    />
+                </div>
+            </div>
         </div>
       </Layout>
   )
