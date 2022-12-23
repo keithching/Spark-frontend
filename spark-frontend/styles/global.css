@@ -24,7 +24,9 @@ code {
   --background-color-flavor: rgb(218, 254, 218);
   --background-color-light: rgb(234, 234, 234);
   --background-color-medium: rgba(0,0,0,0.1);
+  --background-color-dark: black;
   --border-color-light: grey;
   --font-color-primary: black;
   --font-color-secondary: rgb(53, 53, 53);
+  --font-color-tertiary: white;
 }

@@ -43,8 +43,10 @@ const getAllEventIds = async () => {
 }
 
 const getEventsByEmail = async (email: string) => {
-    const events = await axios.get(`${EVENT_URL}/${email}`).then(res => res.data);
-    return events;
+        const events = await axios.get(`${EVENT_URL}/${email}`)
+        .then(res => res.data)
+        .catch(err => console.log(err));
+        return events;
 };
 
 const getEventByEventId = async (id: string | number) => {
