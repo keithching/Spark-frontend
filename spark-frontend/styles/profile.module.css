@@ -40,11 +40,27 @@
     align-items: center;
 }
 
+.profile-image-upload-input {
+    position: absolute;
+} 
+
 .profile-image-upload-text {
+    display: none;
+    color: white;
+    font-size: 3rem;
+    z-index: 20;
     position: absolute;
     text-align: center;
 }
 
+.show {
+    display: block;
+}
+
+.profile-image img {
+    border-radius: 50%;
+}
+
 .profile-image.profile-image-hover {
-    background-color: var(--background-color-flavor);
+    background-color: var(--background-color-dark);
 }

@@ -24,36 +24,90 @@ export default function Profile() {
     }
 
     const [photoURL, setPhotoURL] = useState<string>("");
-    // useEffect(() => {
-    //     if (currentUser.photoURL) {
-    //         console.log(currentUser.photoURL);
-    //         setPhotoURL(currentUser.photoURL);
-    //     }
-    // }, [currentUser]);
+    const photoRef = useRef<HTMLInputElement>(null);
 
-    const [isHover, setIsHover] = useState<boolean>(false);
-    const [isClick, setIsClick] = useState<boolean>(false);
-
-    const handleProfilePhotoMouseOver = () => {
-        setIsHover(true);
-        profileImageRef.current.classList.add(`${profileStyle["profile-image-hover"]}`);
-    }
-
-    const handleProfilePhotoMouseOut = () => {
-        setIsHover(false);
-        profileImageRef.current.classList.remove(`${profileStyle["profile-image-hover"]}`);
-    }
-
-    const handleProfilePhotoClick = () => {
-        setIsClick(true);
-    }
-
-    useEffect(() => {
-        if (isClick) {
-            console.log('fish!!');
-            setIsClick(false);
+    const ProfileImage = () => {
+        // [Refactor] same code block from Modal.tsx
+        
+        const imageUploadTextRef = useRef(null);
+        // no component rendering will be triggered with useRef
+        const isClick = useRef(false);
+        const isHover = useRef(false);
+        const handleProfilePhotoMouseOver = () => {
+            isHover.current = true;
+            imageUploadTextRef.current.classList.add(`${profileStyle["show"]}`);
+            profileImageRef.current.classList.add(`${profileStyle["profile-image-hover"]}`);
         }
-    }, [isClick]);
+
+        const handleProfilePhotoMouseOut = () => {
+            isHover.current = false;
+            imageUploadTextRef.current.classList.remove(`${profileStyle["show"]}`);
+            profileImageRef.current.classList.remove(`${profileStyle["profile-image-hover"]}`);
+        }
+
+        const handleProfilePhotoClick = () => {
+            isClick.current = true;
+            photoRef.current.click();
+        }
+
+        const PhotoInput = () => {
+            const [ photoFile, setPhotoFile ] = useState<any>(null);
+
+            const handlePhotoInputChange = (e) => {
+                // event cancelling
+                if (e.target.value.length === 0) {
+                    return;
+                }
+                let reader = new FileReader();
+                reader.readAsDataURL(photoRef.current.files[0]);
+                setPhotoFile(photoRef.current.files[0]);
+
+                reader.onload = readerEvent => {
+                    setPhotoURL(readerEvent.target.result);
+                }
+            };
+
+            return (
+                <div className={profileStyle["profile-image-upload-input"]}>
+                    <input
+                        style={{visibility: "hidden"}}
+                        type="file" 
+                        name="photoInput" 
+                        id="photoInput" 
+                        ref={photoRef}
+                        onChange={handlePhotoInputChange}
+                    />
+                </div>
+            );
+        }
+
+        return (
+            <div 
+                className={profileStyle["profile-image"]}
+                onMouseOver={handleProfilePhotoMouseOver}
+                onMouseOut={handleProfilePhotoMouseOut}
+                onClick={handleProfilePhotoClick}
+                ref={profileImageRef}
+            >
+                <div
+                    ref={imageUploadTextRef}
+                    className={profileStyle["profile-image-upload-text"]}
+                >UPLOAD</div>
+                <PhotoInput />
+                {
+                    photoURL?
+                    <Image 
+                        src={photoURL}
+                        alt="" 
+                        width={400}
+                        height={400}
+                        objectFit='cover'
+                    />
+                    : null
+                }
+            </div>
+        );
+    }
 
   return (
       <Layout>
@@ -75,25 +129,7 @@ export default function Profile() {
                         <button onClick={handleLogout}>Log Out</button>
                     </div>
                 </div>
-                <div 
-                    className={profileStyle["profile-image"]}
-                    onMouseOver={handleProfilePhotoMouseOver}
-                    onMouseOut={handleProfilePhotoMouseOut}
-                    onClick={handleProfilePhotoClick}
-                    ref={profileImageRef}
-                >
-                    {isHover ? 
-                        <div className={profileStyle["profile-image-upload-text"]}>upload</div>
-                        : null
-                    }
-                    <Image 
-                        src={photoURL}
-                        alt="" 
-                        width={400}
-                        height={400}
-                        objectFit='cover'
-                    />
-                </div>
+                <ProfileImage />
             </div>
         </div>
       </Layout>
