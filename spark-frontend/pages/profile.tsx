@@ -34,9 +34,11 @@ export default function Profile() {
         const isClick = useRef(false);
         const isHover = useRef(false);
         const handleProfilePhotoMouseOver = () => {
-            isHover.current = true;
-            imageUploadTextRef.current.classList.add(`${profileStyle["show"]}`);
-            profileImageRef.current.classList.add(`${profileStyle["profile-image-hover"]}`);
+            if (photoURL == '') {
+                isHover.current = true;
+                imageUploadTextRef.current.classList.add(`${profileStyle["show"]}`);
+                profileImageRef.current.classList.add(`${profileStyle["profile-image-hover"]}`);
+            }
         }
 
         const handleProfilePhotoMouseOut = () => {
@@ -46,8 +48,10 @@ export default function Profile() {
         }
 
         const handleProfilePhotoClick = () => {
-            isClick.current = true;
-            photoRef.current.click();
+            if (photoURL == '') {
+                isClick.current = true;
+                photoRef.current.click();
+            }
         }
 
         const PhotoInput = () => {
@@ -82,31 +86,50 @@ export default function Profile() {
         }
 
         return (
-            <div 
-                className={profileStyle["profile-image"]}
-                onMouseOver={handleProfilePhotoMouseOver}
-                onMouseOut={handleProfilePhotoMouseOut}
-                onClick={handleProfilePhotoClick}
-                ref={profileImageRef}
-            >
-                <div
-                    ref={imageUploadTextRef}
-                    className={profileStyle["profile-image-upload-text"]}
-                >UPLOAD</div>
-                <PhotoInput />
-                {
-                    photoURL?
-                    <Image 
-                        src={photoURL}
-                        alt="" 
-                        width={400}
-                        height={400}
-                        objectFit='cover'
-                    />
-                    : null
+            <div className={profileStyle["profile-image-container"]}>
+                <div 
+                    className={profileStyle["profile-image"]}
+                    onMouseOver={handleProfilePhotoMouseOver}
+                    onMouseOut={handleProfilePhotoMouseOut}
+                    onClick={handleProfilePhotoClick}
+                    ref={profileImageRef}
+                >
+                    <div
+                        ref={imageUploadTextRef}
+                        className={profileStyle["profile-image-upload-text"]}
+                    >UPLOAD</div>
+                    <PhotoInput />
+                    {
+                        photoURL?
+                        <Image 
+                            src={photoURL}
+                            alt="" 
+                            width={400}
+                            height={400}
+                            objectFit='cover'
+                        />
+                        : null
+                    }
+                </div>
+                {photoURL !== '' ? 
+                    <div className={profileStyle["update-operation-buttons"]}>
+                        <button className={profileStyle["update-button"]} onClick={handleUpdateClick}>update</button>
+                        <button className={profileStyle["cancel-button"]} onClick={handleCancelClick}>cancel</button>
+                    </div>
+                    :
+                    null
                 }
             </div>
         );
+    }
+
+    const handleUpdateClick = () => {
+        // TODO
+        console.log('to implement profile image upload to Cloud Storage');
+    }
+
+    const handleCancelClick = () => {
+        setPhotoURL('');
     }
 
   return (
@@ -118,16 +141,19 @@ export default function Profile() {
             <div className={profileStyle["profile-container"]}>
                 <div className={profileStyle["profile-info"]}>
                     {error && <span>{error}</span>}
-                    <div>Name: {currentUser.displayName}</div>
-                    <div>Email: {currentUser.email}</div>
-                    <div>Phone: </div>
-                    <div>About: </div>
+                    <div className={profileStyle["profile-info-name"]}>{currentUser.displayName}</div>
+                    <div className={profileStyle["profile-info-email"]}>Email: {currentUser.email}</div>
+                    <div className={profileStyle["profile-info-phone"]}>Phone: </div>
+                    <div className={profileStyle["profile-info-about"]}>About: </div>
                     <div className={profileStyle["function-buttons"]}>
-                        <Link href="/update-profile" className="">
-                            Update Profile
-                        </Link>
-                        <button onClick={handleLogout}>Log Out</button>
+                        <button className={profileStyle["update-profile-button"]}>
+                            <Link href="/update-profile">
+                                Update Profile
+                            </Link>
+                        </button>
+                        <button className={profileStyle["logout-button"]} onClick={handleLogout}>Log Out</button>
                     </div>
+
                 </div>
                 <ProfileImage />
             </div>

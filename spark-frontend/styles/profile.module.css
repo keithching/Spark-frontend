@@ -22,8 +22,27 @@
     gap: 20px;
 }
 
-.function-buttons {
+.profile-info-name {
+    font-size: 3rem;
+}
+
+.profile-info-email {
+    font-size: 1rem;
+}
+
+.profile-info-phone {
+    font-size: 1rem;
+}
+
+.profile-info-about {
+    font-size: 1rem;
+}
+
+.profile-image-container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 20px;
 }
 
@@ -63,4 +82,49 @@
 
 .profile-image.profile-image-hover {
     background-color: var(--background-color-dark);
+}
+
+.update-operation-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.update-operation-buttons button {
+    padding: 5px 10px;
+    border-style: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.update-button {
+    background-color: var(--background-color-flavor);
+}
+
+.cancel-button {
+    background-color: var(--background-color-light);
+}
+
+
+.function-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.function-buttons button {
+    padding: 5px 10px;
+    color: var(--font-color-primary);
+    cursor: pointer;
+}
+
+.update-profile-button {
+    border-style: none;
+}
+
+.update-profile-button a {
+    text-decoration: none;
+    color: var(--font-color-primary);
+}
+
+.logout-button {
+    border-style: none;
 }
