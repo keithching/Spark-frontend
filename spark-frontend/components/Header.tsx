@@ -3,6 +3,7 @@ import headerStyles from '../styles/header.module.css';
 import { useAuth } from '../contexts/AuthContext';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 const Header = () => {
     const router = useRouter();
@@ -34,7 +35,21 @@ const Header = () => {
                 {!isLoading && 
                 <>
                     {error && <span>{error}</span>}
-                    {currentUser ?  `👋 ${currentUser.displayName}` : "こんにちは！"}
+                    {currentUser ?  
+                        <div className={headerStyles["user-greeting"]}>
+                            <div className={headerStyles["profile-image"]}>
+                                <Image 
+                                    src={currentUser.photoURL}
+                                    alt="" 
+                                    width={30}
+                                    height={30}
+                                    objectFit='cover'
+                                />
+                            </div>
+                            <span>{currentUser.displayName}</span>
+                        </div>
+                        : "こんにちは！"
+                    }
                     {currentUser ? 
                         <>
                             <button><Link href="/dashboard">Dashboard</Link></button>
