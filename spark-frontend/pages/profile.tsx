@@ -6,6 +6,8 @@ import { useRouter } from 'next/router';
 import profileStyle from '../styles/profile.module.css';
 import Layout from '../components/layout';
 import Image from 'next/image';
+import { uploadImageAsync } from '../utils/imageUpload';
+import { updateProfile } from 'firebase/auth';
 
 export default function Profile() {
     const router = useRouter();
@@ -23,15 +25,15 @@ export default function Profile() {
         }
     }
 
-    const [photoURL, setPhotoURL] = useState<string>("");
+    const [photoURL, setPhotoURL] = useState<string>(currentUser.photoURL);
     const photoRef = useRef<HTMLInputElement>(null);
+    const isClick = useRef(false);
 
     const ProfileImage = () => {
         // [Refactor] same code block from Modal.tsx
         
         const imageUploadTextRef = useRef(null);
         // no component rendering will be triggered with useRef
-        const isClick = useRef(false);
         const isHover = useRef(false);
         const handleProfilePhotoMouseOver = () => {
             if (photoURL == '') {
@@ -48,10 +50,8 @@ export default function Profile() {
         }
 
         const handleProfilePhotoClick = () => {
-            if (photoURL == '') {
                 isClick.current = true;
                 photoRef.current.click();
-            }
         }
 
         const PhotoInput = () => {
@@ -111,7 +111,7 @@ export default function Profile() {
                         : null
                     }
                 </div>
-                {photoURL !== '' ? 
+                {photoURL !== '' && isClick.current? 
                     <div className={profileStyle["update-operation-buttons"]}>
                         <button className={profileStyle["update-button"]} onClick={handleUpdateClick}>update</button>
                         <button className={profileStyle["cancel-button"]} onClick={handleCancelClick}>cancel</button>
@@ -123,13 +123,25 @@ export default function Profile() {
         );
     }
 
-    const handleUpdateClick = () => {
+    const handleUpdateClick = async () => {
         // TODO
-        console.log('to implement profile image upload to Cloud Storage');
+        try {
+            // save image to firebase cloud storage
+            const downloadURL = await uploadImageAsync(photoURL, 'profiles');
+            await updatePhotoURL(downloadURL);
+            // set image URL to firebase auth currentUser
+            setPhotoURL(currentUser.photoURL);
+            isClick.current = false;
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     const handleCancelClick = () => {
-        setPhotoURL('');
+        if (!currentUser.photoURL) {
+            setPhotoURL('');
+        } else setPhotoURL(currentUser.photoURL);
+        isClick.current = false;
     }
 
   return (
