@@ -7,7 +7,6 @@ import profileStyle from '../styles/profile.module.css';
 import Layout from '../components/layout';
 import Image from 'next/image';
 import { uploadImageAsync } from '../utils/imageUpload';
-import { updateProfile } from 'firebase/auth';
 
 export default function Profile() {
     const router = useRouter();
