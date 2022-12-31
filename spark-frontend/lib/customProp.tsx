@@ -12,6 +12,8 @@ export interface EventProps {
 export interface EventProviderProps {
     id: number
     name: string
+    phone: string | null
+    about: string | null
 }
 
 export interface EventCategoryProps {

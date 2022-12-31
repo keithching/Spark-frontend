@@ -7,13 +7,16 @@ import profileStyle from '../styles/profile.module.css';
 import Layout from '../components/layout';
 import Image from 'next/image';
 import { uploadImageAsync } from '../utils/imageUpload';
-import { updateProfile } from 'firebase/auth';
+import { EventProviderProps } from '../lib/customProp';
+import { getEventProviderByEmail  } from '../utils/helper';
 
 export default function Profile() {
     const router = useRouter();
     const [error, setError] = useState<string>("");
     const { currentUser, logout, updatePhotoURL } = useAuth();
     const profileImageRef = useRef(null);
+    const [ fetched, setFetched ] = useState<boolean>(false);
+    const [ eventProviderData, setEventProviderData ] = useState<EventProviderProps>(null);
 
     async function handleLogout() {
         setError('');
@@ -149,27 +152,30 @@ export default function Profile() {
         <Head>
             <title>Profile Page</title>
         </Head>
-        <div className={profileStyle.profile}>
-            <div className={profileStyle["profile-container"]}>
-                <div className={profileStyle["profile-info"]}>
-                    {error && <span>{error}</span>}
-                    <div className={profileStyle["profile-info-name"]}>{currentUser.displayName}</div>
-                    <div className={profileStyle["profile-info-email"]}>Email: {currentUser.email}</div>
-                    <div className={profileStyle["profile-info-phone"]}>Phone: </div>
-                    <div className={profileStyle["profile-info-about"]}>About: </div>
-                    <div className={profileStyle["function-buttons"]}>
-                        <button className={profileStyle["update-profile-button"]}>
-                            <Link href="/update-profile">
-                                Update Profile
-                            </Link>
-                        </button>
-                        <button className={profileStyle["logout-button"]} onClick={handleLogout}>Log Out</button>
-                    </div>
+        {fetched?
+            <div className={profileStyle.profile}>
+                <div className={profileStyle["profile-container"]}>
+                    <div className={profileStyle["profile-info"]}>
+                        {error && <span>{error}</span>}
+                        <div className={profileStyle["profile-info-name"]}>{currentUser.displayName}</div>
+                        <div className={profileStyle["profile-info-email"]}>Email: {currentUser.email}</div>
+                        <div className={profileStyle["profile-info-phone"]}>Phone: {eventProviderData.phone}</div>
+                        <div className={profileStyle["profile-info-about"]}>About: {eventProviderData.about}</div>
+                        <div className={profileStyle["function-buttons"]}>
+                            <button className={profileStyle["update-profile-button"]}>
+                                <Link href="/update-profile">
+                                    Update Profile
+                                </Link>
+                            </button>
+                            <button className={profileStyle["logout-button"]} onClick={handleLogout}>Log Out</button>
+                        </div>
 
+                    </div>
+                    <ProfileImage />
                 </div>
-                <ProfileImage />
             </div>
-        </div>
+            : null
+        }
       </Layout>
   )
 }

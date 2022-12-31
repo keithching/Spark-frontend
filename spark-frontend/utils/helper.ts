@@ -38,6 +38,13 @@ const getEventProviders = async () => {
     return eventProviders;
 };
 
+const getEventProviderByEmail = async (email: string) => {
+    const eventProvider = await axios.get(`${EVENT_PROVIDER_URL}/${email}`)
+    .then(res => res.data)
+    .catch(err => console.log(err));
+    return eventProvider;
+}
+
 const getEventCategories = async () => {
     const eventCategories = await axios.get(EVENT_CATEGORY_URL).then(res => res.data);
     return eventCategories;
@@ -122,6 +129,7 @@ const deleteEvent = async (id: string | number) => {
 
 export {
     getEventProviders,
+    getEventProviderByEmail,
     getEventCategories,
     getEvents,
     getAllEventIds,
