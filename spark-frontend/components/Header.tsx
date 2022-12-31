@@ -52,8 +52,8 @@ const Header = () => {
                     }
                     {currentUser ? 
                         <>
-                            <button><Link href="/dashboard">Dashboard</Link></button>
-                            <button><Link href="/profile">Profile</Link></button>
+                            <button onClick={() => router.push('/dashboard')}>Dashboard</button>
+                            <button onClick={() => router.push('/profile')}>Profile</button>
                             <button onClick={handleLogout}>Log Out</button>
                         </>
                         :
