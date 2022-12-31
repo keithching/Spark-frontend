@@ -44,7 +44,7 @@ export default function Profile() {
         }
     }, [eventProviderData, fetched]);
 
-    const [photoURL, setPhotoURL] = useState<string>(currentUser.photoURL);
+    const [photoURL, setPhotoURL] = useState<any>(currentUser.photoURL);
     const photoRef = useRef<HTMLInputElement>(null);
     const isClick = useRef(false);
 
