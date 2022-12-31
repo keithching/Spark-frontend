@@ -25,7 +25,7 @@ export default function Profile() {
         }
     }
 
-    const [photoURL, setPhotoURL] = useState<string>(currentUser.photoURL);
+    const [photoURL, setPhotoURL] = useState<string | ArrayBuffer>(currentUser.photoURL);
     const photoRef = useRef<HTMLInputElement>(null);
     const isClick = useRef(false);
 
