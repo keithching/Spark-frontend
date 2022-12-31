@@ -109,11 +109,9 @@ export default function UpdateProfile() {
                             <label htmlFor="aboutInput">About</label>
                             {/* @ts-ignore */}
                             <textarea name="" id="aboutInput" ref={aboutRef} cols="30" rows="10">{eventProvider.about}</textarea>
-                            <button disabled={loading} type="submit">Update</button>
+                            <button disabled={loading} type="submit" className={updateProfileStyles["update-button"]}>Update</button>
+                            <button onClick={() => router.push('/profile')}>Cancel</button>
                         </form>
-                    </div>
-                    <div>
-                        <Link href="/profile">Cancel</Link>
                     </div>
                 </div>
                 : null

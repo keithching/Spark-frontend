@@ -162,11 +162,10 @@ export default function Profile() {
                         <div className={profileStyle["profile-info-phone"]}>Phone: {eventProvider.phone}</div>
                         <div className={profileStyle["profile-info-about"]}>About: {eventProvider.about}</div>
                         <div className={profileStyle["function-buttons"]}>
-                            <button className={profileStyle["update-profile-button"]}>
-                                <Link href="/update-profile">
-                                    Update Profile
-                                </Link>
-                            </button>
+                            <button 
+                                className={profileStyle["update-profile-button"]}
+                                onClick={() => router.push('/update-profile')}
+                            >Update Profile</button>
                             <button className={profileStyle["logout-button"]} onClick={handleLogout}>Log Out</button>
                         </div>
 
