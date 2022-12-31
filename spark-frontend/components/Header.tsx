@@ -39,7 +39,7 @@ const Header = () => {
                         <div className={headerStyles["user-greeting"]}>
                             <div className={headerStyles["profile-image"]}>
                                 <Image 
-                                    src={currentUser.photoURL}
+                                    src={currentUser.photoURL? currentUser.photoURL : ""}
                                     alt="" 
                                     width={30}
                                     height={30}
