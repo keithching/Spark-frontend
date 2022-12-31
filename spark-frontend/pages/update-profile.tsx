@@ -105,6 +105,7 @@ export default function UpdateProfile() {
                             <input type="number" ref={phoneRef} id="phoneInput" 
                                 required defaultValue={eventProvider.phone}/>
                             <label htmlFor="aboutInput">About</label>
+                            {/* @ts-ignore */}
                             <textarea name="" id="aboutInput" ref={aboutRef} cols="30" rows="10">{eventProvider.about}</textarea>
                             <button disabled={loading} type="submit">Update</button>
                         </form>
