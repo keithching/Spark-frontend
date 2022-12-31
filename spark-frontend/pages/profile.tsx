@@ -28,6 +28,22 @@ export default function Profile() {
         }
     }
 
+    // To refactor: getting the event provider's data from database
+    useEffect(() => {
+        async function fetchData() {
+            const data = await getEventProviderByEmail(currentUser.email);
+            console.log(data);
+            setEventProviderData(data);
+        }
+        fetchData();
+    }, [currentUser]);
+
+    useEffect(() => {
+        if (eventProviderData && Object.keys(eventProviderData).length > 0) {
+            setFetched(true);
+        }
+    }, [eventProviderData, fetched]);
+
     const [photoURL, setPhotoURL] = useState<any>(currentUser.photoURL);
     const photoRef = useRef<HTMLInputElement>(null);
     const isClick = useRef(false);
