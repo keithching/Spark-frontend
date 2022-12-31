@@ -2,6 +2,10 @@ import axios from 'axios';
 import jpPrefecture from 'jp-prefecture';
 // https://github.com/wadackel/jp-prefecture
 
+// client-side data fetching with swr
+// https://swr.vercel.app/docs/getting-started
+import useSWR from 'swr';
+
 const URL = 'https://spark-backend-app.herokuapp.com/api';
 // const URL = 'http://localhost:4000/api';
 
@@ -14,18 +18,26 @@ const EVENT_URL = `${URL}/events`;
 // const JAPAN_PREFECTURE_URL = 'https://opendata.resas-portal.go.jp/api/v1/prefectures';
 // https://opendata.resas-portal.go.jp/docs/api/v1/prefectures.html
 
+// https://stackoverflow.com/questions/34179897/typescript-and-spread-operator
+// @ts-ignore
+const fetcher = (...args) => fetch(...args).then(res => res.json());
+
+// getting event provider by email
+export function useEventProvider(email) {
+    const  { data, error, isLoading } = useSWR(`${EVENT_PROVIDER_URL}/${email}`, fetcher);
+    
+    return {
+        eventProvider: data,
+        isLoading,
+        isError: error
+    }
+}
+
 const getEventProviders = async () => {
     const eventProviders = await axios.get(EVENT_PROVIDER_URL)
         .then(res => res.data);
     return eventProviders;
 };
-
-const getEventProviderByEmail = async (email: string) => {
-    const eventProvider = await axios.get(`${EVENT_PROVIDER_URL}/${email}`)
-    .then(res => res.data)
-    .catch(err => console.log(err));
-    return eventProvider;
-}
 
 const getEventCategories = async () => {
     const eventCategories = await axios.get(EVENT_CATEGORY_URL).then(res => res.data);
@@ -111,7 +123,6 @@ const deleteEvent = async (id: string | number) => {
 
 export {
     getEventProviders,
-    getEventProviderByEmail,
     getEventCategories,
     getEvents,
     getAllEventIds,

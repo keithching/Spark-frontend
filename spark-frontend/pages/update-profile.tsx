@@ -4,7 +4,7 @@ import updateProfileStyles from '../styles/updateProfile.module.css';
 import { useAuth } from '../contexts/AuthContext';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { getEventProviderByEmail, getEventProviders, updateEventProviderByEmail } from '../utils/helper';
+import { getEventProviders, updateEventProviderByEmail, useEventProvider } from '../utils/helper';
 import Layout from '../components/layout';
 import { EventProviderProps } from '../lib/customProp';
 
@@ -15,28 +15,11 @@ export default function UpdateProfile() {
     const passwordConfirmRef = useRef<HTMLInputElement>(null);
     const phoneRef = useRef<HTMLInputElement>(null);
     const aboutRef = useRef<HTMLInputElement>(null);
-    const [ eventProviderData, setEventProviderData ] = useState<EventProviderProps>(null);
-    const [ fetched, setFetched ] = useState<boolean>(false);
     const { currentUser, updatePassword, updateEmail, updateDisplayName } = useAuth();
     const [ error, setError ] = useState<string>('');
     const [ loading, setLoading ] = useState<boolean>(false);
     const router = useRouter();
-
-    // To refactor: getting the event provider's data from database
-    useEffect(() => {
-        async function fetchData() {
-            const data = await getEventProviderByEmail(currentUser.email);
-            console.log(data);
-            setEventProviderData(data);
-        }
-        fetchData();
-    }, [currentUser]);
-
-    useEffect(() => {
-        if (eventProviderData && Object.keys(eventProviderData).length > 0) {
-            setFetched(true);
-        }
-    }, [eventProviderData, fetched]);
+    const { eventProvider, isLoading, isError } = useEventProvider(currentUser.email);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -98,7 +81,7 @@ export default function UpdateProfile() {
             <Head>
                 <title>Update Profile</title>
             </Head>
-            {fetched? 
+            {!isLoading? 
                 <div className={updateProfileStyles["update-profile-container"]}>
                     <div className={updateProfileStyles["update-profile-card"]}>
                         <h2>Update Profile</h2>
@@ -120,9 +103,10 @@ export default function UpdateProfile() {
                                 placeholder="Leave blank to keep the same" />
                             <label htmlFor="phoneInput">Phone</label>
                             <input type="number" ref={phoneRef} id="phoneInput" 
-                                required defaultValue={eventProviderData?.phone}/>
+                                required defaultValue={eventProvider.phone}/>
                             <label htmlFor="aboutInput">About</label>
-                            <textarea name="" id="aboutInput" ref={aboutRef} cols="30" rows="10">{eventProviderData?.about}</textarea>
+                            {/* @ts-ignore */}
+                            <textarea name="" id="aboutInput" ref={aboutRef} cols="30" rows="10">{eventProvider.about}</textarea>
                             <button disabled={loading} type="submit">Update</button>
                         </form>
                     </div>
@@ -132,6 +116,7 @@ export default function UpdateProfile() {
                 </div>
                 : null
             }
+            {isError? <span>Error</span>: null}
         </Layout>
   )
 }

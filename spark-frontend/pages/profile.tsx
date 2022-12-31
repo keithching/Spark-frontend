@@ -8,15 +8,17 @@ import Layout from '../components/layout';
 import Image from 'next/image';
 import { uploadImageAsync } from '../utils/imageUpload';
 import { EventProviderProps } from '../lib/customProp';
-import { getEventProviderByEmail  } from '../utils/helper';
+import { useEventProvider  } from '../utils/helper';
 
 export default function Profile() {
     const router = useRouter();
     const [error, setError] = useState<string>("");
     const { currentUser, logout, updatePhotoURL } = useAuth();
     const profileImageRef = useRef(null);
-    const [ fetched, setFetched ] = useState<boolean>(false);
-    const [ eventProviderData, setEventProviderData ] = useState<EventProviderProps>(null);
+    const { eventProvider, isLoading, isError } = useEventProvider(currentUser.email);
+    const [photoURL, setPhotoURL] = useState<any>(currentUser.photoURL);
+    const photoRef = useRef<HTMLInputElement>(null);
+    const isClick = useRef(false);
 
     async function handleLogout() {
         setError('');
@@ -27,26 +29,6 @@ export default function Profile() {
             setError('Failed to log out');
         }
     }
-
-    // To refactor: getting the event provider's data from database
-    useEffect(() => {
-        async function fetchData() {
-            const data = await getEventProviderByEmail(currentUser.email);
-            console.log(data);
-            setEventProviderData(data);
-        }
-        fetchData();
-    }, [currentUser]);
-
-    useEffect(() => {
-        if (eventProviderData && Object.keys(eventProviderData).length > 0) {
-            setFetched(true);
-        }
-    }, [eventProviderData, fetched]);
-
-    const [photoURL, setPhotoURL] = useState<any>(currentUser.photoURL);
-    const photoRef = useRef<HTMLInputElement>(null);
-    const isClick = useRef(false);
 
     const ProfileImage = () => {
         // [Refactor] same code block from Modal.tsx
@@ -168,15 +150,15 @@ export default function Profile() {
         <Head>
             <title>Profile Page</title>
         </Head>
-        {fetched?
+        {!isLoading?
             <div className={profileStyle.profile}>
                 <div className={profileStyle["profile-container"]}>
                     <div className={profileStyle["profile-info"]}>
                         {error && <span>{error}</span>}
                         <div className={profileStyle["profile-info-name"]}>{currentUser.displayName}</div>
                         <div className={profileStyle["profile-info-email"]}>Email: {currentUser.email}</div>
-                        <div className={profileStyle["profile-info-phone"]}>Phone: {eventProviderData.phone}</div>
-                        <div className={profileStyle["profile-info-about"]}>About: {eventProviderData.about}</div>
+                        <div className={profileStyle["profile-info-phone"]}>Phone: {eventProvider.phone}</div>
+                        <div className={profileStyle["profile-info-about"]}>About: {eventProvider.about}</div>
                         <div className={profileStyle["function-buttons"]}>
                             <button className={profileStyle["update-profile-button"]}>
                                 <Link href="/update-profile">
@@ -192,6 +174,7 @@ export default function Profile() {
             </div>
             : null
         }
+        {isError? <span>Error</span>: null}
       </Layout>
   )
 }
