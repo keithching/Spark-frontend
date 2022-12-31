@@ -32,12 +32,6 @@ const Main = () => {
         document.body.classList.remove('stop-scrolling');
       }
     }, [showModal]);
-    
-    // debugging
-    useEffect(() => {
-        console.log('This component can be accessed');
-    }, []);
-    //////
 
     const { currentUser, adminEmail } = useAuth();
     const [ eventProviders, setEventProviders ] = useState<EventProviderProps[]>([]);
