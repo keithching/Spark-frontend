@@ -81,7 +81,9 @@ export default function UpdateProfile() {
             <Head>
                 <title>Update Profile</title>
             </Head>
-            {!isLoading? 
+            {isError? 
+                <span>Error</span>:     
+            !isLoading? 
                 <div className={updateProfileStyles["update-profile-container"]}>
                     <div className={updateProfileStyles["update-profile-card"]}>
                         <h2>Update Profile</h2>
@@ -116,7 +118,6 @@ export default function UpdateProfile() {
                 </div>
                 : null
             }
-            {isError? <span>Error</span>: null}
         </Layout>
   )
 }

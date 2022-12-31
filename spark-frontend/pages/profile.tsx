@@ -150,7 +150,9 @@ export default function Profile() {
         <Head>
             <title>Profile Page</title>
         </Head>
-        {!isLoading?
+        {isError? 
+            <span>Error</span>
+            : !isLoading?
             <div className={profileStyle.profile}>
                 <div className={profileStyle["profile-container"]}>
                     <div className={profileStyle["profile-info"]}>
@@ -174,7 +176,6 @@ export default function Profile() {
             </div>
             : null
         }
-        {isError? <span>Error</span>: null}
       </Layout>
   )
 }

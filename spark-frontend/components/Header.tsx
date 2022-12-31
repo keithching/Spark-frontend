@@ -58,8 +58,14 @@ const Header = () => {
                         </>
                         :
                         <>
-                            <button className={headerStyles["login-btn"]}><Link href="/login">Log In</Link></button>
-                            <button className={headerStyles["signup-btn"]}><Link href="/signup">Sign Up</Link></button>
+                            <button 
+                                className={headerStyles["login-btn"]}
+                                onClick={() => router.push('/login')}
+                            >Log In</button>
+                            <button 
+                                className={headerStyles["signup-btn"]}
+                                onClick={() => router.push('/signup')}
+                            >Sign Up</button>
                         </>
                     }
                 </>
