@@ -22,6 +22,7 @@ const EVENT_URL = `${URL}/events`;
 // @ts-ignore
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
+// getting event provider by email
 export function useEventProvider(email) {
     const  { data, error, isLoading } = useSWR(`${EVENT_PROVIDER_URL}/${email}`, fetcher);
     
@@ -37,13 +38,6 @@ const getEventProviders = async () => {
         .then(res => res.data);
     return eventProviders;
 };
-
-const getEventProviderByEmail = async (email: string) => {
-    const eventProvider = await axios.get(`${EVENT_PROVIDER_URL}/${email}`)
-    .then(res => res.data)
-    .catch(err => console.log(err));
-    return eventProvider;
-}
 
 const getEventCategories = async () => {
     const eventCategories = await axios.get(EVENT_CATEGORY_URL).then(res => res.data);
@@ -129,7 +123,6 @@ const deleteEvent = async (id: string | number) => {
 
 export {
     getEventProviders,
-    getEventProviderByEmail,
     getEventCategories,
     getEvents,
     getAllEventIds,
