@@ -52,14 +52,20 @@ const Header = () => {
                     }
                     {currentUser ? 
                         <>
-                            <button><Link href="/dashboard">Dashboard</Link></button>
-                            <button><Link href="/profile">Profile</Link></button>
+                            <button onClick={() => router.push('/dashboard')}>Dashboard</button>
+                            <button onClick={() => router.push('/profile')}>Profile</button>
                             <button onClick={handleLogout}>Log Out</button>
                         </>
                         :
                         <>
-                            <button className={headerStyles["login-btn"]}><Link href="/login">Log In</Link></button>
-                            <button className={headerStyles["signup-btn"]}><Link href="/signup">Sign Up</Link></button>
+                            <button 
+                                className={headerStyles["login-btn"]}
+                                onClick={() => router.push('/login')}
+                            >Log In</button>
+                            <button 
+                                className={headerStyles["signup-btn"]}
+                                onClick={() => router.push('/signup')}
+                            >Sign Up</button>
                         </>
                     }
                 </>
