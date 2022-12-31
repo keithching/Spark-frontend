@@ -64,7 +64,7 @@ const Modal = (props) => {
                 if (modalContent.operation === 'create') {
                     // upload photo to firebase.
                     try {
-                        const downloadURL = await uploadImageAsync(photoURL);
+                        const downloadURL = await uploadImageAsync(photoURL, 'events');
                         console.log(downloadURL);
                         // TODO. the data should include the photo. The backend endpoint should be able to pick up a photo
                         eventData.imageURL = downloadURL; // append to event data before sending
@@ -76,7 +76,7 @@ const Modal = (props) => {
                         // if success: everything is fine. do a console log maybe for now
                         // if fail: delete the photo in firebase
                 } else if (modalContent.operation === 'edit') {
-                    const downloadURL = await uploadImageAsync(photoURL);
+                    const downloadURL = await uploadImageAsync(photoURL, 'events');
                     eventData.imageURL = downloadURL; // append to event data before sending
                     await updateEvent(eventData, selectedEvent);
                 }

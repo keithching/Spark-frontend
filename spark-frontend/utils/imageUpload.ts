@@ -6,7 +6,7 @@ import {
 import { v4 as uuidv4 } from 'uuid'; // https://www.npmjs.com/package/uuid
 import { storage } from '../firebase';
 
-export async function uploadImageAsync(uri: string) {
+export async function uploadImageAsync(uri: string, folder: string) {
     // Why are we using XMLHttpRequest? See:
     // https://github.com/expo/expo/issues/2402#issuecomment-443726662
     try {
@@ -23,7 +23,7 @@ export async function uploadImageAsync(uri: string) {
             xhr.open("GET", uri, true);
             xhr.send(null);
         });
-        const fileRef = ref(storage, `testing/${uuidv4()}`); // uuid for the photo object's name
+        const fileRef = ref(storage, `${folder}/${uuidv4()}`); // uuid for the photo object's name
         await uploadBytesResumable(fileRef, blob);
     
         const url = await getDownloadURL(fileRef);

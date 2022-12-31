@@ -48,3 +48,20 @@
     text-decoration: none;
     color: inherit;
 }
+
+.user-greeting {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.profile-image {
+    width: 30px;
+    height: 30px;
+    border: 0.5px solid var(--border-color-light);
+    border-radius: 50%;
+}
+
+.profile-image img {
+    border-radius: 50%;
+}

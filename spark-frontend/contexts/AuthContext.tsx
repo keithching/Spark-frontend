@@ -24,6 +24,7 @@ interface AuthContextType {
     updateEmail: (email: string) => void
     updatePassword: (password: string) => void
     updateDisplayName: (name: string) => void
+    updatePhotoURL: (URL: string) => void
     isLoading: boolean
 }
 
@@ -66,7 +67,11 @@ export function AuthProvider({ children }) {
     }
 
     function updateDisplayName(name) {
-        return updateProfile(auth.currentUser, { displayName:name });
+        return updateProfile(auth.currentUser, { displayName: name });
+    }
+
+    function updatePhotoURL(URL) {
+        return updateProfile(auth.currentUser, { photoURL: URL });
     }
 
     useEffect(() => {
@@ -88,6 +93,7 @@ export function AuthProvider({ children }) {
         updateEmail,
         updatePassword,
         updateDisplayName,
+        updatePhotoURL,
         isLoading
     }
 
