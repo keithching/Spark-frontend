@@ -13,6 +13,7 @@
     padding: 10px 100px;
     position: sticky;
     top: 0;
+    z-index: 1000;
 }
 
 .Header .nav-utilities {
@@ -46,4 +47,21 @@
 .Header a {
     text-decoration: none;
     color: inherit;
+}
+
+.user-greeting {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.profile-image {
+    width: 30px;
+    height: 30px;
+    border: 0.5px solid var(--border-color-light);
+    border-radius: 50%;
+}
+
+.profile-image img {
+    border-radius: 50%;
 }

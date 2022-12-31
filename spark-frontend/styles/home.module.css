@@ -105,12 +105,6 @@
     align-items: center;
 }
 
-.event-image > img {
-    height: 400px;
-    width: 400px;
-    object-fit: cover;
-}
-
 .eventCategory {
     grid-column: 2 / 3;
     grid-row: 2 / 3;

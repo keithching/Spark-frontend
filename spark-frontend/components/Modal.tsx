@@ -5,6 +5,7 @@ import modalStyles from "../styles/modal.module.css";
 import { IoClose } from 'react-icons/io5';
 import { useAuth } from '../contexts/AuthContext';
 import { uploadImageAsync } from '../utils/imageUpload';
+import Image from 'next/image';
 
 const Modal = (props) => {
     const { 
@@ -63,7 +64,7 @@ const Modal = (props) => {
                 if (modalContent.operation === 'create') {
                     // upload photo to firebase.
                     try {
-                        const downloadURL = await uploadImageAsync(photoURL);
+                        const downloadURL = await uploadImageAsync(photoURL, 'events');
                         console.log(downloadURL);
                         // TODO. the data should include the photo. The backend endpoint should be able to pick up a photo
                         eventData.imageURL = downloadURL; // append to event data before sending
@@ -75,7 +76,7 @@ const Modal = (props) => {
                         // if success: everything is fine. do a console log maybe for now
                         // if fail: delete the photo in firebase
                 } else if (modalContent.operation === 'edit') {
-                    const downloadURL = await uploadImageAsync(photoURL);
+                    const downloadURL = await uploadImageAsync(photoURL, 'events');
                     eventData.imageURL = downloadURL; // append to event data before sending
                     await updateEvent(eventData, selectedEvent);
                 }
@@ -287,11 +288,27 @@ const Modal = (props) => {
             return (
                 eventToDisplay && modalContent.operation === 'edit' ?
                     !photoURL && eventToDisplay.imageURL !== null ?
-                        <img src={eventToDisplay.imageURL} alt="" /> :
-                        photoURL ? <img src={photoURL} alt="" /> :
+                        <Image 
+                            src={eventToDisplay.imageURL} 
+                            alt="" 
+                            width={400}
+                            height={400}
+                        /> :
+                        photoURL ? 
+                            <Image 
+                                src={photoURL} 
+                                alt="" 
+                                width={400}
+                                height={400}
+                            /> :
                         <div>photo not available</div>
                 : photoURL ? 
-                    <img src={photoURL} alt="" /> :
+                    <Image 
+                        src={photoURL} 
+                        alt="" 
+                        width={400}
+                        height={400}
+                    /> :
                     <div>upload a photo</div>
             );
         };

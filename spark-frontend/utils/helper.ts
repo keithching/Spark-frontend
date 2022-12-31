@@ -43,8 +43,10 @@ const getAllEventIds = async () => {
 }
 
 const getEventsByEmail = async (email: string) => {
-    const events = await axios.get(`${EVENT_URL}/${email}`).then(res => res.data);
-    return events;
+        const events = await axios.get(`${EVENT_URL}/${email}`)
+        .then(res => res.data)
+        .catch(err => console.log(err));
+        return events;
 };
 
 const getEventByEventId = async (id: string | number) => {
@@ -60,7 +62,7 @@ const getAllPrefectures = () => {
     return jpPrefecture.getAllPref("name");
 };
 
-const createEventProvider = async (eventProvider: string) => {
+const createEventProvider = async (eventProvider: object) => {
     try {
         await axios.post(EVENT_PROVIDER_URL, eventProvider).then(res => console.log(res));
     } catch (err) {
@@ -68,7 +70,7 @@ const createEventProvider = async (eventProvider: string) => {
     }
 };
 
-const updateEventProviderByEmail = async (email: string, eventProvider: string) => {
+const updateEventProviderByEmail = async (email: string, eventProvider: object) => {
     try {
         await axios.patch(`${EVENT_PROVIDER_URL}/${email}`, eventProvider).then(res => console.log(res));
     } catch (err) {
@@ -76,7 +78,7 @@ const updateEventProviderByEmail = async (email: string, eventProvider: string) 
     }
 }
 
-const createEvent = async (event: string) => {
+const createEvent = async (event) => {
     try {
         await axios.post(EVENT_URL, event).then(res => console.log(res));
     } catch (err) {

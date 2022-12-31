@@ -59,7 +59,7 @@ const Main = () => {
         }
         fetchData();
         setLoading(false);
-    }, []);
+    }, [currentUser, adminEmail]);
 
     useEffect(() => { // update the event divs in the DOM
         async function updateData () {
@@ -71,7 +71,7 @@ const Main = () => {
             );
         }
         updateData();
-    }, [showModal, currentUser]);
+    }, [showModal, currentUser, adminEmail]);
 
     const Loading = () => {
         return (

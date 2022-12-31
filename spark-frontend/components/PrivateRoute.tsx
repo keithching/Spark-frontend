@@ -16,7 +16,7 @@ export default function PrivateRoute({ protectedRoutes, children }) {
       // Redirect route, you can point this to /login
       router.push('/');
     }
-  }, [isLoading, currentUser, pathIsProtected]);
+  }, [isLoading, currentUser, pathIsProtected, router]);
 
   if ((isLoading || !currentUser) && pathIsProtected) {
     return <FullPageLoader />;
