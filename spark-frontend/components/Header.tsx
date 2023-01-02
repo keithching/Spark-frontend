@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import headerStyles from '../styles/header.module.css';
 import { useAuth } from '../contexts/AuthContext';
 import Link from 'next/link';
@@ -16,6 +16,11 @@ const Header = () => {
 
     const [error, setError] = useState<string>("");
     const { isLoading, currentUser, logout } = useAuth();
+
+    useEffect(() => {
+        console.log('re-rendered..');
+    }, []);
+
 
     async function handleLogout() {
         setError('');

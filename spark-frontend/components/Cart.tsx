@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BsCart3 } from 'react-icons/bs';
 import CartStyles from '../styles/cart.module.css';
 
 export const Cart = () => {
     // TO UPDATE
-    const [ counter, setCounter ] = useState<number>(0);
+    const [ counter, setCounter ] = useState<any>(localStorage.getItem('cartCounter') ? localStorage.getItem('cartCounter') : 0);
 
     const handleClick = () => {
-        // TO UPDATE
-        setCounter((prev) => prev + 1);
+        setCounter((prev) => Number(prev) + 1);
     }
+
+    useEffect(() => {
+        localStorage.setItem('cartCounter', counter);
+    }, [counter]);
 
     return (
         <button 
