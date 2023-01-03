@@ -20,6 +20,21 @@ export default function Event({
         imageURL: string
     }
 }) {
+
+    const [isClicked, setIsClicked] = useState<boolean>(false);
+
+    // TODO: need to update the cart state.
+    // 2 Jan 2023
+    // the state is now stored within the Cart component residing in the Header component
+    // prop-drilling sounds like a headache
+    // explore state management solutions
+    const handleAddToCartClick = () => {
+        setIsClicked(prev => !prev);
+        // task1 - update the cart's counter
+        console.log('implement cart counter state update when clicked');
+        // task2 - update the cart's event array. push the event id into it
+    }
+
     return (
         <Layout>
             <Head>
@@ -49,6 +64,9 @@ export default function Event({
                             <button>Add to List</button>
                             <button>Chat</button>
                         </div> */}
+                        <button onClick={handleAddToCartClick}>
+                            {!isClicked? "add to cart": "added to cart"}
+                        </button>
                     </div>
                     <div className={eventStyles.right}>
                         {eventData.imageURL && <Image 
