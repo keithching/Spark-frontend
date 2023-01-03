@@ -6,6 +6,7 @@ import { GetStaticProps, GetStaticPaths } from 'next';
 import Image from 'next/image';
 import Layout from '../../components/layout';
 import { parseISO, formatISO } from 'date-fns';
+import { useCart } from '../../utils/store';
 
 export default function Event({
     eventData
@@ -33,6 +34,24 @@ export default function Event({
         // task1 - update the cart's counter
         console.log('implement cart counter state update when clicked');
         // task2 - update the cart's event array. push the event id into it
+    }
+
+
+    // https://github.com/pmndrs/zustand/discussions/855
+    // https://nextjs.org/docs/messages/react-hydration-error
+    
+    // used during pre-rendering and the first render in the browser
+    const [counter, setCounter] = useState(0);
+
+    const counterStore = useCart((state) => state.counter);
+
+    // called during hydration, which has access to the window object localStorage method
+    useEffect(() => {
+        setCounter(counterStore);
+    }, [counterStore]);
+    const increaseCounter = useCart((state) => state.increaseCounter);
+    const handleTestingZustandClick = () => {
+        increaseCounter();
     }
 
     return (
@@ -66,6 +85,9 @@ export default function Event({
                         </div> */}
                         <button onClick={handleAddToCartClick}>
                             {!isClicked? "add to cart": "added to cart"}
+                        </button>
+                        <button onClick={handleTestingZustandClick}>
+                            testing Zustand: {counter}
                         </button>
                     </div>
                     <div className={eventStyles.right}>
