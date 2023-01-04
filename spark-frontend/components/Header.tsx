@@ -17,11 +17,6 @@ const Header = () => {
     const [error, setError] = useState<string>("");
     const { isLoading, currentUser, logout } = useAuth();
 
-    useEffect(() => {
-        console.log('re-rendered..');
-    }, []);
-
-
     async function handleLogout() {
         setError('');
         try {

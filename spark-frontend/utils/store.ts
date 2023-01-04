@@ -10,7 +10,10 @@ export const useCart = create(
     persist(
         (set, get) => ({
             counter: 0,
-            increaseCounter: () => set({ counter: get().counter + 1 })
+            events: [],
+            increaseCounter: () => set({ counter: get().counter + 1 }),
+            addToEvents: (id) => set({ events: get().events.concat(id) }),
+            removeFromEvents: (id) => set({ events: get().events.filter(event => event !== id) })
         }),
         {
             name: 'cart',

@@ -12,6 +12,7 @@ export default function Event({
     eventData
 }: {
     eventData: {
+        id: number
         title: string
         eventProvider: string
         eventCategory: string
@@ -34,8 +35,13 @@ export default function Event({
         // task1 - update the cart's counter
         console.log('implement cart counter state update when clicked');
         // task2 - update the cart's event array. push the event id into it
+        // console.log(eventData.id); // event data id
+        if (eventCartStore.includes(eventData.id)) {
+            removeFromEvents(eventData.id);
+        } else {
+            addToEvents(eventData.id);
+        }
     }
-
 
     // https://github.com/pmndrs/zustand/discussions/855
     // https://nextjs.org/docs/messages/react-hydration-error
@@ -50,6 +56,22 @@ export default function Event({
         setCounter(counterStore);
     }, [counterStore]);
     const increaseCounter = useCart((state) => state.increaseCounter);
+    const eventCartStore = useCart((state) => state.events);
+    const [eventCart, setEventCart] = useState([]);
+    useEffect(() => {
+        setEventCart(eventCartStore);
+    }, [eventCartStore]);
+
+    useEffect(() => {
+        if (eventCartStore.includes(eventData.id)) {
+            setIsClicked(true);
+        } else {
+            setIsClicked(false);
+        }
+    }, [eventCartStore, eventData]);
+
+    const addToEvents = useCart((state) => state.addToEvents);
+    const removeFromEvents = useCart((state) => state.removeFromEvents)
     const handleTestingZustandClick = () => {
         increaseCounter();
     }
@@ -83,12 +105,16 @@ export default function Event({
                             <button>Add to List</button>
                             <button>Chat</button>
                         </div> */}
-                        <button onClick={handleAddToCartClick}>
+                        <button 
+                            onClick={handleAddToCartClick}
+
+                        >
                             {!isClicked? "add to cart": "added to cart"}
                         </button>
                         <button onClick={handleTestingZustandClick}>
                             testing Zustand: {counter}
                         </button>
+                        <div>Cart: {eventCart}</div>
                     </div>
                     <div className={eventStyles.right}>
                         {eventData.imageURL && <Image 
