@@ -35,6 +35,7 @@ export default function Event({
     // https://github.com/pmndrs/zustand/discussions/855
     // https://nextjs.org/docs/messages/react-hydration-error
     // called during hydration, which has access to the window object localStorage method
+
     useEffect(() => {
         setEventCart(eventCartStore);
     }, [eventCartStore]);
@@ -91,7 +92,7 @@ export default function Event({
                         >
                             {!isClicked? "add to cart": "added to cart"}
                         </button>
-                        <div>Cart: {eventCart}</div>
+                        {/* <div>Cart: {eventCart}</div> */}
                     </div>
                     <div className={eventStyles.right}>
                         {eventData.imageURL && <Image 
