@@ -24,7 +24,7 @@ const fetcher = (...args) => fetch(...args).then(res => res.json());
 
 // getting event provider by email
 export function useEventProvider(email) {
-    const  { data, error, isLoading } = useSWR(`${EVENT_PROVIDER_URL}/${email}`, fetcher);
+    const { data, error, isLoading } = useSWR(`${EVENT_PROVIDER_URL}/${email}`, fetcher);
     
     return {
         eventProvider: data,
@@ -48,6 +48,16 @@ const getEvents = async () => {
     const events = await axios.get(EVENT_URL).then(res => res.data);
     return events;
 };
+
+export function useEvents() {
+    const { data, error, isLoading } = useSWR(`${EVENT_URL}`, fetcher);
+    
+    return {
+        events: data,
+        isLoading,
+        isError: error
+    }
+}
 
 const getAllEventIds = async () => {
     const events = await axios.get(EVENT_URL).then(res => res.data);

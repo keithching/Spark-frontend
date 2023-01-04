@@ -22,42 +22,19 @@ export default function Event({
         imageURL: string
     }
 }) {
+    // use zustand cart store
+    const eventCartStore = useCart((state) => state.events);
+    const addToEvents = useCart((state) => state.addToEvents);
+    const removeFromEvents = useCart((state) => state.removeFromEvents);
+    const updateCounter = useCart((state) => state.updateCounter);
 
+    // used during pre-rendering and the first render in the browser
     const [isClicked, setIsClicked] = useState<boolean>(false);
-
-    // TODO: need to update the cart state.
-    // 2 Jan 2023
-    // the state is now stored within the Cart component residing in the Header component
-    // prop-drilling sounds like a headache
-    // explore state management solutions
-    const handleAddToCartClick = () => {
-        setIsClicked(prev => !prev);
-        // task1 - update the cart's counter
-        console.log('implement cart counter state update when clicked');
-        // task2 - update the cart's event array. push the event id into it
-        // console.log(eventData.id); // event data id
-        if (eventCartStore.includes(eventData.id)) {
-            removeFromEvents(eventData.id);
-        } else {
-            addToEvents(eventData.id);
-        }
-    }
+    const [eventCart, setEventCart] = useState([]);
 
     // https://github.com/pmndrs/zustand/discussions/855
     // https://nextjs.org/docs/messages/react-hydration-error
-    
-    // used during pre-rendering and the first render in the browser
-    const [counter, setCounter] = useState(0);
-
-    const counterStore = useCart((state) => state.counter);
-
     // called during hydration, which has access to the window object localStorage method
-    useEffect(() => {
-        setCounter(counterStore);
-    }, [counterStore]);
-    const increaseCounter = useCart((state) => state.increaseCounter);
-    const eventCartStore = useCart((state) => state.events);
-    const [eventCart, setEventCart] = useState([]);
     useEffect(() => {
         setEventCart(eventCartStore);
     }, [eventCartStore]);
@@ -70,10 +47,13 @@ export default function Event({
         }
     }, [eventCartStore, eventData]);
 
-    const addToEvents = useCart((state) => state.addToEvents);
-    const removeFromEvents = useCart((state) => state.removeFromEvents)
-    const handleTestingZustandClick = () => {
-        increaseCounter();
+    const handleAddToCartClick = () => {
+        if (eventCartStore.includes(eventData.id)) {
+            removeFromEvents(eventData.id);
+        } else {
+            addToEvents(eventData.id);
+        }
+        updateCounter();
     }
 
     return (
@@ -107,12 +87,9 @@ export default function Event({
                         </div> */}
                         <button 
                             onClick={handleAddToCartClick}
-
+                            className={!isClicked? eventStyles["add-to-cart"]: eventStyles["added-to-cart"]}
                         >
                             {!isClicked? "add to cart": "added to cart"}
-                        </button>
-                        <button onClick={handleTestingZustandClick}>
-                            testing Zustand: {counter}
                         </button>
                         <div>Cart: {eventCart}</div>
                     </div>

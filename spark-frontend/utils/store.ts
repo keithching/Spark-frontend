@@ -1,9 +1,6 @@
 // Zustand state management 
 // https://www.npmjs.com/package/zustand
 // https://blog.devgenius.io/managing-persistent-states-in-nextjs-with-zustand-e6feea1a2d36
-
-// How to migrate Zustand local storage store to a new version
-// https://relatablecode.com/how-to-migrate-zustand-local-storage-store-to-a-new-version
 import create from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 export const useCart = create(
@@ -11,7 +8,7 @@ export const useCart = create(
         (set, get) => ({
             counter: 0,
             events: [],
-            increaseCounter: () => set({ counter: get().counter + 1 }),
+            updateCounter: () => set({ counter: get().events.length }),
             addToEvents: (id) => set({ events: get().events.concat(id) }),
             removeFromEvents: (id) => set({ events: get().events.filter(event => event !== id) })
         }),
@@ -21,4 +18,3 @@ export const useCart = create(
         }
     )
 )
-// JSON.parse(localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')).counter : 0
