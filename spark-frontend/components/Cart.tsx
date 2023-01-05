@@ -17,17 +17,12 @@ export const Cart = () => {
 
     const handleClick = () => {
         setIsClicked(prev => !prev);
-        console.log(eventCartStore);
     }
 
     const handleRemoveEventClick = (id) => {
         removeFromEvents(id);
         updateCounter();
     }
-
-    useEffect(() => {
-        console.log(events);
-    }, [events]);
 
     const data = eventCartStore.length === 0 ?
         <div>empty</div> :
