@@ -3,7 +3,17 @@
 // https://blog.devgenius.io/managing-persistent-states-in-nextjs-with-zustand-e6feea1a2d36
 import create from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-export const useCart = create(
+
+interface CartState {
+    counter: number
+    events: any[]
+    updateCounter: () => void
+    addToEvents: (id: number) => void
+    removeFromEvents: (id: number) => void
+
+}
+
+export const useCart = create<CartState>()(
     persist(
         (set, get) => ({
             counter: 0,
