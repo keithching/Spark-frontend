@@ -13,7 +13,7 @@ export const Cart = () => {
     const removeFromEvents = useCart((state) => state.removeFromEvents);
     const updateCounter = useCart((state) => state.updateCounter);
 
-    const { events } = useEvents();
+    const { events, isError, isLoading } = useEvents();
 
     const handleClick = () => {
         setIsClicked(prev => !prev);
@@ -31,6 +31,7 @@ export const Cart = () => {
 
     const data = eventCartStore.length === 0 ?
         <div>empty</div> :
+        !isLoading ?
         eventCartStore.map(event => {
             return (
                 <div key={event}>
@@ -39,7 +40,8 @@ export const Cart = () => {
                     <button onClick={() => handleRemoveEventClick(event)}>remove</button>
                 </div>
             )
-        });
+        })
+        : "Loading";
 
     return (
         <>
