@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import headerStyles from '../styles/header.module.css';
 import { useAuth } from '../contexts/AuthContext';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { Cart } from './Cart';
 
 const Header = () => {
     const router = useRouter();
@@ -68,6 +69,7 @@ const Header = () => {
                             >Sign Up</button>
                         </>
                     }
+                    <Cart />
                 </>
                 }
             </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import homeStyles from '../styles/home.module.css';
-import { getEvents } from '../utils/helper';
+import { getEvents, useEvents } from '../utils/helper';
 import { parseISO, formatISO } from 'date-fns';
 import { useRouter } from 'next/router';
 import {
@@ -10,18 +10,7 @@ import Image from 'next/image';
 
 export default function Home() {
     const router = useRouter();
-    const [events, setEvents] = useState<EventProps[]>([]);
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                setEvents(await getEvents());
-            } catch(err) {
-                console.error(err);
-            }
-        }
-        fetchData();
-    }, []);
+    const { events, isError, isLoading } = useEvents();
 
     const EventCategory = ({ category }) => {
         return (
@@ -76,15 +65,18 @@ export default function Home() {
                 <button type="button">Search</button>
             </div>
         </div> */}
-        <div className={homeStyles["event-card-display-container"]}>
-            {events.length > 0 &&
-                events.map(event => {
-                    return (
-                        <Event event={event} key={event.id}/>
-                    );
-                })
-            }
-        </div>
+        {isError && <div>{isError}</div>}
+        {!isLoading && 
+            <div className={homeStyles["event-card-display-container"]}>
+                {events.length > 0 &&
+                    events.map(event => {
+                        return (
+                            <Event event={event} key={event.id}/>
+                        );
+                    })
+                }
+            </div>
+        }
     </div>
   )
 }
