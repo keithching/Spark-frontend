@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Layout from '../../components/layout';
 import { parseISO, formatISO } from 'date-fns';
 import { useCart } from '../../utils/store';
+import classNames from 'classnames';
 
 export default function Event({
     eventData
@@ -88,11 +89,17 @@ export default function Event({
                         </div> */}
                         <button 
                             onClick={handleAddToCartClick}
-                            className={!isClicked? eventStyles["add-to-cart"]: eventStyles["added-to-cart"]}
+                            className={classNames({
+                                    [eventStyles.eventBtn]: true,
+                                    [eventStyles.addToCart]: !isClicked,
+                                    [eventStyles.addedToCart]: isClicked
+                                })}
                         >
                             {!isClicked? "add to cart": "added to cart"}
                         </button>
-                        {/* <div>Cart: {eventCart}</div> */}
+                        <button className={classNames(eventStyles.eventBtn, eventStyles.joinEventBtn)}>join event (require sign-in)</button>
+                        <div>XXX people going</div>
+                        <div>contact event host</div>
                     </div>
                     <div className={eventStyles.right}>
                         {eventData.imageURL && <Image 
