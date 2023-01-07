@@ -6,13 +6,11 @@ import { useCart } from '../utils/store';
 import { Popup } from './Popup';
 
 export const Cart = () => {
-    const [isClicked, setIsClicked] = useState(false);
-
+    const [isClicked, setIsClicked] = useState<boolean>(false);
     const counter = useCart((state) => state.counter);
     const eventCartStore = useCart((state) => state.events);
     const removeFromEvents = useCart((state) => state.removeFromEvents);
     const updateCounter = useCart((state) => state.updateCounter);
-
     const { events, isError, isLoading } = useEvents();
 
     const handleClick = () => {
@@ -25,7 +23,7 @@ export const Cart = () => {
     }
 
     const data = eventCartStore.length === 0 ?
-        <div>empty</div> :
+        <div>add your first event</div> :
         !isLoading ?
         eventCartStore.map(event => {
             return (

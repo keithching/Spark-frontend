@@ -10,7 +10,6 @@ interface CartState {
     updateCounter: () => void
     addToEvents: (id: number) => void
     removeFromEvents: (id: number) => void
-
 }
 
 export const useCart = create<CartState>()(
