@@ -58,6 +58,10 @@ export default function Event({
         updateCounter();
     }
 
+    const handleJoinEventClick = () => {
+        alert('sign-in is required.');
+    }
+
     return (
         <Layout>
             <Head>
@@ -97,7 +101,10 @@ export default function Event({
                         >
                             {!isClicked? "add to cart": "added to cart"}
                         </button>
-                        <button className={classNames(eventStyles.eventBtn, eventStyles.joinEventBtn)}>join event (require sign-in)</button>
+                        <button 
+                            className={classNames(eventStyles.eventBtn, eventStyles.joinEventBtn)}
+                            onClick={handleJoinEventClick}
+                        >join event</button>
                         <div>XXX people going</div>
                         <div>contact event host</div>
                     </div>
