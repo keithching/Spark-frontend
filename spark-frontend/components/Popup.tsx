@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import PopupStyles from "../styles/popup.module.css";
 import { useEvents } from "../utils/helper";
 import { useCart } from "../utils/store";
+import { EventProps } from "../lib/customProp";
 
 export const Popup = ({ data }) => {
   const counter = useCart((state) => state.counter);
   const eventIdsInCart = useCart((state) => state.events); // eventIds
   const { events, isError, isLoading } = useEvents();
-  const [eventsInCart, setEventsInCart] = useState([]);
+  const [eventsInCart, setEventsInCart] = useState<EventProps[]>([]);
 
   useEffect(() => {
     if (eventIdsInCart && events) {
