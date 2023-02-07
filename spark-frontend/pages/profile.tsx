@@ -52,8 +52,9 @@ export default function Profile() {
     const imageUploadTextRef = useRef(null);
     // no component rendering will be triggered with useRef
     const isHover = useRef(false);
-    const handleProfilePhotoMouseOver = () => {
-      if (photoURL == "") {
+    const handleProfilePhotoMouseEnter = () => {
+      if (photoURL == null) {
+        console.log("fish!!");
         isHover.current = true;
         imageUploadTextRef.current.classList.add(`${profileStyle["show"]}`);
         profileImageRef.current.classList.add(
@@ -62,7 +63,7 @@ export default function Profile() {
       }
     };
 
-    const handleProfilePhotoMouseOut = () => {
+    const handleProfilePhotoMouseLeave = () => {
       isHover.current = false;
       imageUploadTextRef.current.classList.remove(`${profileStyle["show"]}`);
       profileImageRef.current.classList.remove(
@@ -110,8 +111,8 @@ export default function Profile() {
       <div className={profileStyle["profile-image-container"]}>
         <div
           className={profileStyle["profile-image"]}
-          onMouseOver={handleProfilePhotoMouseOver}
-          onMouseOut={handleProfilePhotoMouseOut}
+          onMouseEnter={handleProfilePhotoMouseEnter}
+          onMouseLeave={handleProfilePhotoMouseLeave}
           onClick={handleProfilePhotoClick}
           ref={profileImageRef}
         >
