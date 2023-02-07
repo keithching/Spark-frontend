@@ -18,7 +18,7 @@ export default function UpdateProfile() {
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordConfirmRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
-  const aboutRef = useRef<HTMLInputElement>(null);
+  const aboutRef = useRef<HTMLTextAreaElement>(null);
   const { currentUser, updatePassword, updateEmail, updateDisplayName } =
     useAuth();
   const [error, setError] = useState<string>("");
@@ -161,8 +161,8 @@ export default function UpdateProfile() {
                 name=""
                 id="aboutInput"
                 ref={aboutRef}
-                cols="30"
-                rows="10"
+                cols={30}
+                rows={10}
               >
                 {eventProvider.about}
               </textarea>
