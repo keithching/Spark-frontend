@@ -54,7 +54,6 @@ export default function Profile() {
     const isHover = useRef(false);
     const handleProfilePhotoMouseEnter = () => {
       if (photoURL == null) {
-        console.log("fish!!");
         isHover.current = true;
         imageUploadTextRef.current.classList.add(`${profileStyle["show"]}`);
         profileImageRef.current.classList.add(
@@ -169,7 +168,7 @@ export default function Profile() {
 
   const handleCancelClick = () => {
     if (!currentUser.photoURL) {
-      setPhotoURL("");
+      setPhotoURL(null);
     } else setPhotoURL(currentUser.photoURL);
     isClick.current = false;
   };
