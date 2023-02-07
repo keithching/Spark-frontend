@@ -2,12 +2,13 @@ import Head from "next/head";
 import React, { useEffect, useRef, useState } from "react";
 import updateProfileStyles from "../styles/updateProfile.module.css";
 import { useAuth } from "../contexts/AuthContext";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import {
+  getEventConsumers,
   getEventProviders,
+  updateEventConsumerByEmail,
   updateEventProviderByEmail,
-  useEventProvider,
+  useRole,
 } from "../utils/helper";
 import Layout from "../components/layout";
 import { EventProviderProps } from "../lib/customProp";
@@ -24,21 +25,27 @@ export default function UpdateProfile() {
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  const { eventProvider, isLoadingEP, isErrorEP } = useEventProvider(
-    currentUser.email
-  );
+
+  const { role, isLoading, isError } = useRole(currentUser.email);
+
+  useEffect(() => {
+    console.log(role);
+  }, [role]);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     // check uniqueness of user input name
-    const eventProviderNames = (await getEventProviders()).map(
-      (provider) => provider.name
-    );
+    const roleNames =
+      role.role === "provider"
+        ? (await getEventProviders()).map((provider) => provider.name)
+        : role.role === "consumer"
+        ? (await getEventConsumers()).map((consumer) => consumer.name)
+        : "error";
 
     if (
       nameRef.current.value !== currentUser.displayName &&
-      eventProviderNames.includes(nameRef.current.value)
+      roleNames.includes(nameRef.current.value)
     ) {
       return setError("Name is already taken");
     }
@@ -55,11 +62,11 @@ export default function UpdateProfile() {
     if (emailRef.current.value !== currentUser.email) {
       promises.push(updateEmail(emailRef.current.value));
     }
-    // update firebase auth currentUser
+
     if (passwordRef.current.value) {
       promises.push(updatePassword(passwordRef.current.value));
     }
-    // update firebase auth currentUser
+
     if (nameRef.current.value !== currentUser.displayName) {
       promises.push(updateDisplayName(nameRef.current.value));
     }
@@ -69,19 +76,25 @@ export default function UpdateProfile() {
       nameRef.current.value !== currentUser.displayName ||
       emailRef.current.value !== currentUser.email ||
       passwordRef.current.value ||
-      phoneRef.current.value ||
-      aboutRef.current.value
+      phoneRef.current.value || // TODO - [saving api calls] make it only true if this field is updated.
+      aboutRef.current.value // TODO - [saving api calls] make it only true if this field is updated.
     ) {
-      console.log(phoneRef.current.value);
-      promises.push(
-        updateEventProviderByEmail(emailRef.current.value, {
-          name: nameRef.current.value,
-          email: emailRef.current.value,
-          password: passwordRef.current.value,
-          phone: phoneRef.current.value,
-          about: aboutRef.current.value,
-        })
-      );
+      const updateRoleData = {
+        name: nameRef.current.value,
+        email: emailRef.current.value,
+        phone: phoneRef.current.value,
+        about: aboutRef.current.value,
+      };
+
+      if (role.role === "provider") {
+        promises.push(
+          updateEventProviderByEmail(currentUser.email, updateRoleData)
+        );
+      } else if (role.role === "consumer") {
+        promises.push(
+          updateEventConsumerByEmail(currentUser.email, updateRoleData)
+        );
+      }
     }
 
     Promise.all(promises)
@@ -94,8 +107,6 @@ export default function UpdateProfile() {
       .finally(() => {
         setLoading(false);
       });
-
-    setLoading(false);
   }
 
   return (
@@ -103,9 +114,9 @@ export default function UpdateProfile() {
       <Head>
         <title>Update Profile</title>
       </Head>
-      {isErrorEP ? (
+      {isError ? (
         <span>Error</span>
-      ) : !isLoadingEP ? (
+      ) : !isLoading ? (
         <div className={updateProfileStyles["update-profile-container"]}>
           <div className={updateProfileStyles["update-profile-card"]}>
             <h2>Update Profile</h2>
@@ -152,8 +163,7 @@ export default function UpdateProfile() {
                 type="number"
                 ref={phoneRef}
                 id="phoneInput"
-                required
-                defaultValue={eventProvider.phone}
+                defaultValue={role.phone}
               />
               <label htmlFor="aboutInput">About</label>
               {/* @ts-ignore */}
@@ -163,9 +173,8 @@ export default function UpdateProfile() {
                 ref={aboutRef}
                 cols={30}
                 rows={10}
-              >
-                {eventProvider.about}
-              </textarea>
+                defaultValue={role.about}
+              />
               <button
                 disabled={loading}
                 type="submit"

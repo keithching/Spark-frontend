@@ -67,8 +67,7 @@ export default function Signup() {
         });
       }
 
-      // router.push('/dashboard');
-      router.push("/profile"); // redirect to profile page for setting up
+      router.push("/profile");
     } catch (err) {
       console.error(err);
       setError("Failed to create an account");
@@ -102,6 +101,7 @@ export default function Signup() {
             ref={roleRef}
             onChange={handleRoleSelection}
             defaultValue="pickRole"
+            className={signupStyles.rolePicker}
           >
             <option value="pickRole" disabled>
               pick a role

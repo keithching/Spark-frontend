@@ -8,7 +8,7 @@ import Layout from "../components/layout";
 import Image from "next/image";
 import { uploadImageAsync } from "../utils/imageUpload";
 import { EventProviderProps } from "../lib/customProp";
-import { useEventConsumer, useEventProvider } from "../utils/helper";
+import { useRole } from "../utils/helper";
 
 type Role = string;
 
@@ -17,13 +17,7 @@ export default function Profile() {
   const [error, setError] = useState<string>("");
   const { currentUser, logout, updatePhotoURL } = useAuth();
   const profileImageRef = useRef(null);
-  const { eventProvider, isLoadingEP, isErrorEP } = useEventProvider(
-    currentUser.email
-  );
-  const { eventConsumer, isLoadingEC, isErrorEC } = useEventConsumer(
-    currentUser.email
-  );
-  const [role, setRole] = useState<Role>("");
+  const { role, isLoading, isError } = useRole(currentUser.email);
   const [photoURL, setPhotoURL] = useState<any>(currentUser.photoURL);
   const photoRef = useRef<HTMLInputElement>(null);
   const isClick = useRef(false);
@@ -37,14 +31,6 @@ export default function Profile() {
       setError("Failed to log out");
     }
   }
-
-  useEffect(() => {
-    if (eventProvider) {
-      setRole("provider");
-    } else if (eventConsumer) {
-      setRole("consumer");
-    }
-  }, [eventProvider, eventConsumer]);
 
   const ProfileImage = () => {
     // [Refactor] same code block from Modal.tsx
@@ -153,7 +139,6 @@ export default function Profile() {
   };
 
   const handleUpdateClick = async () => {
-    // TODO
     try {
       // save image to firebase cloud storage
       const downloadURL = await uploadImageAsync(photoURL, "profiles");
@@ -175,7 +160,7 @@ export default function Profile() {
 
   const Badge = () => {
     const style = {
-      backgroundColor: role === "consumer" ? "green" : "blue",
+      backgroundColor: role.role === "consumer" ? "green" : "blue",
       padding: "5px 10px",
       borderRadius: "5px",
       color: "white",
@@ -185,7 +170,7 @@ export default function Profile() {
       justifyContent: "center",
     };
 
-    return <div style={style}>{role}</div>;
+    return <div style={style}>{role.role}</div>;
   };
 
   return (
@@ -193,9 +178,9 @@ export default function Profile() {
       <Head>
         <title>Profile Page</title>
       </Head>
-      {isErrorEP && isErrorEC ? (
+      {isError ? (
         <span>Error</span>
-      ) : (!isLoadingEP && eventProvider) || (!isLoadingEC && eventConsumer) ? (
+      ) : !isLoading && role ? (
         <div className={profileStyle.profile}>
           <div className={profileStyle["profile-container"]}>
             <div className={profileStyle["profile-info"]}>
@@ -208,12 +193,10 @@ export default function Profile() {
                 Email: {currentUser.email}
               </div>
               <div className={profileStyle["profile-info-phone"]}>
-                Phone:{" "}
-                {eventProvider ? eventProvider.phone : eventConsumer.phone}
+                Phone: {role.phone}
               </div>
               <div className={profileStyle["profile-info-about"]}>
-                About:{" "}
-                {eventProvider ? eventProvider.about : eventConsumer.about}
+                About: {role.about}
               </div>
               <div className={profileStyle["function-buttons"]}>
                 <button

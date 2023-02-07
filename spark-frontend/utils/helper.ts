@@ -50,12 +50,52 @@ export function useEventConsumer(email) {
   };
 }
 
+export function useRole(email) {
+  const { eventProvider, isLoadingEP, isErrorEP } = useEventProvider(email);
+  const { eventConsumer, isLoadingEC, isErrorEC } = useEventConsumer(email);
+
+  let role: any = {};
+
+  if (eventProvider) {
+    role = { ...eventProvider };
+    role.role = "provider";
+  }
+
+  if (eventConsumer) {
+    role = { ...eventConsumer };
+    role.role = "consumer";
+  }
+
+  return {
+    role,
+    isError: isErrorEP && isErrorEC,
+    isLoading: isLoadingEP && isLoadingEC,
+  };
+}
+
+const getEventConsumers = async () => {
+  const eventConsumers = await axios
+    .get(EVENT_CONSUMER_URL)
+    .then((res) => res.data);
+  return eventConsumers;
+};
+
 const getEventProviders = async () => {
   const eventProviders = await axios
     .get(EVENT_PROVIDER_URL)
     .then((res) => res.data);
   return eventProviders;
 };
+
+export function useEventProviders() {
+  const { data, error, isLoading } = useSWR(`${EVENT_PROVIDER_URL}`, fetcher);
+
+  return {
+    eventProviders: data,
+    isLoading: isLoading,
+    isError: error,
+  };
+}
 
 const getEventCategories = async () => {
   const eventCategories = await axios
@@ -145,6 +185,19 @@ const updateEventProviderByEmail = async (
   }
 };
 
+const updateEventConsumerByEmail = async (
+  email: string,
+  eventConsumer: object
+) => {
+  try {
+    await axios
+      .patch(`${EVENT_CONSUMER_URL}/${email}`, eventConsumer)
+      .then((res) => console.log(res));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 const createEvent = async (event) => {
   try {
     await axios.post(EVENT_URL, event).then((res) => console.log(res));
@@ -172,6 +225,7 @@ const deleteEvent = async (id: string | number) => {
 };
 
 export {
+  getEventConsumers,
   getEventProviders,
   getEventCategories,
   getEvents,
@@ -183,6 +237,7 @@ export {
   createEventConsumer,
   createEventProvider,
   updateEventProviderByEmail,
+  updateEventConsumerByEmail,
   createEvent,
   updateEvent,
   deleteEvent,
