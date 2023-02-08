@@ -14,16 +14,7 @@ export const Popup = ({ data }) => {
   const eventIdsInCart = useCart((state) => state.events); // eventIds
   const { currentUser } = useAuth();
   const { events, isError, isLoading } = useEvents();
-  // const [eventsInCart, setEventsInCart] = useState<EventProps[]>([]);
-  const { role } = useRole(currentUser.email);
-
-  // useEffect(() => {
-  //   if (eventIdsInCart && events) {
-  //     setEventsInCart(
-  //       eventIdsInCart.map((id) => events.find((event) => event.id === id))
-  //     );
-  //   }
-  // }, [eventIdsInCart, events]);
+  const { role } = useRole(currentUser?.email);
 
   const handleSendEventsBtnClick = async () => {
     try {
@@ -36,7 +27,6 @@ export const Popup = ({ data }) => {
 
       const data = {
         eventIds: eventIdsInCart,
-        // eventIds: [13, 12], // Hardcode - Temp only
         consumerId: role.id,
       };
 
@@ -51,11 +41,11 @@ export const Popup = ({ data }) => {
       <div className={PopupStyles["popup-text"]}>
         {data}
         <button
-          disabled={counter === 0}
+          disabled={counter === 0 || !currentUser}
           className={PopupStyles.sendEventsToServerBtn}
           onClick={handleSendEventsBtnClick}
         >
-          send to server
+          {currentUser ? "send to server" : "login to join event"}
         </button>
       </div>
     </div>
