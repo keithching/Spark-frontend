@@ -74,6 +74,19 @@ export function useRole(email) {
   };
 }
 
+export function useEventsJoinEventConsumer(consumerId) {
+  const { data, error, isLoading } = useSWR(
+    `${EVENTS_JOIN_EVENT_CONSUMER_URL}/${consumerId}`,
+    fetcher
+  );
+
+  return {
+    eventsJoinEventConsumer: data,
+    isLoadingEJEC: isLoading,
+    isErrorEJEC: error,
+  };
+}
+
 const getEventConsumers = async () => {
   const eventConsumers = await axios
     .get(EVENT_CONSUMER_URL)
