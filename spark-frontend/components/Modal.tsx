@@ -51,8 +51,6 @@ const Modal = (props) => {
         const regionInput = regionRef.current.value;
         const prefectureInput = prefectureRef.current.value;
 
-        // TODO. photo to be included
-
         const eventData = {
           title: titleInput,
           eventProvider: providerInput,
@@ -60,8 +58,6 @@ const Modal = (props) => {
           location: prefectureInput + ", " + regionInput,
           imageURL: null,
         };
-
-        // console.log(eventData);
 
         if (modalContent.operation === "create") {
           // upload photo to firebase.
@@ -273,10 +269,6 @@ const Modal = (props) => {
         </>
       );
     };
-
-    useEffect(() => {
-      console.log(photoURL);
-    });
 
     const PhotoPreview = () => {
       return eventToDisplay && modalContent.operation === "edit" ? (
