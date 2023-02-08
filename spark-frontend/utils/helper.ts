@@ -227,7 +227,6 @@ const deleteEvent = async (id: string | number) => {
 
 const createEventsJoinEventConsumer = async (eventsJoinEventConsumer) => {
   try {
-    console.log(eventsJoinEventConsumer);
     await axios
       .post(`${EVENTS_JOIN_EVENT_CONSUMER_URL}`, eventsJoinEventConsumer)
       .then((res) => console.log(res));

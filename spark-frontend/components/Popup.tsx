@@ -12,14 +12,12 @@ import { useAuth } from "../contexts/AuthContext";
 export const Popup = ({ data }) => {
   const counter = useCart((state) => state.counter);
   const eventIdsInCart = useCart((state) => state.events); // eventIds
+  const resetCart = useCart((state) => state.reset);
   const { currentUser } = useAuth();
-  const { events, isError, isLoading } = useEvents();
   const { role } = useRole(currentUser?.email);
 
   const handleSendEventsBtnClick = async () => {
     try {
-      console.log("implement sending events to server");
-
       if (role.role !== "consumer") {
         console.log("not consumer. aborted submission");
         return;
@@ -31,6 +29,7 @@ export const Popup = ({ data }) => {
       };
 
       await createEventsJoinEventConsumer(data);
+      resetCart(); // reset cart after successful POST request
     } catch (err) {
       console.error(err);
     }
