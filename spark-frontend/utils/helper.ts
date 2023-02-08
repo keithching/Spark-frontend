@@ -14,7 +14,7 @@ const EVENT_PROVIDER_URL = `${URL}/event_providers`;
 const EVENT_CONSUMER_URL = `${URL}/event_consumers`;
 const EVENT_CATEGORY_URL = `${URL}/event_categories`;
 const EVENT_URL = `${URL}/events`;
-const EVENTS_JOIN_EVENT_CONSUMER_URL = `${URL}/api/events_event_consumers`;
+const EVENTS_JOIN_EVENT_CONSUMER_URL = `${URL}/events_event_consumers`;
 
 // external public API
 // const JAPAN_PREFECTURE_URL = 'https://opendata.resas-portal.go.jp/api/v1/prefectures';
