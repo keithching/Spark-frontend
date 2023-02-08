@@ -63,16 +63,13 @@ const Modal = (props) => {
           // upload photo to firebase.
           try {
             const downloadURL = await uploadImageAsync(photoURL, "events");
-            console.log(downloadURL);
-            // TODO. the data should include the photo. The backend endpoint should be able to pick up a photo
-            eventData.imageURL = downloadURL; // append to event data before sending
-            await createEvent(eventData);
+            eventData.imageURL = downloadURL;
+            await createEvent(eventData); // if success: grab the download URL. then createEvent
           } catch (err) {
             console.log(err);
           }
-          // if success: grab the download URL. then createEvent
-          // if success: everything is fine. do a console log maybe for now
-          // if fail: delete the photo in firebase
+
+          // TODO - if fail: delete the photo in firebase
         } else if (modalContent.operation === "edit") {
           const downloadURL =
             eventToDisplay && !photoURL
@@ -238,16 +235,12 @@ const Modal = (props) => {
     const PhotoInput = () => {
       const [photoFile, setPhotoFile] = useState(null);
       const handlePhotoInputChange = (e) => {
-        console.log("hello");
-        // console.log(photoRef.current.files[0]);
-
         // https://stackoverflow.com/questions/16215771/how-to-open-select-file-dialog-via-js
         let reader = new FileReader();
         reader.readAsDataURL(photoRef.current.files[0]);
         setPhotoFile(photoRef.current.files[0]); // is this state necessary?
 
         reader.onload = (readerEvent) => {
-          // console.log(readerEvent.target.result);
           // problem: setting state also causes re-rendering
           setPhotoURL(readerEvent.target.result); // data url for the file
         };
