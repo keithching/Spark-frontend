@@ -7,13 +7,14 @@ import jpPrefecture from "jp-prefecture";
 import useSWR from "swr";
 
 const URL = "https://spark-backend-app.herokuapp.com/api";
-// const URL = 'http://localhost:4000/api';
+// const URL = "http://localhost:4000/api";
 
 // spark backend
 const EVENT_PROVIDER_URL = `${URL}/event_providers`;
 const EVENT_CONSUMER_URL = `${URL}/event_consumers`;
 const EVENT_CATEGORY_URL = `${URL}/event_categories`;
 const EVENT_URL = `${URL}/events`;
+const EVENTS_JOIN_EVENT_CONSUMER_URL = `http://localhost:4000/api/events_event_consumers`;
 
 // external public API
 // const JAPAN_PREFECTURE_URL = 'https://opendata.resas-portal.go.jp/api/v1/prefectures';
@@ -224,6 +225,17 @@ const deleteEvent = async (id: string | number) => {
   }
 };
 
+const createEventsJoinEventConsumer = async (eventsJoinEventConsumer) => {
+  try {
+    console.log(eventsJoinEventConsumer);
+    await axios
+      .post(`${EVENTS_JOIN_EVENT_CONSUMER_URL}`, eventsJoinEventConsumer)
+      .then((res) => console.log(res));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 export {
   getEventConsumers,
   getEventProviders,
@@ -241,4 +253,5 @@ export {
   createEvent,
   updateEvent,
   deleteEvent,
+  createEventsJoinEventConsumer,
 };
