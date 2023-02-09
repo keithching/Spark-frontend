@@ -44,7 +44,7 @@ export default function Event({
       );
       setIsJoined(true);
     }
-  }, [eventsJoinEventConsumer]);
+  }, [eventsJoinEventConsumer, eventData]);
 
   // use zustand cart store
   const eventCartStore = useCart((state) => state.events);
@@ -116,16 +116,6 @@ export default function Event({
                 representation: "date",
               })}
             </div>
-            {/* <div className={eventStyles.interestedTitle}>Interested</div>
-                        <div className={eventStyles.interestedContent}>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                        <div className={eventStyles.functions}>
-                            <button>Add to List</button>
-                            <button>Chat</button>
-                        </div> */}
             {!isJoined && (
               <button
                 onClick={handleAddToCartClick}
@@ -149,8 +139,6 @@ export default function Event({
                 join event
               </button>
             )}
-            {/* <div>XXX people going</div> */}
-            {/* <div>contact event host</div> */}
             <div>
               {isJoined &&
                 "This event has been joined by the current authenticated consumer"}
