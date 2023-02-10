@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   getEventByEventId,
   getAllEventIds,
@@ -14,6 +14,7 @@ import { parseISO, formatISO } from "date-fns";
 import { useCart } from "../../utils/store";
 import classNames from "classnames";
 import { useAuth } from "../../contexts/AuthContext";
+import { useRouter } from "next/router";
 
 export default function Event({
   eventData,
@@ -29,22 +30,51 @@ export default function Event({
     imageURL: string;
   };
 }) {
+  const router = useRouter();
   const { currentUser } = useAuth();
   const { role } = useRole(currentUser?.email);
   const { eventsJoinEventConsumer } = useEventsJoinEventConsumer(role?.id);
-  const [isJoined, setIsJoined] = useState(false);
+  const [isJoined, setIsJoined] = useState<boolean | string>("1"); // set an initial value using a non-zero string
+  const [isVerified, setIsVerified] = useState(false); // set it to true after the user is identified whether he/she has joined an event
+  const [isOwnerOfEvent, setIsOwnerOfEvent] = useState<boolean | string>("1");
 
   useEffect(() => {
     if (
+      role.role === "consumer" &&
       eventsJoinEventConsumer &&
       eventsJoinEventConsumer.find((event) => event.event_id === eventData.id)
     ) {
-      console.log(
-        "this event has been joined by the current authenticated consumer"
-      );
       setIsJoined(true);
+    } else if (eventsJoinEventConsumer) {
+      setIsJoined(false);
     }
-  }, [eventsJoinEventConsumer, eventData]);
+  }, [role, eventsJoinEventConsumer, eventData]);
+
+  useEffect(() => {
+    if (
+      role.role === "consumer" &&
+      eventsJoinEventConsumer &&
+      (isJoined || !isJoined)
+    ) {
+      setIsVerified(true);
+    }
+  }, [role, isJoined, eventsJoinEventConsumer]);
+
+  //////
+  useEffect(() => {
+    console.log(role);
+    console.log(role.name);
+    console.log(eventData.eventProvider);
+    console.log(role.name === eventData.eventProvider);
+    if (role.role === "provider" && role.name === eventData.eventProvider) {
+      setIsOwnerOfEvent(true);
+      setIsVerified(true);
+    } else if (role.role === "provider") {
+      setIsOwnerOfEvent(false);
+      setIsVerified(true);
+    }
+  });
+  /////
 
   // use zustand cart store
   const eventCartStore = useCart((state) => state.events);
@@ -116,7 +146,7 @@ export default function Event({
                 representation: "date",
               })}
             </div>
-            {!isJoined && (
+            {role.role === "consumer" && isVerified && !isJoined && (
               <button
                 onClick={handleAddToCartClick}
                 className={classNames({
@@ -128,7 +158,7 @@ export default function Event({
                 {!isClicked ? "add to cart" : "added to cart"}
               </button>
             )}
-            {!isJoined && (
+            {role.role === "consumer" && isVerified && !isJoined && (
               <button
                 className={classNames(
                   eventStyles.eventBtn,
@@ -139,10 +169,20 @@ export default function Event({
                 join event
               </button>
             )}
-            <div>
-              {isJoined &&
-                "This event has been joined by the current authenticated consumer"}
-            </div>
+
+            {role.role === "consumer" && isVerified && isJoined && (
+              <div>
+                This event has been joined by the current authenticated consumer
+              </div>
+            )}
+            <div>I am {isOwnerOfEvent ? "" : "not"} the provider</div>
+            {role.role === "provider" && isVerified && isOwnerOfEvent && (
+              <>
+                <button onClick={() => router.push("/dashboard")}>
+                  manage event
+                </button>
+              </>
+            )}
           </div>
           <div className={eventStyles.right}>
             {eventData.imageURL && (
