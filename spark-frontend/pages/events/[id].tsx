@@ -1,12 +1,12 @@
 import Head from "next/head";
 import React from "react";
-import { getEventByEventId, getAllEventIds } from "../utils/helper";
-import { EventInformation } from "../components/EventInformation";
-import { EventPhotoDisplay } from "../components/EventPhotoDisplay";
-import { EventFunctionalities } from "../components/EventFunctionalities";
+import { getEventByEventId, getAllEventIds } from "../../utils/helper";
+import { EventInformation } from "../../components/EventInformation";
+import { EventPhotoDisplay } from "../../components/EventPhotoDisplay";
+import { EventFunctionalities } from "../../components/EventFunctionalities";
 import eventStyles from "../../styles/event.module.css";
 import { GetStaticProps, GetStaticPaths } from "next";
-import Layout from "../components/layout";
+import Layout from "../../components/layout";
 
 export default function Event({
   eventData,
