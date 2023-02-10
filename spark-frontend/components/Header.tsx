@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import headerStyles from "../../styles/header.module.css";
-import { useAuth } from "../../contexts/AuthContext";
+import headerStyles from "../styles/header.module.css";
+import { useAuth } from "../contexts/AuthContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";

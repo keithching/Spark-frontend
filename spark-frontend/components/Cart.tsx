@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { BsCart3 } from "react-icons/bs";
-import CartStyles from "../../styles/cart.module.css";
-import { useEvents } from "../../utils/helper";
-import { useCart } from "../../utils/store";
+import CartStyles from "../styles/cart.module.css";
+import { useEvents } from "../utils/helper";
+import { useCart } from "../utils/store";
 import { Popup } from "./Popup";
 
 export const Cart = () => {
