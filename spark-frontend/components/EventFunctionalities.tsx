@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useAuth } from "../../contexts/AuthContext";
-import { useCart } from "../../utils/store";
-import { useEventsJoinEventConsumer, useRole } from "../../utils/helper";
+import { useAuth } from "../contexts/AuthContext";
+import { useCart } from "../utils/store";
+import { useEventsJoinEventConsumer, useRole } from "../utils/helper";
 import classNames from "classnames";
-import eventFunctionalitiesStyles from "../../styles/eventFunctionalities.module.css";
+import eventFunctionalitiesStyles from "../styles/eventFunctionalities.module.css";
 
 export const EventFunctionalities = ({ eventData }) => {
   const { currentUser } = useAuth();
@@ -116,10 +116,15 @@ export const EventFunctionalities = ({ eventData }) => {
           This event has been joined by the current authenticated consumer
         </div>
       )}
-      <div>I am {isOwnerOfEvent ? "" : "not"} the provider</div>
+      {role.role === "provider" && (
+        <div>I am {isOwnerOfEvent === true ? "" : "not"} the provider</div>
+      )}
       {role.role === "provider" && isVerified && isOwnerOfEvent && (
         <>
-          <button onClick={() => router.push("/dashboard")}>
+          <button
+            className={eventFunctionalitiesStyles.manageEventBtn}
+            onClick={() => router.push("/dashboard")}
+          >
             manage event
           </button>
         </>

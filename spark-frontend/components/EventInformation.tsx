@@ -1,4 +1,4 @@
-import eventInformationStyles from "../../styles/eventInformation.module.css";
+import eventInformationStyles from "../styles/eventInformation.module.css";
 import { parseISO, formatISO } from "date-fns";
 
 export const EventInformation = ({ eventData }) => {
