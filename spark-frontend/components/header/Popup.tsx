@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import PopupStyles from "../styles/popup.module.css";
+import PopupStyles from "../../styles/popup.module.css";
 import {
   createEventsJoinEventConsumer,
   useEvents,
   useRole,
-} from "../utils/helper";
-import { useCart } from "../utils/store";
-import { EventProps } from "../lib/customProp";
-import { useAuth } from "../contexts/AuthContext";
+} from "../../utils/helper";
+import { useCart } from "../../utils/store";
+import { EventProps } from "../../lib/customProp";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const Popup = ({ data }) => {
   const counter = useCart((state) => state.counter);
