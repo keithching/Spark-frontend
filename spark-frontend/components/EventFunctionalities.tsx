@@ -209,7 +209,6 @@ export const EventFunctionalities = ({ eventData }) => {
   const GuestFunctions = () => {
     return (
       <>
-        <div>Hi I am a guest!</div>
         <AddToCartBtn />
         <JoinEventBtn />
       </>
