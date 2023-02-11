@@ -9,6 +9,7 @@ import {
   useEventProvider,
   useEventConsumer,
   useRole,
+  useEventsJoinEventConsumerByEmail,
 } from "../utils/helper";
 import Modal from "./Modal";
 // import EditEventModal from './EditEventModal';
@@ -23,6 +24,7 @@ import {
   EventProps,
   JpRegionProps,
 } from "../lib/customProp";
+import { useRouter } from "next/router";
 
 interface ModalProps {
   title: string;
@@ -34,6 +36,10 @@ type Role = string;
 const Main = () => {
   const { currentUser, adminEmail } = useAuth();
   const { role } = useRole(currentUser?.email);
+  const router = useRouter();
+  const { eventsJoinEventConsumer } = useEventsJoinEventConsumerByEmail(
+    currentUser?.email
+  );
 
   const [showModal, setShowModal] = useState<boolean>(false);
   useEffect(() => {
@@ -165,8 +171,20 @@ const Main = () => {
           ) : !loading && currentUser && events.length === 0 ? (
             role === "provider" ? (
               <span>Create your first event</span>
-            ) : (
+            ) : eventsJoinEventConsumer.length === 0 ? (
               <span>Join your first event</span>
+            ) : (
+              eventsJoinEventConsumer.map((item) => {
+                return (
+                  <div
+                    key={item.consumer_id}
+                    className={mainStyles.consumerEventDiv}
+                    onClick={() => router.push(`/events/${item.event_id}`)}
+                  >
+                    {item.event_id}
+                  </div>
+                );
+              })
             )
           ) : (
             <Loading />

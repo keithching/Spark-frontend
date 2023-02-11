@@ -1,14 +1,14 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -17,13 +17,13 @@ code {
   overflow: hidden;
 }
 
-/* Define CSS Variables here */
+/* Define Global CSS Variables here */
 :root {
   --main-padding: 20px;
-  --event-background-color: rgba(0,0,0,0.1);
+  --event-background-color: rgba(0, 0, 0, 0.1);
   --background-color-flavor: rgb(218, 254, 218);
   --background-color-light: rgb(234, 234, 234);
-  --background-color-medium: rgba(0,0,0,0.1);
+  --background-color-medium: rgba(0, 0, 0, 0.1);
   --background-color-dark: black;
   --border-color-light: grey;
   --font-color-primary: black;
