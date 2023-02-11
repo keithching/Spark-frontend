@@ -110,14 +110,22 @@ export const EventFunctionalities = ({ eventData }) => {
     const handleJoinEventClick = async () => {
       if (!currentUser) return alert("sign-in is required.");
 
-      const eventJoinEventConsumer = {
-        eventIds: [eventData.id],
-        consumerId: role.id,
-      };
+      try {
+        const eventJoinEventConsumer = {
+          eventIds: [eventData.id],
+          consumerId: role.id,
+        };
 
-      // send to the backend API as a POST request
-      await createEventsJoinEventConsumer(eventJoinEventConsumer);
-      setIsJoined(true);
+        // send to the backend API as a POST request
+        await createEventsJoinEventConsumer(eventJoinEventConsumer);
+        alert("joined");
+
+        // TO REFACTOR - these 2 actions should be in sync when display in UI
+        mutate(getEventsJoinEventConsumerByEventId(eventData.id));
+        setIsJoined(true);
+      } catch (err) {
+        alert(err);
+      }
     };
 
     return (
@@ -135,21 +143,25 @@ export const EventFunctionalities = ({ eventData }) => {
 
   const LeaveEventBtn = () => {
     const handleLeaveEventClick = async () => {
-      // alert("to be implemented!!!");
+      try {
+        const eventJoinEventConsumer = {
+          event_id: eventData.id,
+          consumer_id: role.id,
+        };
 
-      const eventJoinEventConsumer = {
-        event_id: eventData.id,
-        consumer_id: role.id,
-      };
+        // send to the backend API as a DELETE request
+        await deleteEventsJoinEventConsumer(eventJoinEventConsumer);
+        alert("deleted");
+        // if success, update the UI
+        // refresh data with SWR
+        // https://benborgers.com/posts/swr-refresh
 
-      // send to the backend API as a DELETE request
-      await deleteEventsJoinEventConsumer(eventJoinEventConsumer);
-
-      // if success, update the UI
-      // refresh data with SWR
-      // https://benborgers.com/posts/swr-refresh
-      mutate(getEventsJoinEventConsumerByEventId(eventData.id));
-      setIsJoined(false); // very slow
+        // TO REFACTOR - these 2 actions should be in sync when display in UI
+        mutate(getEventsJoinEventConsumerByEventId(eventData.id));
+        setIsJoined(false); // very slow
+      } catch (err) {
+        alert(err);
+      }
     };
     return (
       <>
