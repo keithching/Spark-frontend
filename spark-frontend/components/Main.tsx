@@ -171,7 +171,8 @@ const Main = () => {
           ) : !loading && currentUser && events.length === 0 ? (
             role === "provider" ? (
               <span>Create your first event</span>
-            ) : eventsJoinEventConsumer.length === 0 ? (
+            ) : eventsJoinEventConsumer &&
+              eventsJoinEventConsumer.length === 0 ? (
               <span>Join your first event</span>
             ) : (
               eventsJoinEventConsumer.map((item) => {
