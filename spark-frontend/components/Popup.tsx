@@ -8,6 +8,7 @@ import {
 import { useCart } from "../utils/store";
 import { EventProps } from "../lib/customProp";
 import { useAuth } from "../contexts/AuthContext";
+import { useRouter } from "next/router";
 
 export const Popup = ({ data }) => {
   const counter = useCart((state) => state.counter);
@@ -15,6 +16,7 @@ export const Popup = ({ data }) => {
   const resetCart = useCart((state) => state.reset);
   const { currentUser } = useAuth();
   const { role } = useRole(currentUser?.email);
+  const router = useRouter();
 
   const handleSendEventsBtnClick = async () => {
     try {
@@ -29,7 +31,9 @@ export const Popup = ({ data }) => {
       };
 
       await createEventsJoinEventConsumer(data);
+      alert(`joined ${eventIdsInCart.length} events successfully`);
       resetCart(); // reset cart after successful POST request
+      router.push("/"); // redirects to index page
     } catch (err) {
       console.error(err);
     }
