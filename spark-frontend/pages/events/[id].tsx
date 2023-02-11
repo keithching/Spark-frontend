@@ -1,12 +1,13 @@
-import Head from "next/head";
 import React from "react";
-import { getEventByEventId, getAllEventIds } from "../../utils/helper";
-import { EventInformation } from "../../components/EventInformation";
-import { EventPhotoDisplay } from "../../components/EventPhotoDisplay";
-import { EventFunctionalities } from "../../components/EventFunctionalities";
-import eventStyles from "../../styles/event.module.css";
+import Head from "next/head";
 import { GetStaticProps, GetStaticPaths } from "next";
 import Layout from "../../components/layout";
+import { EventInformation } from "../../components/EventInformation";
+import { EventFunctionalities } from "../../components/EventFunctionalities";
+import { EventJoiners } from "../../components/EventJoiners";
+import { EventPhotoDisplay } from "../../components/EventPhotoDisplay";
+import { getEventByEventId, getAllEventIds } from "../../utils/helper";
+import eventStyles from "../../styles/event.module.css";
 
 export default function Event({
   eventData,
@@ -28,6 +29,7 @@ export default function Event({
         <div className={eventStyles.left}>
           <EventInformation eventData={eventData} />
           <EventFunctionalities eventData={eventData} />
+          <EventJoiners />
         </div>
         <div className={eventStyles.right}>
           <EventPhotoDisplay {...eventData} />

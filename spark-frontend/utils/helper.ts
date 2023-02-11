@@ -74,9 +74,9 @@ export function useRole(email) {
   };
 }
 
-export function useEventsJoinEventConsumer(consumerId) {
+export function useEventsJoinEventConsumer(consumerEmail) {
   const { data, error, isLoading } = useSWR(
-    `${EVENTS_JOIN_EVENT_CONSUMER_URL}/${consumerId}`,
+    `${EVENTS_JOIN_EVENT_CONSUMER_URL}/${consumerEmail}`,
     fetcher
   );
 

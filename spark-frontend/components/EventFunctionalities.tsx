@@ -9,7 +9,9 @@ import eventFunctionalitiesStyles from "../styles/eventFunctionalities.module.cs
 export const EventFunctionalities = ({ eventData }) => {
   const { currentUser } = useAuth();
   const { role } = useRole(currentUser?.email);
-  const { eventsJoinEventConsumer } = useEventsJoinEventConsumer(role?.id);
+  const { eventsJoinEventConsumer } = useEventsJoinEventConsumer(
+    currentUser?.email
+  );
   const [isJoined, setIsJoined] = useState<boolean | string>("1"); // set an initial value using a non-zero string
   const [isVerified, setIsVerified] = useState(false); // set it to true after the user is identified whether he/she has joined an event
   const [isOwnerOfEvent, setIsOwnerOfEvent] = useState<boolean | string>("1");
