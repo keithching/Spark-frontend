@@ -261,6 +261,19 @@ const createEventsJoinEventConsumer = async (eventsJoinEventConsumer) => {
   }
 };
 
+const deleteEventsJoinEventConsumer = async (eventJoinEventConsumer) => {
+  try {
+    console.log(eventJoinEventConsumer);
+    await axios({
+      method: "delete",
+      url: `${EVENTS_JOIN_EVENT_CONSUMER_URL}`,
+      data: eventJoinEventConsumer,
+    }).then((res) => console.log(res));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 export {
   getEventConsumers,
   getEventProviders,
@@ -279,4 +292,5 @@ export {
   updateEvent,
   deleteEvent,
   createEventsJoinEventConsumer,
+  deleteEventsJoinEventConsumer,
 };

@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../utils/store";
-import { useEventsJoinEventConsumerByEmail, useRole } from "../utils/helper";
+import {
+  useEventsJoinEventConsumerByEmail,
+  useRole,
+  deleteEventsJoinEventConsumer,
+} from "../utils/helper";
 import classNames from "classnames";
 import eventFunctionalitiesStyles from "../styles/eventFunctionalities.module.css";
 
@@ -117,11 +121,24 @@ export const EventFunctionalities = ({ eventData }) => {
   };
 
   const LeaveEventBtn = () => {
+    const handleLeaveEventClick = () => {
+      // alert("to be implemented!!!");
+
+      const eventJoinEventConsumer = {
+        event_id: eventData.id,
+        consumer_id: role.id,
+      };
+
+      // send to the backend API as a DELETE request
+      deleteEventsJoinEventConsumer(eventJoinEventConsumer);
+
+      // if success, update the UI
+    };
     return (
       <>
         <button
           className={classNames(eventFunctionalitiesStyles.leaveEventBtn)}
-          onClick={() => alert("to be implemented")}
+          onClick={handleLeaveEventClick}
         >
           leave event
         </button>
@@ -174,7 +191,7 @@ export const EventFunctionalities = ({ eventData }) => {
     <>
       {role.role === "consumer" && <ConsumerFunctions />}
       {role.role === "provider" && <ProviderFunctions />}
-      {Object.keys(role).length === 0 && <GuestFunctions />}
+      {!currentUser && <GuestFunctions />}
     </>
   );
 };
