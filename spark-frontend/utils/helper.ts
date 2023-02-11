@@ -74,26 +74,42 @@ export function useRole(email) {
   };
 }
 
+const getEventsJoinEventConsumerByEmail = async (consumerEmail) => {
+  const eventsJoinEventConsumer = await axios
+    .get(EVENT_CONSUMER_URL, consumerEmail)
+    .then((res) => res.data);
+  return eventsJoinEventConsumer;
+};
+
 export function useEventsJoinEventConsumerByEmail(consumerEmail) {
-  const { data, error, isLoading } = useSWR(
+  const { data, mutate, error, isLoading } = useSWR(
     `${EVENTS_JOIN_EVENT_CONSUMER_URL}/${consumerEmail}`,
     fetcher
   );
 
   return {
+    mutate,
     eventsJoinEventConsumer: data,
     isLoadingEJEC: isLoading,
     isErrorEJEC: error,
   };
 }
 
+const getEventsJoinEventConsumerByEventId = async (eventId) => {
+  const eventsJoinEventConsumer = await axios
+    .get(EVENT_CONSUMER_URL, eventId)
+    .then((res) => res.data);
+  return eventsJoinEventConsumer;
+};
+
 export function useEventsJoinEventConsumerByEventId(eventId) {
-  const { data, error, isLoading } = useSWR(
+  const { data, mutate, error, isLoading } = useSWR(
     `${EVENTS_JOIN_EVENT_CONSUMER_URL}/${eventId}`,
     fetcher
   );
 
   return {
+    mutate,
     eventsJoinEventConsumer: data,
     isLoadingEJEC: isLoading,
     isErrorEJEC: error,
@@ -293,4 +309,6 @@ export {
   deleteEvent,
   createEventsJoinEventConsumer,
   deleteEventsJoinEventConsumer,
+  getEventsJoinEventConsumerByEventId,
+  getEventsJoinEventConsumerByEmail,
 };

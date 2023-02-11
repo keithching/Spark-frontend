@@ -6,6 +6,9 @@ import {
   useEventsJoinEventConsumerByEmail,
   useRole,
   deleteEventsJoinEventConsumer,
+  useEventsJoinEventConsumerByEventId,
+  getEventsJoinEventConsumerByEventId,
+  createEventsJoinEventConsumer,
 } from "../utils/helper";
 import classNames from "classnames";
 import eventFunctionalitiesStyles from "../styles/eventFunctionalities.module.css";
@@ -20,6 +23,7 @@ export const EventFunctionalities = ({ eventData }) => {
   const [isVerified, setIsVerified] = useState(false); // set it to true after the user is identified whether he/she has joined an event
   const [isOwnerOfEvent, setIsOwnerOfEvent] = useState<boolean | string>("1");
   const router = useRouter();
+  const { mutate } = useEventsJoinEventConsumerByEventId(eventData?.id);
 
   useEffect(() => {
     if (
@@ -103,8 +107,17 @@ export const EventFunctionalities = ({ eventData }) => {
   };
 
   const JoinEventBtn = () => {
-    const handleJoinEventClick = () => {
-      alert("sign-in is required.");
+    const handleJoinEventClick = async () => {
+      if (!currentUser) return alert("sign-in is required.");
+
+      const eventJoinEventConsumer = {
+        eventIds: [eventData.id],
+        consumerId: role.id,
+      };
+
+      // send to the backend API as a POST request
+      await createEventsJoinEventConsumer(eventJoinEventConsumer);
+      setIsJoined(true);
     };
 
     return (
@@ -121,7 +134,7 @@ export const EventFunctionalities = ({ eventData }) => {
   };
 
   const LeaveEventBtn = () => {
-    const handleLeaveEventClick = () => {
+    const handleLeaveEventClick = async () => {
       // alert("to be implemented!!!");
 
       const eventJoinEventConsumer = {
@@ -130,9 +143,13 @@ export const EventFunctionalities = ({ eventData }) => {
       };
 
       // send to the backend API as a DELETE request
-      deleteEventsJoinEventConsumer(eventJoinEventConsumer);
+      await deleteEventsJoinEventConsumer(eventJoinEventConsumer);
 
       // if success, update the UI
+      // refresh data with SWR
+      // https://benborgers.com/posts/swr-refresh
+      mutate(getEventsJoinEventConsumerByEventId(eventData.id));
+      setIsJoined(false); // very slow
     };
     return (
       <>
@@ -142,9 +159,9 @@ export const EventFunctionalities = ({ eventData }) => {
         >
           leave event
         </button>
-        <div>
+        {/* <div>
           This event has been joined by the current authenticated consumer
-        </div>
+        </div> */}
       </>
     );
   };
