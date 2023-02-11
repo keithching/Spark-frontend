@@ -8,6 +8,7 @@ import {
   getAllRegions,
   useEventProvider,
   useEventConsumer,
+  useRole,
 } from "../utils/helper";
 import Modal from "./Modal";
 // import EditEventModal from './EditEventModal';
@@ -31,6 +32,9 @@ interface ModalProps {
 type Role = string;
 
 const Main = () => {
+  const { currentUser, adminEmail } = useAuth();
+  const { role } = useRole(currentUser?.email);
+
   const [showModal, setShowModal] = useState<boolean>(false);
   useEffect(() => {
     if (showModal) {
@@ -40,7 +44,6 @@ const Main = () => {
     }
   }, [showModal]);
 
-  const { currentUser, adminEmail } = useAuth();
   const [eventProviders, setEventProviders] = useState<EventProviderProps[]>(
     []
   );
@@ -50,22 +53,6 @@ const Main = () => {
   const [events, setEvents] = useState<EventProps[]>([]);
   const [regions, setRegions] = useState<JpRegionProps[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-
-  const { eventProvider, isLoadingEP, isErrorEP } = useEventProvider(
-    currentUser.email
-  );
-  const { eventConsumer, isLoadingEC, isErrorEC } = useEventConsumer(
-    currentUser.email
-  );
-  const [role, setRole] = useState<Role>("");
-
-  useEffect(() => {
-    if (eventProvider) {
-      setRole("provider");
-    } else if (eventConsumer) {
-      setRole("consumer");
-    }
-  }, [eventProvider, eventConsumer]);
 
   const [modalContent, setModalContent] = useState<ModalProps>({
     title: "", // title for the modal
@@ -238,8 +225,9 @@ const Main = () => {
 
   return (
     <div className={mainStyles.Main}>
-      {((eventProvider && !isErrorEP && !isLoadingEP) ||
-        (eventConsumer && !isErrorEC && !isLoadingEC)) &&
+      {role &&
+      // ((eventProvider && !isErrorEP && !isLoadingEP) ||
+      // (eventConsumer && !isErrorEC && !isLoadingEC))
       currentUser &&
       currentUser.email === adminEmail ? (
         <>
