@@ -29,7 +29,7 @@ export default function Event({
         <div className={eventStyles.left}>
           <EventInformation eventData={eventData} />
           <EventFunctionalities eventData={eventData} />
-          <EventJoiners />
+          <EventJoiners eventData={eventData} />
         </div>
         <div className={eventStyles.right}>
           <EventPhotoDisplay {...eventData} />

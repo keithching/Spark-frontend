@@ -74,9 +74,22 @@ export function useRole(email) {
   };
 }
 
-export function useEventsJoinEventConsumer(consumerEmail) {
+export function useEventsJoinEventConsumerByEmail(consumerEmail) {
   const { data, error, isLoading } = useSWR(
     `${EVENTS_JOIN_EVENT_CONSUMER_URL}/${consumerEmail}`,
+    fetcher
+  );
+
+  return {
+    eventsJoinEventConsumer: data,
+    isLoadingEJEC: isLoading,
+    isErrorEJEC: error,
+  };
+}
+
+export function useEventsJoinEventConsumerByEventId(eventId) {
+  const { data, error, isLoading } = useSWR(
+    `${EVENTS_JOIN_EVENT_CONSUMER_URL}/${eventId}`,
     fetcher
   );
 

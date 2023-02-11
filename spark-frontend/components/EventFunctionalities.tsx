@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../utils/store";
-import { useEventsJoinEventConsumer, useRole } from "../utils/helper";
+import { useEventsJoinEventConsumerByEmail, useRole } from "../utils/helper";
 import classNames from "classnames";
 import eventFunctionalitiesStyles from "../styles/eventFunctionalities.module.css";
 
 export const EventFunctionalities = ({ eventData }) => {
   const { currentUser } = useAuth();
   const { role } = useRole(currentUser?.email);
-  const { eventsJoinEventConsumer } = useEventsJoinEventConsumer(
+  const { eventsJoinEventConsumer } = useEventsJoinEventConsumerByEmail(
     currentUser?.email
   );
   const [isJoined, setIsJoined] = useState<boolean | string>("1"); // set an initial value using a non-zero string
