@@ -37,9 +37,8 @@ const Main = () => {
   const { currentUser, adminEmail } = useAuth();
   const { role } = useRole(currentUser?.email);
   const router = useRouter();
-  const { eventsJoinEventConsumer } = useEventsJoinEventConsumerByEmail(
-    currentUser?.email
-  );
+  const { eventsJoinEventConsumer, isLoadingEJEC } =
+    useEventsJoinEventConsumerByEmail(currentUser?.email);
 
   const [showModal, setShowModal] = useState<boolean>(false);
   useEffect(() => {
@@ -171,9 +170,11 @@ const Main = () => {
           ) : !loading && currentUser && events.length === 0 ? (
             role === "provider" ? (
               <span>Create your first event</span>
-            ) : eventsJoinEventConsumer.length === 0 ? (
+            ) : !isLoadingEJEC &&
+              eventsJoinEventConsumer &&
+              eventsJoinEventConsumer.length === 0 ? (
               <span>Join your first event</span>
-            ) : (
+            ) : !isLoadingEJEC && eventsJoinEventConsumer ? (
               eventsJoinEventConsumer.map((item) => {
                 return (
                   <div
@@ -185,6 +186,8 @@ const Main = () => {
                   </div>
                 );
               })
+            ) : (
+              <Loading />
             )
           ) : (
             <Loading />
