@@ -13,6 +13,7 @@ export const EventFunctionalities = ({ eventData }) => {
   const [isJoined, setIsJoined] = useState<boolean | string>("1"); // set an initial value using a non-zero string
   const [isVerified, setIsVerified] = useState(false); // set it to true after the user is identified whether he/she has joined an event
   const [isOwnerOfEvent, setIsOwnerOfEvent] = useState<boolean | string>("1");
+  const router = useRouter();
 
   useEffect(() => {
     if (
@@ -44,7 +45,7 @@ export const EventFunctionalities = ({ eventData }) => {
       setIsOwnerOfEvent(false);
       setIsVerified(true);
     }
-  });
+  }, [role, eventData]);
 
   const eventCartStore = useCart((state) => state.events);
   const addToEvents = useCart((state) => state.addToEvents);
@@ -55,6 +56,7 @@ export const EventFunctionalities = ({ eventData }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [eventCart, setEventCart] = useState([]);
 
+  // working with LocalStorage in Static Site Generation
   // https://github.com/pmndrs/zustand/discussions/855
   // https://nextjs.org/docs/messages/react-hydration-error
   // called during hydration, which has access to the window object localStorage method
@@ -70,65 +72,107 @@ export const EventFunctionalities = ({ eventData }) => {
     }
   }, [eventCartStore, eventData]);
 
-  const router = useRouter();
+  const AddToCartBtn = () => {
+    const handleAddToCartClick = () => {
+      if (eventCartStore.includes(eventData.id)) {
+        removeFromEvents(eventData.id);
+      } else {
+        addToEvents(eventData.id);
+      }
+      updateCounter();
+    };
 
-  const handleAddToCartClick = () => {
-    if (eventCartStore.includes(eventData.id)) {
-      removeFromEvents(eventData.id);
-    } else {
-      addToEvents(eventData.id);
-    }
-    updateCounter();
+    return (
+      <button
+        onClick={handleAddToCartClick}
+        className={classNames({
+          [eventFunctionalitiesStyles.eventBtn]: true,
+          [eventFunctionalitiesStyles.addToCart]: !isClicked,
+          [eventFunctionalitiesStyles.addedToCart]: isClicked,
+        })}
+      >
+        {!isClicked ? "add to cart" : "added to cart"}
+      </button>
+    );
   };
 
-  const handleJoinEventClick = () => {
-    alert("sign-in is required.");
+  const JoinEventBtn = () => {
+    const handleJoinEventClick = () => {
+      alert("sign-in is required.");
+    };
+
+    return (
+      <button
+        className={classNames(
+          eventFunctionalitiesStyles.eventBtn,
+          eventFunctionalitiesStyles.joinEventBtn
+        )}
+        onClick={handleJoinEventClick}
+      >
+        join event
+      </button>
+    );
+  };
+
+  const LeaveEventBtn = () => {
+    return (
+      <>
+        <button
+          className={classNames(eventFunctionalitiesStyles.leaveEventBtn)}
+          onClick={() => alert("to be implemented")}
+        >
+          leave event
+        </button>
+        <div>
+          This event has been joined by the current authenticated consumer
+        </div>
+      </>
+    );
+  };
+
+  const ConsumerFunctions = () => {
+    return (
+      <>
+        {isVerified && !isJoined && <AddToCartBtn />}
+        {isVerified && !isJoined && <JoinEventBtn />}
+        {isVerified && isJoined && <LeaveEventBtn />}
+      </>
+    );
+  };
+
+  const ProviderFunctions = () => {
+    return (
+      <>
+        {<div>I am {isOwnerOfEvent === true ? "" : "not"} the provider</div>}
+        {isVerified && isOwnerOfEvent && (
+          <>
+            <button
+              className={eventFunctionalitiesStyles.manageEventBtn}
+              onClick={() => router.push("/dashboard")}
+            >
+              manage event
+            </button>
+          </>
+        )}
+      </>
+    );
+  };
+
+  const GuestFunctions = () => {
+    return (
+      <>
+        <div>Hi I am a guest!</div>
+        <AddToCartBtn />
+        <JoinEventBtn />
+      </>
+    );
   };
 
   return (
     <>
-      {role.role === "consumer" && isVerified && !isJoined && (
-        <button
-          onClick={handleAddToCartClick}
-          className={classNames({
-            [eventFunctionalitiesStyles.eventBtn]: true,
-            [eventFunctionalitiesStyles.addToCart]: !isClicked,
-            [eventFunctionalitiesStyles.addedToCart]: isClicked,
-          })}
-        >
-          {!isClicked ? "add to cart" : "added to cart"}
-        </button>
-      )}
-      {role.role === "consumer" && isVerified && !isJoined && (
-        <button
-          className={classNames(
-            eventFunctionalitiesStyles.eventBtn,
-            eventFunctionalitiesStyles.joinEventBtn
-          )}
-          onClick={handleJoinEventClick}
-        >
-          join event
-        </button>
-      )}
-
-      {role.role === "consumer" && isVerified && isJoined && (
-        <div>
-          This event has been joined by the current authenticated consumer
-        </div>
-      )}
-      {role.role === "provider" && (
-        <div>I am {isOwnerOfEvent === true ? "" : "not"} the provider</div>
-      )}
-      {role.role === "provider" && isVerified && isOwnerOfEvent && (
-        <>
-          <button
-            className={eventFunctionalitiesStyles.manageEventBtn}
-            onClick={() => router.push("/dashboard")}
-          >
-            manage event
-          </button>
-        </>
-      )}
+      {role.role === "consumer" && <ConsumerFunctions />}
+      {role.role === "provider" && <ProviderFunctions />}
+      {Object.keys(role).length === 0 && <GuestFunctions />}
     </>
   );
 };
