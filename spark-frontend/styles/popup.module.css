@@ -1,20 +1,20 @@
 .popup {
-    position: relative;
+    position: fixed;
 }
 
 .popup-text {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
-    padding: 5px;
+    padding: 10px;
     position: absolute;
-    width: 400px;
+    width: 300px;
     background-color: var(--background-color-light);
     box-shadow: 0 0 8px 1px rgba(0,0,0,0.1);
     top: 50px;
-    right: 10px;
+    left: 50px;
     z-index: 1;
-    padding: 5px;
 }
 
 .popup-text > div {
@@ -22,4 +22,13 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
+}
+
+.sendEventsToServerBtn {
+    background-color: var(--background-color-flavor);
+    width: 200px;
+}
+
+.sendEventsToServerBtn:disabled {
+    background-color: var(--background-color-medium);
 }
