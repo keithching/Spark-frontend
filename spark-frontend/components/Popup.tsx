@@ -39,38 +39,30 @@ export const Popup = ({ data, hamburgerIsClicked }) => {
     }
   };
 
-  useEffect(() => {
-    if (hamburgerIsClicked) console.log("YAYA");
-  });
-
   return (
     <>
-      {!hamburgerIsClicked && (
-        <div className={PopupStyles["popup"]}>
-          <div className={PopupStyles["popup-text"]}>
-            {data}
-            <button
-              disabled={counter === 0 || !currentUser}
-              className={PopupStyles.sendEventsToServerBtn}
-              onClick={handleSendEventsBtnClick}
-            >
-              {currentUser ? "send to server" : "login to join event"}
-            </button>
-          </div>
+      <div
+        className={
+          !hamburgerIsClicked ? PopupStyles["popup"] : PopupStyles.inSideMenu
+        }
+      >
+        <div
+          className={
+            !hamburgerIsClicked
+              ? PopupStyles["popup-text"]
+              : PopupStyles.inSideMenuText
+          }
+        >
+          {data}
         </div>
-      )}
-      {hamburgerIsClicked && (
-        <div className={PopupStyles.inSideMenu}>
-          <div className={PopupStyles.inSideMenuText}>{data}</div>
-          <button
-            disabled={counter === 0 || !currentUser}
-            className={PopupStyles.sendEventsToServerBtn}
-            onClick={handleSendEventsBtnClick}
-          >
-            {currentUser ? "send to server" : "login to join event"}
-          </button>
-        </div>
-      )}
+        <button
+          disabled={counter === 0 || !currentUser}
+          className={PopupStyles.sendEventsToServerBtn}
+          onClick={handleSendEventsBtnClick}
+        >
+          {currentUser ? "send to server" : "login to join event"}
+        </button>
+      </div>
     </>
   );
 };
