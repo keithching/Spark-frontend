@@ -8,7 +8,11 @@ import Layout from "../components/layout";
 import Image from "next/image";
 import { uploadImageAsync } from "../utils/imageUpload";
 import { EventProviderProps } from "../lib/customProp";
-import { useRole } from "../utils/helper";
+import {
+  updateEventConsumerByEmail,
+  updateEventProviderByEmail,
+  useRole,
+} from "../utils/helper";
 
 type Role = string;
 
@@ -17,7 +21,7 @@ export default function Profile() {
   const [error, setError] = useState<string>("");
   const { currentUser, logout, updatePhotoURL } = useAuth();
   const profileImageRef = useRef(null);
-  const { role, isLoading, isError } = useRole(currentUser.email);
+  const { role, isLoading, isError } = useRole(currentUser?.email);
   const [photoURL, setPhotoURL] = useState<any>(currentUser.photoURL);
   const photoRef = useRef<HTMLInputElement>(null);
   const isClick = useRef(false);
@@ -62,18 +66,29 @@ export default function Profile() {
     };
 
     const PhotoInput = () => {
-      const [photoFile, setPhotoFile] = useState<any>(null);
+      // const [photoFile, setPhotoFile] = useState<any>(null);
 
+      const handleInputClick = (e) => {
+        console.log("hello");
+        // photoRef.current.value = "";
+        e.target.value = "";
+        // setPhotoURL(null);
+      };
+
+      // 20230213 TO REFACTOR - Not firing properly with the photo is clicked
       const handlePhotoInputChange = (e) => {
         // event cancelling
-        if (e.target.value.length === 0) {
+        if (e.target.value === "") {
+          console.log("HI");
           return;
         }
         let reader = new FileReader();
-        reader.readAsDataURL(photoRef.current.files[0]);
-        setPhotoFile(photoRef.current.files[0]);
+        reader.readAsDataURL(e.target.files[0]);
+        // setPhotoFile(photoRef.current.files[0]);
+        console.log("hihi");
 
         reader.onload = (readerEvent) => {
+          console.log(readerEvent.target.result);
           setPhotoURL(readerEvent.target.result);
         };
       };
@@ -87,6 +102,7 @@ export default function Profile() {
             id="photoInput"
             ref={photoRef}
             onChange={handlePhotoInputChange}
+            onClick={handleInputClick}
           />
         </div>
       );
@@ -145,6 +161,28 @@ export default function Profile() {
       await updatePhotoURL(downloadURL);
       // set image URL to firebase auth currentUser
       setPhotoURL(currentUser.photoURL);
+
+      // update Database profile pic url
+      if (role.role === "provider") {
+        try {
+          await updateEventProviderByEmail(currentUser.email, {
+            profile_pic_url: downloadURL,
+          });
+          console.log("success!");
+        } catch (err) {
+          console.error(err);
+        }
+      } else if (role.role === "consumer") {
+        try {
+          await updateEventConsumerByEmail(currentUser.email, {
+            profile_pic_url: downloadURL,
+          });
+          console.log("success!");
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
       isClick.current = false;
     } catch (err) {
       console.log(err);
@@ -154,8 +192,11 @@ export default function Profile() {
   const handleCancelClick = () => {
     if (!currentUser.photoURL) {
       setPhotoURL(null);
-    } else setPhotoURL(currentUser.photoURL);
-    isClick.current = false;
+      isClick.current = false;
+    } else {
+      setPhotoURL(currentUser.photoURL);
+      isClick.current = false;
+    }
   };
 
   const Badge = () => {
