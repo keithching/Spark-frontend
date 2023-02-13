@@ -69,7 +69,11 @@
 }
 
 @media screen and (min-width: 1px) and (max-width: 750px) {
+  .Event {
+    grid-template-columns: 1fr;
+  }
+
   .leftTop > h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 }
