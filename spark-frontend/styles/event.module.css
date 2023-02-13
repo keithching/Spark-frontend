@@ -7,7 +7,6 @@
 
 .left {
   display: grid;
-  /* grid-template-columns: repeat(2, 1fr); */
   gap: 20px;
   place-items: center;
 }
@@ -57,4 +56,20 @@
 
 .right {
   /* border: 1px solid var(--event-background-color); */
+}
+
+@media screen and (min-width: 751px) and (max-width: 1200px) {
+  .Event {
+    grid-template-columns: 1fr;
+  }
+
+  .leftTop > h1 {
+    font-size: 3rem;
+  }
+}
+
+@media screen and (min-width: 1px) and (max-width: 750px) {
+  .leftTop > h1 {
+    font-size: 2rem;
+  }
 }

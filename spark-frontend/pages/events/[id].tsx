@@ -29,6 +29,8 @@ export default function Event({
         <div className={eventStyles.left}>
           <div className={eventStyles.leftTop}>
             <EventInformation eventData={eventData} />
+          </div>
+          <div className={eventStyles.leftMid}>
             <EventFunctionalities eventData={eventData} />
           </div>
           <div className={eventStyles.leftBot}>

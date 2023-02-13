@@ -1,3 +1,11 @@
+.containerDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  height: var(--event-functionalities-div-height);
+}
+
 .eventBtn,
 .manageEventBtn,
 .leaveEventBtn {
