@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { forwardRef } from "react";
+import { forwardRef, useEffect } from "react";
 import classNames from "classnames";
 import { useEventsJoinEventConsumerByEventId } from "../utils/helper";
 import eventJoinerStyles from "../styles/eventJoiners.module.css";
@@ -23,6 +23,11 @@ export const EventJoiners = ({ eventData }) => {
     eventData?.id
   );
 
+  useEffect(() => {
+    console.log({ eventsJoinEventConsumer });
+    console.log({ eventData });
+  });
+
   // forward the ref from tooltip to the image
   const ProfilePicImage = forwardRef<Ref, Props>(function ProfilePicImage(
     props,
@@ -43,27 +48,33 @@ export const EventJoiners = ({ eventData }) => {
 
   return (
     <div className={classNames(eventJoinerStyles.joinersDiv)}>
-      Joiners:
-      {eventsJoinEventConsumer &&
-        eventsJoinEventConsumer.map((joiner) => {
-          return (
-            <div
-              key={joiner.consumer_id}
-              className={classNames(eventJoinerStyles.joinerProfilePic)}
-            >
-              {joiner.profile_pic_url && (
-                <Tooltip
-                  title={joiner.consumer_name}
-                  placement="bottom"
-                  arrow
-                  TransitionComponent={Zoom}
-                >
-                  <ProfilePicImage joiner={joiner} />
-                </Tooltip>
-              )}
-            </div>
-          );
-        })}
+      {eventsJoinEventConsumer && eventsJoinEventConsumer.length === 0 && (
+        <span>Become the first one to join this event!</span>
+      )}
+      {eventsJoinEventConsumer && eventsJoinEventConsumer.length > 0 && (
+        <>
+          <span>Joiners:</span>
+          {eventsJoinEventConsumer.map((joiner) => {
+            return (
+              <div
+                key={joiner.id}
+                className={classNames(eventJoinerStyles.joinerProfilePic)}
+              >
+                {joiner.profile_pic_url && (
+                  <Tooltip
+                    title={joiner.consumer_name}
+                    placement="bottom"
+                    arrow
+                    TransitionComponent={Zoom}
+                  >
+                    <ProfilePicImage joiner={joiner} />
+                  </Tooltip>
+                )}
+              </div>
+            );
+          })}
+        </>
+      )}
     </div>
   );
 };
