@@ -82,3 +82,20 @@
   background-color: var(--background-color-flavor);
   font-size: 0.5rem;
 }
+
+@media screen and (min-width: 1px) and (max-width: 750px) {
+  .providerTitle,
+  .categoryTitle,
+  .locationTitle,
+  .dateTitle,
+  .interestedTitle {
+    font-size: 1.25rem;
+  }
+
+  .providerContent,
+  .categoryContent,
+  .locationContent,
+  .dateContent {
+    font-size: 1.25rem;
+  }
+}

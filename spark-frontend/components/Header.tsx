@@ -5,6 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Cart } from "./Cart";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { RxCross1 } from "react-icons/rx";
+import classNames from "classnames";
 
 const Header = () => {
   const router = useRouter();
@@ -16,6 +19,7 @@ const Header = () => {
 
   const [error, setError] = useState<string>("");
   const { isLoading, currentUser, logout } = useAuth();
+  const [hamburgerIsClicked, setHamburgerIsClicked] = useState(false);
 
   async function handleLogout() {
     setError("");
@@ -27,6 +31,77 @@ const Header = () => {
     }
   }
 
+  useEffect(() => {
+    const handleWindowResize = () => setHamburgerIsClicked(false);
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  });
+
+  const UserAvatarName = () => {
+    return (
+      <div
+        className={classNames(
+          headerStyles["user-greeting"],
+          hamburgerIsClicked && headerStyles.userGreetingSideMenu
+        )}
+      >
+        <div className={headerStyles["profile-image"]}>
+          <Image
+            src={currentUser.photoURL ? currentUser.photoURL : ""}
+            alt=""
+            width={hamburgerIsClicked ? 50 : 30}
+            height={hamburgerIsClicked ? 50 : 30}
+            objectFit="cover"
+          />
+        </div>
+        <span>{currentUser.displayName}</span>
+      </div>
+    );
+  };
+
+  const UserGreeting = () => {
+    return currentUser ? (
+      <UserAvatarName />
+    ) : (
+      <div className={classNames(headerStyles.guestGreeting)}>こんにちは！</div>
+    );
+  };
+
+  const Hamburger = () => {
+    return (
+      <div
+        className={classNames(headerStyles.hamburgerMenu)}
+        onClick={() => setHamburgerIsClicked((prev) => !prev)}
+      >
+        {hamburgerIsClicked ? <RxCross1 /> : <RxHamburgerMenu />}
+      </div>
+    );
+  };
+
+  const SideMenu = () => {
+    return (
+      <div className={classNames(headerStyles.sideMenu)}>
+        <UserGreeting />
+        <Cart hamburgerIsClicked={hamburgerIsClicked} />
+        {currentUser ? (
+          <>
+            <Link href="/dashboard">Dashboard</Link>
+            <Link href="/profile">Profile</Link>
+            <span onClick={handleLogout}>Log Out</span>
+          </>
+        ) : (
+          <>
+            <Link href="/login">Log In</Link>
+            <Link href="/signup">Sign Up</Link>
+          </>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className={headerStyles.Header}>
       <nav className={headerStyles.brand}>
@@ -36,22 +111,7 @@ const Header = () => {
         {!isLoading && (
           <>
             {error && <span>{error}</span>}
-            {currentUser ? (
-              <div className={headerStyles["user-greeting"]}>
-                <div className={headerStyles["profile-image"]}>
-                  <Image
-                    src={currentUser.photoURL ? currentUser.photoURL : ""}
-                    alt=""
-                    width={30}
-                    height={30}
-                    objectFit="cover"
-                  />
-                </div>
-                <span>{currentUser.displayName}</span>
-              </div>
-            ) : (
-              "こんにちは！"
-            )}
+            <UserGreeting />
             {currentUser ? (
               <>
                 <button onClick={() => router.push("/dashboard")}>
@@ -76,9 +136,13 @@ const Header = () => {
                 </button>
               </>
             )}
-            <Cart />
+            <Cart hamburgerIsClicked={hamburgerIsClicked} />
           </>
         )}
+      </div>
+      <div className={classNames(headerStyles.mobileDevice)}>
+        <Hamburger />
+        {hamburgerIsClicked && <SideMenu />}
       </div>
     </div>
   );

@@ -1,6 +1,24 @@
-.cartButton {
-    display: flex;
-    gap: 5px;
-    background-color: var(--background-color-dark);
-    color: var(--font-color-tertiary);
+.cartDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.cartBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 5px;
+  background-color: var(--background-color-dark);
+  color: var(--font-color-tertiary);
+  border-style: none;
+}
+
+.cartDetail {
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

@@ -226,10 +226,10 @@ export const EventFunctionalities = ({ eventData }) => {
   };
 
   return (
-    <>
+    <div className={classNames(eventFunctionalitiesStyles.containerDiv)}>
       {role.role === "consumer" && <ConsumerFunctions />}
       {role.role === "provider" && <ProviderFunctions />}
       {!currentUser && <GuestFunctions />}
-    </>
+    </div>
   );
 };

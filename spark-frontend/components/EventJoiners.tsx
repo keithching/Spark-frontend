@@ -23,11 +23,6 @@ export const EventJoiners = ({ eventData }) => {
     eventData?.id
   );
 
-  useEffect(() => {
-    console.log({ eventsJoinEventConsumer });
-    console.log({ eventData });
-  });
-
   // forward the ref from tooltip to the image
   const ProfilePicImage = forwardRef<Ref, Props>(function ProfilePicImage(
     props,

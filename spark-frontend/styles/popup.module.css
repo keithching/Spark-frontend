@@ -1,34 +1,62 @@
 .popup {
-    position: fixed;
+  position: fixed;
 }
 
 .popup-text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 10px;
-    position: absolute;
-    width: 300px;
-    background-color: var(--background-color-light);
-    box-shadow: 0 0 8px 1px rgba(0,0,0,0.1);
-    top: 50px;
-    left: 50px;
-    z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  position: absolute;
+  width: 300px;
+  background-color: var(--background-color-light);
+  box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.1);
+  top: 50px;
+  left: 50px;
+  z-index: 1;
 }
 
 .popup-text > div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .sendEventsToServerBtn {
-    background-color: var(--background-color-flavor);
-    width: 200px;
+  background-color: var(--background-color-flavor);
+  width: 200px;
 }
 
 .sendEventsToServerBtn:disabled {
-    background-color: var(--background-color-medium);
+  background-color: var(--background-color-medium);
+}
+
+.inSideMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.inSideMenuText div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px;
+  /* color: white; */
+}
+
+.inSideMenuText button {
+  border-style: none;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.inSideMenu .sendEventsToServerBtn {
+  border-style: none;
+  padding: 10px;
+  border-radius: 20px;
 }
