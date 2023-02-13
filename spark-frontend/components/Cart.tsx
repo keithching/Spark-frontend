@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import classNames from "classnames";
+import { useEffect, useState, useRef } from "react";
 import { BsCart3 } from "react-icons/bs";
 import CartStyles from "../styles/cart.module.css";
 import { useEvents } from "../utils/helper";
 import { useCart } from "../utils/store";
 import { Popup } from "./Popup";
 
-export const Cart = () => {
+export const Cart = ({ hamburgerIsClicked }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const counter = useCart((state) => state.counter);
   const eventCartStore = useCart((state) => state.events);
@@ -29,8 +30,8 @@ export const Cart = () => {
       eventCartStore.map((event) => {
         return (
           <div key={event}>
-            <div>id: {event}</div>
-            <div>name: {events.find((eve) => eve.id === event).title}</div>
+            {/* <div>id: {event}</div> */}
+            <div>{events.find((eve) => eve.id === event).title}</div>
             <button onClick={() => handleRemoveEventClick(event)}>
               remove
             </button>
@@ -41,13 +42,29 @@ export const Cart = () => {
       "Loading"
     );
 
+  const CartDetails = () => {
+    return <Popup data={data} hamburgerIsClicked={hamburgerIsClicked} />;
+  };
+
   return (
     <>
-      <button className={CartStyles.cartButton} onClick={handleClick}>
-        <BsCart3 />
-        {counter}
-      </button>
-      {isClicked && <Popup data={data} />}
+      <div className={CartStyles.cartDiv}>
+        <button
+          className={classNames(CartStyles.cartBtn)}
+          onClick={handleClick}
+        >
+          <BsCart3 />
+          {counter}
+        </button>
+        {hamburgerIsClicked && isClicked && (
+          <div className={classNames(CartStyles.cartDetail)}>
+            <CartDetails />
+          </div>
+        )}
+      </div>
+      {!hamburgerIsClicked && isClicked && (
+        <Popup data={data} hamburgerIsClicked={hamburgerIsClicked} />
+      )}
     </>
   );
 };
