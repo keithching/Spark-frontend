@@ -7,12 +7,23 @@
 
 .left {
   display: grid;
+  /* grid-template-columns: repeat(2, 1fr); */
+  gap: 20px;
+  place-items: center;
+}
+
+.left .leftTop {
+  display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   place-items: center;
 }
 
-.left > h1 {
+.left .leftBot {
+  display: flex;
+}
+
+.leftTop > h1 {
   grid-column: 1 / -1;
   grid-row: 1 / 2;
   font-size: 4rem;
@@ -36,11 +47,11 @@
   cursor: pointer;
 }
 
-.left > section {
+.leftTop > section {
   margin-bottom: 1rem;
 }
 
-.left > section > .title {
+.leftTop > section > .title {
   font-size: 1rem;
 }
 

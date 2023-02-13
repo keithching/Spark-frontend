@@ -49,7 +49,9 @@ export const EventJoiners = ({ eventData }) => {
   return (
     <div className={classNames(eventJoinerStyles.joinersDiv)}>
       {eventsJoinEventConsumer && eventsJoinEventConsumer.length === 0 && (
-        <span>Become the first one to join this event!</span>
+        <div className={classNames(eventJoinerStyles.firstJoinerDiv)}>
+          Become the first one to join this event!
+        </div>
       )}
       {eventsJoinEventConsumer && eventsJoinEventConsumer.length > 0 && (
         <>

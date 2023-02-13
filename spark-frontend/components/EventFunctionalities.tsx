@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../utils/store";
@@ -19,8 +19,11 @@ export const EventFunctionalities = ({ eventData }) => {
   const { eventsJoinEventConsumer } = useEventsJoinEventConsumerByEmail(
     currentUser?.email
   );
-  const [isJoined, setIsJoined] = useState<boolean | string>("1"); // set an initial value using a non-zero string
-  const [isVerified, setIsVerified] = useState(false); // set it to true after the user is identified whether he/she has joined an event
+  const isJoined = useRef<boolean | "1">("1");
+
+  // const [isJoined, setIsJoined] = useState<boolean | string>("1"); // set an initial value using a non-zero string
+  const isVerified = useRef<boolean>(false);
+  // const [isVerified, setIsVerified] = useState(false); // set it to true after the user is identified whether he/she has joined an event
   const [isOwnerOfEvent, setIsOwnerOfEvent] = useState<boolean | string>("1");
   const router = useRouter();
   const { mutate } = useEventsJoinEventConsumerByEventId(eventData?.id);
@@ -31,9 +34,11 @@ export const EventFunctionalities = ({ eventData }) => {
       eventsJoinEventConsumer &&
       eventsJoinEventConsumer.find((event) => event.event_id === eventData.id)
     ) {
-      setIsJoined(true);
+      // setIsJoined(true);
+      isJoined.current = true;
     } else if (eventsJoinEventConsumer) {
-      setIsJoined(false);
+      // setIsJoined(false);
+      isJoined.current = false;
     }
   }, [role, eventsJoinEventConsumer, eventData]);
 
@@ -41,19 +46,22 @@ export const EventFunctionalities = ({ eventData }) => {
     if (
       role.role === "consumer" &&
       eventsJoinEventConsumer &&
-      (isJoined || !isJoined)
+      (isJoined.current || !isJoined.current)
     ) {
-      setIsVerified(true);
+      // setIsVerified(true);
+      isVerified.current = true;
     }
   }, [role, isJoined, eventsJoinEventConsumer]);
 
   useEffect(() => {
     if (role.role === "provider" && role.name === eventData.eventProvider) {
       setIsOwnerOfEvent(true);
-      setIsVerified(true);
+      // setIsVerified(true);
+      isVerified.current = true;
     } else if (role.role === "provider") {
       setIsOwnerOfEvent(false);
-      setIsVerified(true);
+      // setIsVerified(true);
+      isVerified.current = true;
     }
   }, [role, eventData]);
 
@@ -122,7 +130,8 @@ export const EventFunctionalities = ({ eventData }) => {
 
         // TO REFACTOR - these 2 actions should be in sync when display in UI
         mutate(getEventsJoinEventConsumerByEventId(eventData.id));
-        setIsJoined(true);
+        // setIsJoined(true);
+        isJoined.current = true;
       } catch (err) {
         alert(err);
       }
@@ -158,7 +167,8 @@ export const EventFunctionalities = ({ eventData }) => {
 
         // TO REFACTOR - these 2 actions should be in sync when display in UI
         mutate(getEventsJoinEventConsumerByEventId(eventData.id));
-        setIsJoined(false); // very slow
+        // setIsJoined(false); // very slow - not trigger the UI update
+        isJoined.current = false;
       } catch (err) {
         alert(err);
       }
@@ -181,9 +191,9 @@ export const EventFunctionalities = ({ eventData }) => {
   const ConsumerFunctions = () => {
     return (
       <>
-        {isVerified && !isJoined && <AddToCartBtn />}
-        {isVerified && !isJoined && <JoinEventBtn />}
-        {isVerified && isJoined && <LeaveEventBtn />}
+        {isVerified.current && !isJoined.current && <AddToCartBtn />}
+        {isVerified.current && !isJoined.current && <JoinEventBtn />}
+        {isVerified.current && isJoined.current && <LeaveEventBtn />}
       </>
     );
   };
@@ -192,7 +202,7 @@ export const EventFunctionalities = ({ eventData }) => {
     return (
       <>
         {<div>I am {isOwnerOfEvent === true ? "" : "not"} the provider</div>}
-        {isVerified && isOwnerOfEvent && (
+        {isVerified.current && isOwnerOfEvent && (
           <>
             <button
               className={eventFunctionalitiesStyles.manageEventBtn}
