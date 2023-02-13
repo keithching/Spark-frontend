@@ -27,9 +27,13 @@ export default function Event({
     return (
       <div className={eventStyles.Event}>
         <div className={eventStyles.left}>
-          <EventInformation eventData={eventData} />
-          <EventFunctionalities eventData={eventData} />
-          <EventJoiners eventData={eventData} />
+          <div className={eventStyles.leftTop}>
+            <EventInformation eventData={eventData} />
+            <EventFunctionalities eventData={eventData} />
+          </div>
+          <div className={eventStyles.leftBot}>
+            <EventJoiners eventData={eventData} />
+          </div>
         </div>
         <div className={eventStyles.right}>
           <EventPhotoDisplay {...eventData} />
