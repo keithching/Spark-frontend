@@ -10,7 +10,8 @@ export const EventPhotoDisplay = (eventData) => {
           className={eventPhotoDisplayStyles["event-image"]}
           width={400}
           height={400}
-          alt=""
+          objectFit="cover"
+          alt={eventData.title}
         />
       )}
     </>

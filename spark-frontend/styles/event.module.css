@@ -45,5 +45,5 @@
 }
 
 .right {
-  border: 1px solid var(--event-background-color);
+  /* border: 1px solid var(--event-background-color); */
 }
