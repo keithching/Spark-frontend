@@ -69,23 +69,17 @@ export default function Profile() {
       // const [photoFile, setPhotoFile] = useState<any>(null);
 
       const handleInputClick = (e) => {
-        console.log("hello");
-        // photoRef.current.value = "";
         e.target.value = "";
-        // setPhotoURL(null);
       };
 
-      // 20230213 TO REFACTOR - Not firing properly with the photo is clicked
       const handlePhotoInputChange = (e) => {
         // event cancelling
         if (e.target.value === "") {
-          console.log("HI");
           return;
         }
         let reader = new FileReader();
         reader.readAsDataURL(e.target.files[0]);
         // setPhotoFile(photoRef.current.files[0]);
-        console.log("hihi");
 
         reader.onload = (readerEvent) => {
           console.log(readerEvent.target.result);
