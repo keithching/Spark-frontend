@@ -1,5 +1,11 @@
 .event-image {
-  /* height: 400px; */
-  /* width: 400px; */
-  /* object-fit: cover; */
+  height: 400px;
+  width: 400px;
+}
+
+@media screen and (max-width: 750px) {
+  .event-image {
+    height: 300px;
+    width: 300px;
+  }
 }
