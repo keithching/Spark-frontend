@@ -208,6 +208,17 @@ export default function Profile() {
     return <div style={style}>{role.role}</div>;
   };
 
+  const ProfileNameAndBadge = () => {
+    return (
+      <div className={profileStyle.profileNameAndBadge}>
+        <div className={profileStyle["profile-info-name"]}>
+          {currentUser.displayName}
+        </div>
+        <Badge />
+      </div>
+    );
+  };
+
   return (
     <Layout>
       <Head>
@@ -220,18 +231,18 @@ export default function Profile() {
           <div className={profileStyle["profile-container"]}>
             <div className={profileStyle["profile-info"]}>
               {error && <span>{error}</span>}
-              <div className={profileStyle["profile-info-name"]}>
-                {currentUser.displayName}
-              </div>
-              <Badge />
+              <ProfileNameAndBadge />
               <div className={profileStyle["profile-info-email"]}>
-                Email: {currentUser.email}
+                <div className={profileStyle.titles}>email</div>
+                <div className={profileStyle.fields}>{currentUser.email}</div>
               </div>
               <div className={profileStyle["profile-info-phone"]}>
-                Phone: {role.phone}
+                <div className={profileStyle.titles}>phone</div>
+                <div className={profileStyle.fields}>{role.phone}</div>
               </div>
               <div className={profileStyle["profile-info-about"]}>
-                About: {role.about}
+                <div className={profileStyle.titles}>about</div>
+                <div className={profileStyle.fields}>{role.about}</div>
               </div>
               <div className={profileStyle["function-buttons"]}>
                 <button

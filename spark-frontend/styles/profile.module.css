@@ -8,6 +8,7 @@
 
 .profile-container {
   width: 80vw;
+  margin: 20px;
   border: 0.5px solid var(--border-color-light);
   display: grid;
   grid-template-columns: auto 400px;
@@ -104,7 +105,10 @@
 }
 
 .function-buttons button {
-  padding: 5px 10px;
+  width: 200px;
+  font-size: 1rem;
+  border-radius: 40px;
+  padding: 20px;
   color: var(--font-color-primary);
   cursor: pointer;
 }
@@ -122,12 +126,41 @@
   border-style: none;
 }
 
+.titles {
+  font-size: 1rem;
+  text-decoration: underline;
+  color: var(--font-color-primary);
+}
+
+.fields {
+  min-height: 1rem;
+}
+
+.profileNameAndBadge {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+@media screen and (min-width: 751px) and (max-width: 1000px) {
+  .function-buttons {
+    flex-direction: column;
+  }
+}
+
 @media screen and (max-width: 750px) {
   .profile-container {
+    width: 60vw;
     grid-template-columns: 1fr;
     justify-items: center;
     align-items: center;
     gap: 50px;
+  }
+
+  .profileNameAndBadge {
+    align-items: center;
+    justify-content: center;
   }
 
   .profile-info {
@@ -147,7 +180,6 @@
   }
 
   .function-buttons button {
-    font-size: 1.5rem;
     padding: 20px;
     border-radius: 40px;
   }
