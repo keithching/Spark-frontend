@@ -6,17 +6,14 @@ import {
   getEvents,
   getEventsByEmail,
   getAllRegions,
-  useEventProvider,
-  useEventConsumer,
   useRole,
   useEventsJoinEventConsumerByEmail,
 } from "../utils/helper";
-import Modal from "./Modal";
-// import EditEventModal from './EditEventModal';
+import { Modal } from "./Modal";
+import { Loading } from "./Loading";
 import { GrAddCircle } from "react-icons/gr";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
-// https://react-icons.github.io/react-icons
 import { useAuth } from "../contexts/AuthContext";
 import {
   EventProviderProps,
@@ -91,10 +88,6 @@ const Main = () => {
     }
     updateData();
   }, [showModal, currentUser, adminEmail]);
-
-  const Loading = () => {
-    return <div>loading...</div>;
-  };
 
   const EventProvider = (props) => {
     const { eventProvider } = props;
@@ -239,18 +232,13 @@ const Main = () => {
     );
   };
 
-  const EventCategory = (props) => {
-    const { eventCategory } = props;
+  const EventCategory = ({ eventCategory }) => {
     return <li>{eventCategory.name}</li>;
   };
 
   return (
     <div className={mainStyles.Main}>
-      {role &&
-      // ((eventProvider && !isErrorEP && !isLoadingEP) ||
-      // (eventConsumer && !isErrorEC && !isLoadingEC))
-      currentUser &&
-      currentUser.email === adminEmail ? (
+      {role && currentUser && currentUser.email === adminEmail ? (
         <>
           <EventProviders />
           <EventCategories />

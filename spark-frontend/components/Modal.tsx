@@ -7,7 +7,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { uploadImageAsync } from "../utils/imageUpload";
 import Image from "next/image";
 
-const Modal = (props) => {
+export const Modal = (props) => {
   const {
     modalContent,
     events,
@@ -331,5 +331,3 @@ const Modal = (props) => {
     </div>
   );
 };
-
-export default Modal;
