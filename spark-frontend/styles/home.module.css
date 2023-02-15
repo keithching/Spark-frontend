@@ -1,8 +1,8 @@
 .Home {
-  padding: 0 15vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-color: var(--background-color-extraLight);
 }
 
 .header {
@@ -51,11 +51,13 @@
 }
 
 .event-card-display-container {
-  padding: 50px 0;
+  padding: 50px;
+  margin: 20px;
   display: grid;
-  gap: 20px;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
   justify-items: center;
+  background-color: white;
 }
 
 .event-card-display h1 {

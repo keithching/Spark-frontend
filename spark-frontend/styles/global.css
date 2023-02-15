@@ -22,6 +22,7 @@ code {
   --main-padding: 20px;
   --event-background-color: rgba(0, 0, 0, 0.1);
   --background-color-flavor: rgb(218, 254, 218);
+  --background-color-extraLight: rgb(250, 250, 250);
   --background-color-light: rgb(240, 240, 240);
   --background-color-medium: rgba(0, 0, 0, 0.2);
   --background-color-dark: black;
