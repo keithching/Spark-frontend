@@ -9,6 +9,12 @@
   padding: 50px;
 }
 
+.Footer a {
+  color: inherit;
+  text-decoration: underline;
+  text-align: center;
+}
+
 .links {
   display: flex;
   justify-content: center;

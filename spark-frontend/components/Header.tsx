@@ -8,11 +8,13 @@ import { Cart } from "./Cart";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxCross1 } from "react-icons/rx";
 import classNames from "classnames";
+import { useRole } from "../utils/helper";
 
 const Header = () => {
   const router = useRouter();
   const [error, setError] = useState<string>("");
   const { isLoading, currentUser, logout } = useAuth();
+  const { role } = useRole(currentUser?.email);
   const [hamburgerIsClicked, setHamburgerIsClicked] = useState(false);
 
   async function handleLogout() {
@@ -79,7 +81,9 @@ const Header = () => {
     return (
       <div className={classNames(headerStyles.sideMenu)}>
         <UserGreeting />
-        <Cart hamburgerIsClicked={hamburgerIsClicked} />
+        {role.role !== "provider" && (
+          <Cart hamburgerIsClicked={hamburgerIsClicked} />
+        )}
         {currentUser ? (
           <>
             <Link href="/dashboard">Dashboard</Link>
@@ -130,7 +134,9 @@ const Header = () => {
                 </button>
               </>
             )}
-            <Cart hamburgerIsClicked={hamburgerIsClicked} />
+            {role.role !== "provider" && (
+              <Cart hamburgerIsClicked={hamburgerIsClicked} />
+            )}
           </>
         )}
       </div>

@@ -49,7 +49,9 @@ export default function Event({
       <Head>
         <title>{eventData.title}</title>
       </Head>
-      <Event />
+      <section className={eventStyles.container}>
+        <Event />
+      </section>
     </Layout>
   );
 }

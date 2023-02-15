@@ -1,8 +1,14 @@
+.container {
+  background-color: var(--background-color-extraLight);
+}
+
 .Event {
+  margin: 20px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   place-items: center;
   padding: 50px 0;
+  background-color: white;
 }
 
 .left {
