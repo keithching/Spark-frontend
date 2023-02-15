@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-import { useAuth } from "../contexts/AuthContext";
-import { useCart } from "../utils/store";
+import { useAuth } from "../../contexts/AuthContext";
+import { useCart } from "../../utils/store";
 import {
   useEventsJoinEventConsumerByEmail,
   useRole,
@@ -9,9 +9,9 @@ import {
   useEventsJoinEventConsumerByEventId,
   getEventsJoinEventConsumerByEventId,
   createEventsJoinEventConsumer,
-} from "../utils/helper";
+} from "../../utils/helper";
 import classNames from "classnames";
-import eventFunctionalitiesStyles from "../styles/eventFunctionalities.module.css";
+import eventFunctionalitiesStyles from "../../styles/eventFunctionalities.module.css";
 
 export const EventFunctionalities = ({ eventData }) => {
   const { currentUser } = useAuth();

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import eventPhotoDisplayStyles from "../styles/eventPhotoDisplay.module.css";
+import eventPhotoDisplayStyles from "../../styles/eventPhotoDisplay.module.css";
 
 export const EventPhotoDisplay = (eventData) => {
   return (
