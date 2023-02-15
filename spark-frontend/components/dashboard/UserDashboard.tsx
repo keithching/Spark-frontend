@@ -10,10 +10,6 @@ import {
   useEventsJoinEventConsumerByEmail,
 } from "../../utils/helper";
 import { Modal } from "./Modal";
-import { Loading } from "../Loading";
-import { GrAddCircle } from "react-icons/gr";
-import { FiEdit } from "react-icons/fi";
-import { RiDeleteBinLine } from "react-icons/ri";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   EventProviderProps,
@@ -21,7 +17,9 @@ import {
   EventProps,
   JpRegionProps,
 } from "../../lib/customProp";
-import { useRouter } from "next/router";
+import { EventProviders } from "./EventProviders";
+import { EventCategories } from "./EventCategories";
+import { EventsDashboard } from "./EventsDashboard";
 
 interface ModalProps {
   title: string;
@@ -30,10 +28,9 @@ interface ModalProps {
 
 type Role = string;
 
-const Main = () => {
+const UserDashboard = () => {
   const { currentUser, adminEmail } = useAuth();
   const { role } = useRole(currentUser?.email);
-  const router = useRouter();
   const { eventsJoinEventConsumer, isLoadingEJEC } =
     useEventsJoinEventConsumerByEmail(currentUser?.email);
 
@@ -89,171 +86,27 @@ const Main = () => {
     updateData();
   }, [showModal, currentUser, adminEmail]);
 
-  const EventProvider = ({ eventProvider }) => {
-    return <li>{eventProvider.name}</li>;
-  };
-
-  const EventCategories = () => {
-    return (
-      <>
-        <h1>Event Categories</h1>
-        {eventCategories.length > 0 ? (
-          eventCategories.map((eventCategory) => {
-            return (
-              <EventCategory
-                eventCategory={eventCategory}
-                key={eventCategory.id}
-              />
-            );
-          })
-        ) : (
-          <Loading />
-        )}
-      </>
-    );
-  };
-
-  const EventCategory = ({ eventCategory }) => {
-    return <li>{eventCategory.name}</li>;
-  };
-
-  const ProviderEvent = (props) => {
-    const { event } = props;
-
-    const handleEditEventClick = () => {
-      setSelectedEvent(event.id);
-      setModalContent({
-        title: "Edit Event",
-        operation: "edit",
-      });
-      setShowModal((prev) => !prev);
-    };
-
-    const handleDeleteEventClick = () => {
-      setSelectedEvent(event.id);
-      setModalContent({
-        title: "Delete Event",
-        operation: "delete",
-      });
-      setShowModal((prev) => !prev);
-    };
-
-    return (
-      <div className={userDashboardStyles["event-card"]}>
-        <div>Title: {event.title}</div>
-        <div>Provider: {event.eventProvider}</div>
-        <div>Category: {event.eventCategory}</div>
-        <div>Location: {event.location}</div>
-        <div>
-          Date: {event.dateStart} ~ {event.dateEnd}
-        </div>
-        <div className={userDashboardStyles["event-function-btn-container"]}>
-          <FiEdit
-            className={userDashboardStyles["edit-event-btn"]}
-            onClick={handleEditEventClick}
-          />
-          <RiDeleteBinLine
-            className={userDashboardStyles["delete-event-btn"]}
-            onClick={handleDeleteEventClick}
-          />
-        </div>
-      </div>
-    );
-  };
-
-  const ConsumerEvents = () => {
-    return (
-      <div className={userDashboardStyles.consumerEventsContainer}>
-        {eventsJoinEventConsumer.map((item) => {
-          return (
-            <div
-              key={item.id}
-              className={userDashboardStyles.consumerEventDiv}
-              onClick={() => router.push(`/events/${item.event_id}`)}
-            >
-              {item.event_name}
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
-
-  const ProviderEvents = () => {};
-
-  const EventsDashboard = () => {
-    const handleAddEventClick = () => {
-      setModalContent({
-        title: "Add Event",
-        operation: "create",
-      });
-      setShowModal((prev) => !prev);
-    };
-
-    return (
-      <section className={userDashboardStyles.eventsContainer}>
-        <header className={userDashboardStyles["events-header"]}>
-          <h1>Events</h1>
-          {role === "provider" && (
-            <GrAddCircle onClick={handleAddEventClick} id="add-event-btn" />
-          )}
-        </header>
-        <div className={userDashboardStyles["event-cards"]}>
-          {!loading && events.length > 0 ? (
-            events.map((event) => {
-              return <ProviderEvent event={event} key={event.id} />;
-            })
-          ) : !loading && currentUser && events.length === 0 ? (
-            role === "provider" ? (
-              <span>Create your first event</span>
-            ) : !isLoadingEJEC &&
-              eventsJoinEventConsumer &&
-              eventsJoinEventConsumer.length === 0 ? (
-              <span>Join your first event</span>
-            ) : !isLoadingEJEC && eventsJoinEventConsumer ? (
-              <ConsumerEvents />
-            ) : (
-              <Loading />
-            )
-          ) : (
-            <Loading />
-          )}
-        </div>
-      </section>
-    );
-  };
-
-  const EventProviders = () => {
-    return (
-      <>
-        <h1>Event Providers</h1>
-        {eventProviders.length > 0 ? (
-          eventProviders.map((eventProvider) => {
-            return (
-              <EventProvider
-                eventProvider={eventProvider}
-                key={eventProvider.id}
-              />
-            );
-          })
-        ) : !loading && currentUser && eventProviders.length === 0 ? (
-          <span>null</span>
-        ) : (
-          <Loading />
-        )}
-      </>
-    );
-  };
-
   return (
     <div className={userDashboardStyles.Main}>
       {role && currentUser && currentUser.email === adminEmail ? (
         <>
-          <EventProviders />
-          <EventCategories />
+          <EventProviders
+            eventProviders={eventProviders}
+            loading={loading}
+            currentUser={currentUser}
+          />
+          <EventCategories eventCategories={eventCategories} />
         </>
       ) : null}
-      <EventsDashboard />
+      <EventsDashboard
+        loading={loading}
+        events={events}
+        setSelectedEvent={setSelectedEvent}
+        setModalContent={setModalContent}
+        setShowModal={setShowModal}
+        isLoadingEJEC={isLoadingEJEC}
+        eventsJoinEventConsumer={eventsJoinEventConsumer}
+      />
       {showModal && Object.keys(modalContent).length > 0 ? (
         <Modal
           modalContent={modalContent}
@@ -270,4 +123,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default UserDashboard;
