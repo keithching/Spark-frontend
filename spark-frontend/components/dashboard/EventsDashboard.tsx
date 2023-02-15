@@ -34,32 +34,38 @@ export const EventsDashboard = ({
           <GrAddCircle onClick={handleAddEventClick} id="add-event-btn" />
         )}
       </header>
-      <div className={userDashboardStyles["event-cards"]}>
-        {!loading && events.length > 0 ? (
-          <ProviderEvents
-            events={events}
-            setSelectedEvent={setSelectedEvent}
-            setModalContent={setModalContent}
-            setShowModal={setShowModal}
-          />
-        ) : !loading && currentUser && events.length === 0 ? (
-          role === "provider" ? (
-            <span>Create your first event</span>
-          ) : !isLoadingEJEC &&
-            eventsJoinEventConsumer &&
-            eventsJoinEventConsumer.length === 0 ? (
-            <span>Join your first event</span>
-          ) : !isLoadingEJEC &&
-            eventsJoinEventConsumer &&
-            role === "consumer" ? (
+      <section className={userDashboardStyles["event-cards"]}>
+        {(isLoadingEJEC || loading) && <Loading />}
+
+        {!loading &&
+          currentUser &&
+          role.role === "provider" &&
+          events.length > 0 && (
+            <ProviderEvents
+              events={events}
+              setSelectedEvent={setSelectedEvent}
+              setModalContent={setModalContent}
+              setShowModal={setShowModal}
+            />
+          )}
+
+        {!loading &&
+          currentUser &&
+          role.role === "provider" &&
+          events.length === 0 && <span>Create your first event</span>}
+
+        {!isLoadingEJEC &&
+          eventsJoinEventConsumer &&
+          eventsJoinEventConsumer.length > 0 &&
+          role.role === "consumer" && (
             <ConsumerEvents eventsJoinEventConsumer={eventsJoinEventConsumer} />
-          ) : (
-            <Loading />
-          )
-        ) : (
-          <Loading />
-        )}
-      </div>
+          )}
+
+        {!isLoadingEJEC &&
+          eventsJoinEventConsumer &&
+          eventsJoinEventConsumer.length === 0 &&
+          role.role === "consumer" && <span>Join your first event</span>}
+      </section>
     </section>
   );
 };
