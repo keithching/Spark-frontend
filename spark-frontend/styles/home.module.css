@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
 }
 
 .header {
@@ -16,8 +15,6 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  /* align-items: center; */
-  /* justify-content: center; */
 }
 
 .searchParams {
@@ -116,12 +113,6 @@
   background-color: var(--background-color-flavor);
   font-size: 0.5rem;
 }
-
-/* .eventProvider {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
-    justify-self: end;
-} */
 
 .eventLocation {
   grid-column: 1 / 2;

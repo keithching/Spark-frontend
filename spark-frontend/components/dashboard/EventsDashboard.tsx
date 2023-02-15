@@ -49,7 +49,9 @@ export const EventsDashboard = ({
             eventsJoinEventConsumer &&
             eventsJoinEventConsumer.length === 0 ? (
             <span>Join your first event</span>
-          ) : !isLoadingEJEC && eventsJoinEventConsumer ? (
+          ) : !isLoadingEJEC &&
+            eventsJoinEventConsumer &&
+            role === "consumer" ? (
             <ConsumerEvents eventsJoinEventConsumer={eventsJoinEventConsumer} />
           ) : (
             <Loading />
