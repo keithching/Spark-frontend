@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { forwardRef, useEffect } from "react";
 import classNames from "classnames";
-import { useEventsJoinEventConsumerByEventId } from "../utils/helper";
-import eventJoinerStyles from "../styles/eventJoiners.module.css";
+import { useEventsJoinEventConsumerByEventId } from "../../utils/helper";
+import eventJoinerStyles from "../../styles/eventJoiners.module.css";
 // React Tooltip from MUI
 // https://mui.com/material-ui/react-tooltip/
 import Tooltip from "@mui/material/Tooltip";

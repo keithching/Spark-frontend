@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import jpPrefecture from "jp-prefecture";
-import { createEvent, updateEvent, deleteEvent } from "../utils/helper";
-import modalStyles from "../styles/modal.module.css";
+import { createEvent, updateEvent, deleteEvent } from "../../utils/helper";
+import modalStyles from "../../styles/modal.module.css";
 import { IoClose } from "react-icons/io5";
-import { useAuth } from "../contexts/AuthContext";
-import { uploadImageAsync } from "../utils/imageUpload";
+import { useAuth } from "../../contexts/AuthContext";
+import { uploadImageAsync } from "../../utils/imageUpload";
 import Image from "next/image";
 
-const Modal = (props) => {
+export const Modal = (props) => {
   const {
     modalContent,
     events,
@@ -331,5 +331,3 @@ const Modal = (props) => {
     </div>
   );
 };
-
-export default Modal;

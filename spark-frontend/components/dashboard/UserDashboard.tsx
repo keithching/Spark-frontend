@@ -1,29 +1,26 @@
 import { useState, useEffect } from "react";
-import mainStyles from "../styles/main.module.css";
+import userDashboardStyles from "../../styles/userDashboard.module.css";
 import {
   getEventProviders,
   getEventCategories,
   getEvents,
   getEventsByEmail,
   getAllRegions,
-  useEventProvider,
-  useEventConsumer,
   useRole,
   useEventsJoinEventConsumerByEmail,
-} from "../utils/helper";
-import Modal from "./Modal";
-// import EditEventModal from './EditEventModal';
+} from "../../utils/helper";
+import { Modal } from "./Modal";
+import { Loading } from "../Loading";
 import { GrAddCircle } from "react-icons/gr";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
-// https://react-icons.github.io/react-icons
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import {
   EventProviderProps,
   EventCategoryProps,
   EventProps,
   JpRegionProps,
-} from "../lib/customProp";
+} from "../../lib/customProp";
 import { useRouter } from "next/router";
 
 interface ModalProps {
@@ -92,16 +89,35 @@ const Main = () => {
     updateData();
   }, [showModal, currentUser, adminEmail]);
 
-  const Loading = () => {
-    return <div>loading...</div>;
-  };
-
-  const EventProvider = (props) => {
-    const { eventProvider } = props;
+  const EventProvider = ({ eventProvider }) => {
     return <li>{eventProvider.name}</li>;
   };
 
-  const Event = (props) => {
+  const EventCategories = () => {
+    return (
+      <>
+        <h1>Event Categories</h1>
+        {eventCategories.length > 0 ? (
+          eventCategories.map((eventCategory) => {
+            return (
+              <EventCategory
+                eventCategory={eventCategory}
+                key={eventCategory.id}
+              />
+            );
+          })
+        ) : (
+          <Loading />
+        )}
+      </>
+    );
+  };
+
+  const EventCategory = ({ eventCategory }) => {
+    return <li>{eventCategory.name}</li>;
+  };
+
+  const ProviderEvent = (props) => {
     const { event } = props;
 
     const handleEditEventClick = () => {
@@ -123,7 +139,7 @@ const Main = () => {
     };
 
     return (
-      <div className={mainStyles["event-card"]}>
+      <div className={userDashboardStyles["event-card"]}>
         <div>Title: {event.title}</div>
         <div>Provider: {event.eventProvider}</div>
         <div>Category: {event.eventCategory}</div>
@@ -131,13 +147,13 @@ const Main = () => {
         <div>
           Date: {event.dateStart} ~ {event.dateEnd}
         </div>
-        <div className={mainStyles["event-function-btn-container"]}>
+        <div className={userDashboardStyles["event-function-btn-container"]}>
           <FiEdit
-            className={mainStyles["edit-event-btn"]}
+            className={userDashboardStyles["edit-event-btn"]}
             onClick={handleEditEventClick}
           />
           <RiDeleteBinLine
-            className={mainStyles["delete-event-btn"]}
+            className={userDashboardStyles["delete-event-btn"]}
             onClick={handleDeleteEventClick}
           />
         </div>
@@ -145,7 +161,27 @@ const Main = () => {
     );
   };
 
-  const Events = () => {
+  const ConsumerEvents = () => {
+    return (
+      <div className={userDashboardStyles.consumerEventsContainer}>
+        {eventsJoinEventConsumer.map((item) => {
+          return (
+            <div
+              key={item.id}
+              className={userDashboardStyles.consumerEventDiv}
+              onClick={() => router.push(`/events/${item.event_id}`)}
+            >
+              {item.event_name}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  const ProviderEvents = () => {};
+
+  const EventsDashboard = () => {
     const handleAddEventClick = () => {
       setModalContent({
         title: "Add Event",
@@ -155,17 +191,17 @@ const Main = () => {
     };
 
     return (
-      <>
-        <header className={mainStyles["events-header"]}>
+      <section className={userDashboardStyles.eventsContainer}>
+        <header className={userDashboardStyles["events-header"]}>
           <h1>Events</h1>
           {role === "provider" && (
             <GrAddCircle onClick={handleAddEventClick} id="add-event-btn" />
           )}
         </header>
-        <div className={mainStyles["event-cards"]}>
+        <div className={userDashboardStyles["event-cards"]}>
           {!loading && events.length > 0 ? (
             events.map((event) => {
-              return <Event event={event} key={event.id} />;
+              return <ProviderEvent event={event} key={event.id} />;
             })
           ) : !loading && currentUser && events.length === 0 ? (
             role === "provider" ? (
@@ -175,17 +211,7 @@ const Main = () => {
               eventsJoinEventConsumer.length === 0 ? (
               <span>Join your first event</span>
             ) : !isLoadingEJEC && eventsJoinEventConsumer ? (
-              eventsJoinEventConsumer.map((item) => {
-                return (
-                  <div
-                    key={item.consumer_id}
-                    className={mainStyles.consumerEventDiv}
-                    onClick={() => router.push(`/events/${item.event_id}`)}
-                  >
-                    {item.event_id}
-                  </div>
-                );
-              })
+              <ConsumerEvents />
             ) : (
               <Loading />
             )
@@ -193,7 +219,7 @@ const Main = () => {
             <Loading />
           )}
         </div>
-      </>
+      </section>
     );
   };
 
@@ -219,44 +245,15 @@ const Main = () => {
     );
   };
 
-  const EventCategories = () => {
-    return (
-      <>
-        <h1>Event Categories</h1>
-        {eventCategories.length > 0 ? (
-          eventCategories.map((eventCategory) => {
-            return (
-              <EventCategory
-                eventCategory={eventCategory}
-                key={eventCategory.id}
-              />
-            );
-          })
-        ) : (
-          <Loading />
-        )}
-      </>
-    );
-  };
-
-  const EventCategory = (props) => {
-    const { eventCategory } = props;
-    return <li>{eventCategory.name}</li>;
-  };
-
   return (
-    <div className={mainStyles.Main}>
-      {role &&
-      // ((eventProvider && !isErrorEP && !isLoadingEP) ||
-      // (eventConsumer && !isErrorEC && !isLoadingEC))
-      currentUser &&
-      currentUser.email === adminEmail ? (
+    <div className={userDashboardStyles.Main}>
+      {role && currentUser && currentUser.email === adminEmail ? (
         <>
           <EventProviders />
           <EventCategories />
         </>
       ) : null}
-      <Events />
+      <EventsDashboard />
       {showModal && Object.keys(modalContent).length > 0 ? (
         <Modal
           modalContent={modalContent}

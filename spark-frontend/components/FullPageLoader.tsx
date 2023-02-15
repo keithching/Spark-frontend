@@ -1,7 +1,6 @@
-import fullPageLoaderStyles from '../styles/fullPageLoader.module.css';
+import fullPageLoaderStyles from "../styles/fullPageLoader.module.css";
+import { Loading } from "./Loading";
 
 export default function FullPageLoader() {
-    return (
-        <div className={fullPageLoaderStyles.container}>Loading...</div>
-    );
+  return <Loading className={fullPageLoaderStyles.container} />;
 }

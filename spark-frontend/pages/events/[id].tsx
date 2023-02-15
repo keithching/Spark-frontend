@@ -2,10 +2,10 @@ import React from "react";
 import Head from "next/head";
 import { GetStaticProps, GetStaticPaths } from "next";
 import Layout from "../../components/layout";
-import { EventInformation } from "../../components/EventInformation";
-import { EventFunctionalities } from "../../components/EventFunctionalities";
-import { EventJoiners } from "../../components/EventJoiners";
-import { EventPhotoDisplay } from "../../components/EventPhotoDisplay";
+import { EventInformation } from "../../components/event/EventInformation";
+import { EventFunctionalities } from "../../components/event/EventFunctionalities";
+import { EventJoiners } from "../../components/event/EventJoiners";
+import { EventPhotoDisplay } from "../../components/event/EventPhotoDisplay";
 import { getEventByEventId, getAllEventIds } from "../../utils/helper";
 import eventStyles from "../../styles/event.module.css";
 

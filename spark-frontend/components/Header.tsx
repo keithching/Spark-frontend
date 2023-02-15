@@ -11,12 +11,6 @@ import classNames from "classnames";
 
 const Header = () => {
   const router = useRouter();
-
-  // to implement:
-  // view for event provider
-  // view for user
-  // a state for controlling views
-
   const [error, setError] = useState<string>("");
   const { isLoading, currentUser, logout } = useAuth();
   const [hamburgerIsClicked, setHamburgerIsClicked] = useState(false);
