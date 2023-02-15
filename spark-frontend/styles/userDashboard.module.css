@@ -78,8 +78,20 @@
   height: 300px; /* to be updated */
   transition: all 0.3s;
   font-size: 2rem;
+  text-align: center;
 }
 
 .consumerEventDiv:hover {
   transform: scale(1.05);
+}
+
+@media screen and (max-width: 750px) {
+  .consumerEventsContainer {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .consumerEventDiv {
+    width: 200px;
+    height: 200px;
+  }
 }
