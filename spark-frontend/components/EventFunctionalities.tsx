@@ -15,18 +15,15 @@ import eventFunctionalitiesStyles from "../styles/eventFunctionalities.module.cs
 
 export const EventFunctionalities = ({ eventData }) => {
   const { currentUser } = useAuth();
+  const router = useRouter();
   const { role } = useRole(currentUser?.email);
   const { eventsJoinEventConsumer } = useEventsJoinEventConsumerByEmail(
     currentUser?.email
   );
-  const isJoined = useRef<boolean | "1">("1");
-
-  // const [isJoined, setIsJoined] = useState<boolean | string>("1"); // set an initial value using a non-zero string
-  const isVerified = useRef<boolean>(false);
-  // const [isVerified, setIsVerified] = useState(false); // set it to true after the user is identified whether he/she has joined an event
-  const [isOwnerOfEvent, setIsOwnerOfEvent] = useState<boolean | string>("1");
-  const router = useRouter();
   const { mutate } = useEventsJoinEventConsumerByEventId(eventData?.id);
+  const isJoined = useRef<boolean | "1">("1");
+  const isVerified = useRef<boolean>(false); // set it to true after the user is identified whether he/she has joined an event
+  const [isOwnerOfEvent, setIsOwnerOfEvent] = useState<boolean | string>("1");
 
   useEffect(() => {
     if (
@@ -34,10 +31,8 @@ export const EventFunctionalities = ({ eventData }) => {
       eventsJoinEventConsumer &&
       eventsJoinEventConsumer.find((event) => event.event_id === eventData.id)
     ) {
-      // setIsJoined(true);
       isJoined.current = true;
     } else if (eventsJoinEventConsumer) {
-      // setIsJoined(false);
       isJoined.current = false;
     }
   }, [role, eventsJoinEventConsumer, eventData]);
@@ -48,7 +43,6 @@ export const EventFunctionalities = ({ eventData }) => {
       eventsJoinEventConsumer &&
       (isJoined.current || !isJoined.current)
     ) {
-      // setIsVerified(true);
       isVerified.current = true;
     }
   }, [role, isJoined, eventsJoinEventConsumer]);
@@ -56,11 +50,9 @@ export const EventFunctionalities = ({ eventData }) => {
   useEffect(() => {
     if (role.role === "provider" && role.name === eventData.eventProvider) {
       setIsOwnerOfEvent(true);
-      // setIsVerified(true);
       isVerified.current = true;
     } else if (role.role === "provider") {
       setIsOwnerOfEvent(false);
-      // setIsVerified(true);
       isVerified.current = true;
     }
   }, [role, eventData]);
@@ -130,7 +122,6 @@ export const EventFunctionalities = ({ eventData }) => {
 
         // TO REFACTOR - these 2 actions should be in sync when display in UI
         mutate(getEventsJoinEventConsumerByEventId(eventData.id));
-        // setIsJoined(true);
         isJoined.current = true;
       } catch (err) {
         alert(err);
@@ -167,8 +158,7 @@ export const EventFunctionalities = ({ eventData }) => {
 
         // TO REFACTOR - these 2 actions should be in sync when display in UI
         mutate(getEventsJoinEventConsumerByEventId(eventData.id));
-        // setIsJoined(false); // very slow - not trigger the UI update
-        isJoined.current = false;
+        isJoined.current = false; // very slow - not trigger the UI update
       } catch (err) {
         alert(err);
       }
@@ -181,9 +171,6 @@ export const EventFunctionalities = ({ eventData }) => {
         >
           leave event
         </button>
-        {/* <div>
-          This event has been joined by the current authenticated consumer
-        </div> */}
       </>
     );
   };
