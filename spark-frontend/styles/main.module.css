@@ -25,6 +25,12 @@
   gap: 5px;
 }
 
+.eventsContainer {
+  margin: 20px;
+  padding: 20px;
+  background-color: white;
+}
+
 .events-header {
   display: flex;
   align-items: center;
@@ -33,7 +39,10 @@
 }
 
 .events-header > h1 {
-  /* margin: 0; */
+  font-family: "Dancing Script", cursive;
+  font-size: 2rem;
+  padding: 0;
+  margin: 0;
 }
 
 #add-event-btn {
@@ -53,12 +62,24 @@
   transition: all 0.2s;
 }
 
+.consumerEventsContainer {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
 .consumerEventDiv {
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background-color: white;
-  width: 200px; /* to be updated */
-  height: 200px; /* to be updated */
+  background-color: var(--background-color-light);
+  width: 300px; /* to be updated */
+  height: 300px; /* to be updated */
+  transition: all 0.3s;
+  font-size: 2rem;
+}
+
+.consumerEventDiv:hover {
+  transform: scale(1.05);
 }

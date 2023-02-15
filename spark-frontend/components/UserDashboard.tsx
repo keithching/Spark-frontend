@@ -138,6 +138,26 @@ const Main = () => {
     );
   };
 
+  const ConsumerEvents = () => {
+    return (
+      <div className={mainStyles.consumerEventsContainer}>
+        {eventsJoinEventConsumer.map((item) => {
+          return (
+            <div
+              key={item.id}
+              className={mainStyles.consumerEventDiv}
+              onClick={() => router.push(`/events/${item.event_id}`)}
+            >
+              {item.event_name}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  const ProviderEvents = () => {};
+
   const Events = () => {
     const handleAddEventClick = () => {
       setModalContent({
@@ -148,7 +168,7 @@ const Main = () => {
     };
 
     return (
-      <>
+      <section className={mainStyles.eventsContainer}>
         <header className={mainStyles["events-header"]}>
           <h1>Events</h1>
           {role === "provider" && (
@@ -168,17 +188,7 @@ const Main = () => {
               eventsJoinEventConsumer.length === 0 ? (
               <span>Join your first event</span>
             ) : !isLoadingEJEC && eventsJoinEventConsumer ? (
-              eventsJoinEventConsumer.map((item) => {
-                return (
-                  <div
-                    key={item.consumer_id}
-                    className={mainStyles.consumerEventDiv}
-                    onClick={() => router.push(`/events/${item.event_id}`)}
-                  >
-                    {item.event_id}
-                  </div>
-                );
-              })
+              <ConsumerEvents />
             ) : (
               <Loading />
             )
@@ -186,7 +196,7 @@ const Main = () => {
             <Loading />
           )}
         </div>
-      </>
+      </section>
     );
   };
 
