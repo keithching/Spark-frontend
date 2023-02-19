@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 interface ThemeContextType {
   darkTheme: boolean;
@@ -22,6 +22,12 @@ export function ThemeProvider({ children }) {
   function toggleTheme() {
     setDarkTheme((prev) => !prev);
   }
+
+  // testing
+  useEffect(() => {
+    if (darkTheme) document.body.classList.add("dark");
+    else document.body.classList.remove("dark");
+  }, [darkTheme]);
 
   function test() {
     console.log("hi from theme context");

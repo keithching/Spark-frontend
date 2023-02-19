@@ -2,12 +2,12 @@ import { Switch } from "@mui/material";
 import { useTheme } from "../../contexts/ThemeContext";
 
 export const ThemeSwitch = () => {
-  const { test } = useTheme();
+  const { toggleTheme } = useTheme();
 
   return (
     <Switch
       //   checked={isChecked}
-      onChange={test}
+      onChange={toggleTheme}
       color="warning"
     />
   );

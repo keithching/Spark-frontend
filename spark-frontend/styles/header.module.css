@@ -8,12 +8,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: var(--background-color-extraLight);
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   padding: 10px 50px;
   position: sticky;
   top: 0;
   z-index: 1000;
+}
+
+.brand {
+  color: var(--font-color-primary);
 }
 
 .Header .nav-utilities {
@@ -53,6 +57,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
+  color: var(--font-color-secondary);
 }
 
 .profile-image {
@@ -81,11 +86,13 @@
   display: flex;
   flex-direction: column;
   width: 300px;
-  background-color: white;
+  background-color: var(--background-color-light);
+  color: var(--font-color-secondary);
 }
 
 .hamburgerMenu {
   font-size: 2rem;
+  color: var(--font-color-primary);
 }
 
 .sideMenu a,
@@ -99,7 +106,7 @@
 
 .userGreetingSideMenu {
   display: none;
-  background-color: white;
+  background-color: var(--background-color-light);
   padding: 5px;
 }
 
@@ -118,6 +125,7 @@
 .guestGreeting {
   padding: 0 20px;
   text-align: center;
+  color: var(--font-color-primary);
 }
 
 @media screen and (max-width: 800px) {
