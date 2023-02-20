@@ -2,7 +2,7 @@
 .switchChecked > span > span:first-of-type {
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 15px;
+  background-size: 18px;
 }
 
 .switch > span > span:first-of-type {
