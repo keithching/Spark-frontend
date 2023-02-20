@@ -4,6 +4,7 @@
 .dateTitle,
 .interestedTitle {
   font-size: 1.5rem;
+  color: var(--font-color-secondary);
 }
 
 .providerContent,
@@ -11,6 +12,7 @@
 .locationContent,
 .dateContent {
   font-size: 1.5rem;
+  color: var(--font-color-secondary);
 }
 
 .providerTitle {

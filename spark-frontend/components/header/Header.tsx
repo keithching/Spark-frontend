@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import headerStyles from "../styles/header.module.css";
-import { useAuth } from "../contexts/AuthContext";
+import headerStyles from "../../styles/header.module.css";
+import { useAuth } from "../../contexts/AuthContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -8,7 +8,8 @@ import { Cart } from "./Cart";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxCross1 } from "react-icons/rx";
 import classNames from "classnames";
-import { useRole } from "../utils/helper";
+import { useRole } from "../../utils/helper";
+import { ThemeSwitch } from "./ThemeSwitch";
 
 const Header = () => {
   const router = useRouter();
@@ -137,6 +138,7 @@ const Header = () => {
             {role.role !== "provider" && (
               <Cart hamburgerIsClicked={hamburgerIsClicked} />
             )}
+            <ThemeSwitch />
           </>
         )}
       </div>

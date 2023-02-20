@@ -2,13 +2,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: var(--background-color-extraLight);
+  background-color: var(--background-color-medium);
 }
 
 .header {
   text-align: center;
   padding: 50px 0;
   font-family: "Dancing Script", cursive;
+  color: var(--font-color-primary);
 }
 
 .searchContainer {
@@ -57,7 +58,7 @@
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 20px;
   justify-items: center;
-  background-color: white;
+  background-color: var(--background-color-extraLight);
 }
 
 .event-card-display h1 {
@@ -68,7 +69,6 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2px;
-  background-color: white;
   align-items: center;
   justify-items: center;
   width: 400px;
@@ -96,7 +96,6 @@
 .event-image {
   grid-column: 1 / -1;
   grid-row: 1 / 2;
-  /* background-color: var(--event-background-color); */
   border: 1px solid var(--event-background-color);
   height: 400px;
   width: 400px;
@@ -120,12 +119,14 @@
   grid-column: 1 / 2;
   grid-row: 3 / 4;
   justify-self: start;
+  color: var(--font-color-primary);
 }
 
 .eventDate {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
   justify-self: start;
+  color: var(--font-color-primary);
 }
 
 @media screen and (min-width: 1px) and (max-width: 1200px) {

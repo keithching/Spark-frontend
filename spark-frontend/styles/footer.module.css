@@ -7,10 +7,11 @@
   gap: 25px;
   background-color: var(--background-color-light);
   padding: 50px;
+  color: var(--font-color-secondary);
 }
 
 .Footer a {
-  color: inherit;
+  color: var(--font-color-primary);
   text-decoration: underline;
   text-align: center;
 }

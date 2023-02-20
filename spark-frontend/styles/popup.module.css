@@ -11,7 +11,7 @@
   margin-top: 100px;
   margin-right: 20px;
   border: 0.5px solid var(--background-color-medium);
-  background-color: white;
+  background-color: var(--background-color-extraLight);
 }
 
 .popup-text {
@@ -20,6 +20,7 @@
   flex-direction: column;
   gap: 20px;
   z-index: 1;
+  color: var(--font-color-primary);
 }
 
 .popup-text div {
@@ -32,6 +33,7 @@
 .sendEventsToServerBtn {
   background-color: var(--background-color-flavor);
   width: 200px;
+  color: var(--font-color-secondary);
 }
 
 .sendEventsToServerBtn:disabled {
