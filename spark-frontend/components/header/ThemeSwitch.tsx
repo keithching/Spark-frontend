@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 import { useTheme } from "../../contexts/ThemeContext";
 import themeSwitchStyles from "../../styles/themeSwitch.module.css";
 
+// customized MUI switch
 // https://stackoverflow.com/questions/51231297/how-to-change-size-of-toggle-switch-in-material-ui
 const MuiSwitchLarge = styled(Switch)(({ theme }) => ({
   width: 68,
