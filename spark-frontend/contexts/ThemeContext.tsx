@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from "react";
 interface ThemeContextType {
   darkTheme: boolean;
   toggleTheme: () => void;
-  test: () => void;
 }
 
 const ThemeContext = React.createContext<ThemeContextType | undefined>(
@@ -23,15 +22,10 @@ export function ThemeProvider({ children }) {
     setDarkTheme((prev) => !prev);
   }
 
-  // testing
   useEffect(() => {
     if (darkTheme) document.body.classList.add("dark");
     else document.body.classList.remove("dark");
   }, [darkTheme]);
-
-  function test() {
-    console.log("hi from theme context");
-  }
 
   const value = {
     darkTheme,
