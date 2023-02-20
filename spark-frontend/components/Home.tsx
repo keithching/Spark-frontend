@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from "react";
-import homeStyles from "../styles/home.module.css";
-import { useEvents } from "../utils/helper";
-import { parseISO, formatISO } from "date-fns";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useEvents } from "../utils/helper";
+import { Hero } from "./hero";
+import { parseISO, formatISO } from "date-fns";
+import homeStyles from "../styles/home.module.css";
 
 export default function Home() {
   const router = useRouter();
   const { events, isError, isLoading } = useEvents();
-
-  const EventCards = () => {
-    return (
-      <div className={homeStyles["event-card-display-container"]}>
-        {events.length > 0 &&
-          events.map((event) => {
-            return <EventCard event={event} key={event.id} />;
-          })}
-      </div>
-    );
-  };
 
   const EventCard = ({ event }) => {
     const { id } = event;
@@ -77,9 +67,20 @@ export default function Home() {
     );
   };
 
+  const EventCards = () => {
+    return (
+      <div className={homeStyles["event-card-display-container"]}>
+        {events.length > 0 &&
+          events.map((event) => {
+            return <EventCard event={event} key={event.id} />;
+          })}
+      </div>
+    );
+  };
+
   return (
     <div className={homeStyles.Home}>
-      <h1 className={homeStyles.header}>your next adventure awaits.</h1>
+      <Hero />
       {isError && <div>{isError}</div>}
       {!isLoading && <EventCards />}
     </div>

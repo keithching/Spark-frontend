@@ -35,15 +35,6 @@
   cursor: pointer;
 }
 
-.signup-btn {
-  background-color: var(--background-color-flavor);
-  /* color: white; */
-}
-
-.login-btn {
-  background-color: var(--background-color-light);
-}
-
 .Header .nav-utilities button:hover {
   opacity: 0.8;
 }
