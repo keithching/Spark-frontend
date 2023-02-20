@@ -143,6 +143,7 @@ const Header = () => {
         )}
       </div>
       <div className={classNames(headerStyles.mobileDevice)}>
+        <ThemeSwitch />
         <Hamburger />
         {hamburgerIsClicked && <SideMenu />}
       </div>

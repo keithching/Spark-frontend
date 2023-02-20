@@ -24,7 +24,7 @@ code {
   --event-background-color: rgba(0, 0, 0, 0.1);
   --background-color-flavor: rgb(189, 243, 189);
   --background-color-extraLight: rgb(250, 250, 250);
-  --background-color-light: rgb(244, 244, 244);
+  --background-color-light: rgb(230, 230, 230);
   --background-color-medium: rgb(239, 238, 238);
   --background-color-dark: black;
   --border-color-light: grey;
@@ -39,7 +39,7 @@ code {
   --background-color-flavor: rgb(182, 76, 164);
   --background-color-extraLight: rgb(71, 71, 71);
   --background-color-light: rgb(52, 52, 52);
-  --background-color-medium: rgb(63, 63, 63);
+  --background-color-medium: rgb(47, 47, 47);
   --background-color-dark: rgb(255, 255, 255);
   --border-color-light: grey;
   --font-color-primary: rgb(255, 255, 255);

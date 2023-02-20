@@ -41,7 +41,7 @@
 }
 
 .login-btn {
-  background-color: var(--background-color-medium);
+  background-color: var(--background-color-light);
 }
 
 .Header .nav-utilities button:hover {
@@ -123,7 +123,7 @@
 }
 
 .guestGreeting {
-  padding: 0 20px;
+  padding: 20px;
   text-align: center;
   color: var(--font-color-primary);
 }
@@ -134,7 +134,7 @@
   }
 
   .Header .mobileDevice {
-    display: block;
+    display: flex;
     gap: 10px;
   }
 

@@ -1,5 +1,5 @@
 .container {
-  background-color: var(--background-color-extraLight);
+  background-color: var(--background-color-light);
 }
 
 .Event {
@@ -8,7 +8,7 @@
   grid-template-columns: repeat(2, 1fr);
   place-items: center;
   padding: 50px 0;
-  background-color: var(--background-color-extraLight);
+  background-color: var(--background-color-light);
 }
 
 .left {
