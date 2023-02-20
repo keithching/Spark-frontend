@@ -30,7 +30,6 @@ export function ThemeProvider({ children }) {
   const value = {
     darkTheme,
     toggleTheme,
-    test,
   };
 
   return (
