@@ -1,21 +1,7 @@
-.container {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.header {
-  text-align: center;
-  padding: 50px 0;
-  font-family: "Dancing Script", cursive;
-  color: var(--font-color-primary);
-}
-
 .buttons {
   display: flex;
   gap: 10px;
+  align-self: end;
 }
 
 .buttons button {
@@ -28,26 +14,90 @@
   cursor: pointer;
 }
 
+.buttons button:hover {
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
 /* learning lazy loading */
 .lazy {
-  /* position: relative; */
   padding: 20px;
-  width: 300px;
-  height: 300px;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.lazy_img {
-  /* position: absolute;
-  top: 0;
-  left: 0; */
+.lazy_div {
   width: 100%;
-  -webkit-transition: 1s linear;
-  transition: 1s linear;
   opacity: 0;
   visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.lazy_img--loaded {
+.lazy_div--loaded {
   opacity: 1;
   visibility: visible;
+}
+
+.header {
+  text-align: center;
+  padding: 50px 0;
+  margin: 0;
+  font-family: "Dancing Script", cursive;
+  color: var(--font-color-primary);
+  font-size: 4rem;
+  opacity: 0;
+  visibility: hidden;
+  /* -webkit-transition: 1s linear; */
+  /* transition: 1s linear; */
+}
+
+.header--loaded {
+  opacity: 1;
+  visibility: visible;
+}
+
+.subheader {
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  font-family: "Dancing Script", cursive;
+  color: var(--font-color-secondary);
+  /* -webkit-transition: 0.5s linear; */
+  /* transition: 0.5s linear; */
+  display: flex;
+  flex-direction: column;
+}
+
+.subheader--loaded {
+  opacity: 1;
+  visibility: visible;
+}
+
+.viewEventsBtn {
+  background-color: var(--background-color-dark);
+  color: var(--font-color-tertiary);
+}
+
+.viewEventsBtn a {
+  text-decoration: none;
+  color: inherit;
+}
+
+@media screen and (min-width: 751px) and (max-width: 1200px) {
+}
+
+@media screen and (min-width: 1px) and (max-width: 750px) {
+  .subheader {
+    flex-direction: column;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
 }

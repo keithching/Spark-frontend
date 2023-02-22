@@ -1,13 +1,21 @@
-import React, { useState, useEffect, lazy, Suspense } from "react";
+import React, {
+  useState,
+  useEffect,
+  lazy,
+  Suspense,
+  useRef,
+  forwardRef,
+  createRef,
+  useMemo,
+} from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { parseISO, formatISO } from "date-fns";
-import homeStyles from "../../styles/home.module.css";
+import EventCardsStyles from "../../styles/eventCards.module.css";
 import classNames from "classnames";
 
 const EventCard = ({ event }) => {
   const router = useRouter();
-
   const { id } = event;
   const navigateToEventPage = (id) => {
     router.push(`/events/${id}/`);
@@ -15,7 +23,7 @@ const EventCard = ({ event }) => {
 
   const EventImage = ({ imageURL }) => {
     return (
-      <div className={homeStyles["event-image"]}>
+      <div className={EventCardsStyles["event-image"]}>
         <Image
           src={imageURL}
           alt=""
@@ -28,20 +36,20 @@ const EventCard = ({ event }) => {
   };
 
   const EventTitle = ({ title }) => {
-    return <div className={homeStyles["event-title"]}>{title}</div>;
+    return <div className={EventCardsStyles["event-title"]}>{title}</div>;
   };
 
   const EventCategory = ({ category }) => {
-    return <div className={homeStyles.eventCategory}>{category}</div>;
+    return <div className={EventCardsStyles.eventCategory}>{category}</div>;
   };
 
   const EventLocation = ({ location }) => {
-    return <div className={homeStyles.eventLocation}>{location}</div>;
+    return <div className={EventCardsStyles.eventLocation}>{location}</div>;
   };
 
   const EventDate = ({ dateStart, dateEnd }) => {
     return (
-      <div className={homeStyles.eventDate}>
+      <div className={EventCardsStyles.eventDate}>
         {formatISO(parseISO(dateStart), {
           representation: "date",
         })}{" "}
@@ -52,7 +60,7 @@ const EventCard = ({ event }) => {
 
   return (
     <div
-      className={homeStyles["event-card-display"]}
+      className={EventCardsStyles["event-card-display"]}
       onClick={() => navigateToEventPage(id)}
     >
       <EventImage imageURL={event.imageURL} />
@@ -67,18 +75,13 @@ const EventCard = ({ event }) => {
 export const EventCards = ({ events }) => {
   return (
     <div
-      className={classNames(
-        homeStyles["event-card-display-container"]
-        // isLoading ? homeStyles.unloaded : homeStyles.loaded
-      )}
+      className={classNames(EventCardsStyles["event-card-display-container"])}
+      id="events"
     >
-      {
-        // !isLoading &&
-        events.length > 0 &&
-          events.map((event) => {
-            return <EventCard event={event} key={event.id} />;
-          })
-      }
+      {events.length > 0 &&
+        events.map((event) => {
+          return <EventCard event={event} key={event.id} />;
+        })}
     </div>
   );
 };

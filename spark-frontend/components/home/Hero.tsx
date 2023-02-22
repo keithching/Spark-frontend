@@ -8,107 +8,62 @@ import { AiOutlineReload } from "react-icons/Ai";
 import useOnScreen from "../../utils/useOnScreen";
 
 const Child = ({ loaded }) => {
-  const imgRef = useRef<HTMLImageElement>();
-
-  function loadImage(img) {
-    img.src = img.getAttribute("data-src");
-  }
+  const divRef = useRef<HTMLDivElement>();
+  const headerRef = useRef<HTMLHeadingElement>();
+  const subheaderRef = useRef<HTMLHeadingElement>();
 
   useEffect(() => {
-    if (!loaded.current && imgRef.current) {
-      loadImage(imgRef.current);
+    if (!loaded.current && headerRef.current) {
       loaded.current = true;
       setTimeout(() => {
-        imgRef.current.classList.add(HeroStyles["lazy_img--loaded"]);
+        divRef.current.classList.add(HeroStyles["lazy_div--loaded"]);
+      }, 500);
+      setTimeout(() => {
+        headerRef.current.classList.add(HeroStyles["header--loaded"]);
+      }, 500);
+      setTimeout(() => {
+        subheaderRef.current.classList.add(HeroStyles["subheader--loaded"]);
       }, 1000);
     }
   });
 
   return (
-    <img
-      ref={imgRef}
-      className={classNames(HeroStyles.lazy_img)}
-      data-src="/images/twitter.png"
-    />
+    <div ref={divRef} className={classNames(HeroStyles.lazy_div)}>
+      <h1 ref={headerRef} className={classNames(HeroStyles.header)}>
+        your next adventure awaits.
+      </h1>
+      <div ref={subheaderRef} className={classNames(HeroStyles.subheader)}>
+        <h2>choose your next destiny by picking your favourite events</h2>
+        <div className={classNames(HeroStyles.buttons)}>
+          {/* <LogInBtn /> */}
+          {/* <SignUpBtn /> */}
+          <a href="#events">
+            <button className={HeroStyles.viewEventsBtn}>View Events</button>
+          </a>
+        </div>
+      </div>
+    </div>
   );
 };
 
 export default function Hero() {
   const loaded = useRef<boolean>(false);
   const { currentUser } = useAuth();
-  // const imgRef = useRef<HTMLImageElement>();
-  // const offset = useRef<number>();
-  // const loaded = useRef<boolean>(false);
-
   const childRef = useRef();
   const childRefValue = useOnScreen(childRef);
   const [isChildRef, setIsChildRef] = useState(false);
 
   useEffect(() => {
     if (!isChildRef) setIsChildRef(childRefValue);
-  }, [childRefValue]);
+  }, [isChildRef, childRefValue]);
 
   const style = {
     height: "1000px",
     backgroundColor: "#eee",
   };
 
-  // function loadImage(img) {
-  //   img.src = img.getAttribute("data-src");
-  // }
-
-  // function handleScrollEvent() {
-  //   if (!loaded.current && window.scrollY > offset.current) {
-  //     loadImage(imgRef.current);
-  //     console.log("loaded!");
-  //     loaded.current = true;
-  //     imgRef.current.classList.remove(HeroStyles["lazy_img--loading"]);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   if (!loaded.current) {
-  //     offset.current =
-  //       imgRef.current.getBoundingClientRect().top +
-  //       window.scrollY -
-  //       window.innerHeight;
-  //     console.log(offset.current);
-  //     imgRef.current.classList.add(HeroStyles["lazy_img--loading"]);
-
-  //     if (offset.current < 0 || offset.current === 0) {
-  //       loadImage(imgRef.current);
-  //       loaded.current = true;
-  //       imgRef.current.classList.remove(HeroStyles["lazy_img--loading"]);
-  //     }
-
-  //     window.addEventListener("scroll", handleScrollEvent);
-  //   } else {
-  //     window.removeEventListener("scroll", handleScrollEvent);
-  //   }
-  // });
-
   return (
-    // <div className={HeroStyles.container}>
-    //   <h1 className={HeroStyles.header}>your next adventure awaits.</h1>
-    //   <div className={HeroStyles.buttons}>
-    //     {!currentUser && (
-    //       <>
-    //         <LogInBtn />
-    //         <SignUpBtn />
-    //       </>
-    //     )}
-    //   </div>
-
-    //   </div>
     <>
-      <div style={style}>A large div</div>
-      {/* <div className={HeroStyles.lazy}>
-        <img
-          ref={imgRef}
-          className={classNames(HeroStyles.lazy_img)}
-          data-src="/images/twitter.png"
-        />
-      </div> */}
       <div className={HeroStyles.lazy} ref={childRef}>
         {isChildRef && <Child loaded={loaded} />}
       </div>

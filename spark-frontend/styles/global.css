@@ -18,18 +18,22 @@ code {
   overflow: hidden;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Define Global CSS Variables here */
 :root {
   --main-padding: 20px;
   --event-background-color: rgba(0, 0, 0, 0.1);
   --background-color-flavor: rgb(189, 243, 189);
   --background-color-extraLight: rgb(250, 250, 250);
-  --background-color-light: rgb(230, 230, 230);
-  --background-color-medium: rgb(239, 238, 238);
+  --background-color-light: rgb(239, 239, 239);
+  --background-color-medium: rgb(231, 231, 231);
   --background-color-dark: black;
   --border-color-light: grey;
   --font-color-primary: black;
-  --font-color-secondary: rgb(53, 53, 53);
+  --font-color-secondary: rgb(68, 68, 68);
   --font-color-tertiary: white;
   --event-functionalities-div-height: 100px;
   --event-joiner-div-height: 100px;
