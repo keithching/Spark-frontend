@@ -4,7 +4,6 @@ import { useAuth } from "../../contexts/AuthContext";
 import HeroStyles from "../../styles/hero.module.css";
 import { LogInBtn } from "../header/LogInBtn";
 import { SignUpBtn } from "../header/SignUpBtn";
-import { AiOutlineReload } from "react-icons/Ai";
 import useOnScreen from "../../utils/useOnScreen";
 
 const Child = ({ loaded }) => {
