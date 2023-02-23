@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
 import HeroStyles from "../../styles/hero.module.css";
 import { LogInBtn } from "../header/LogInBtn";
 import { SignUpBtn } from "../header/SignUpBtn";
@@ -32,7 +31,7 @@ const Child = ({ loaded }) => {
         your next adventure awaits.
       </h1>
       <div ref={subheaderRef} className={classNames(HeroStyles.subheader)}>
-        <h2>choose your next destiny by picking your favourite events</h2>
+        <h2>choose your next destination by picking your favourite events</h2>
         <div className={classNames(HeroStyles.buttons)}>
           {/* <LogInBtn /> */}
           {/* <SignUpBtn /> */}
@@ -47,7 +46,6 @@ const Child = ({ loaded }) => {
 
 export default function Hero() {
   const loaded = useRef<boolean>(false);
-  const { currentUser } = useAuth();
   const childRef = useRef();
   const childRefValue = useOnScreen(childRef);
   const [isChildRef, setIsChildRef] = useState(false);

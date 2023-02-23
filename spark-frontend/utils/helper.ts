@@ -27,7 +27,7 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 // getting event provider by email
 export function useEventProvider(email) {
   const { data, error, isLoading } = useSWR(
-    `${EVENT_PROVIDER_URL}/${email}`,
+    email !== undefined ? `${EVENT_PROVIDER_URL}/${email}` : null,
     fetcher
   );
 
@@ -40,7 +40,7 @@ export function useEventProvider(email) {
 
 export function useEventConsumer(email) {
   const { data, error, isLoading } = useSWR(
-    `${EVENT_CONSUMER_URL}/${email}`,
+    email !== undefined ? `${EVENT_CONSUMER_URL}/${email}` : null,
     fetcher
   );
 
@@ -83,7 +83,9 @@ const getEventsJoinEventConsumerByEmail = async (consumerEmail) => {
 
 export function useEventsJoinEventConsumerByEmail(consumerEmail) {
   const { data, mutate, error, isLoading } = useSWR(
-    `${EVENTS_JOIN_EVENT_CONSUMER_URL}/${consumerEmail}`,
+    consumerEmail !== undefined
+      ? `${EVENTS_JOIN_EVENT_CONSUMER_URL}/${consumerEmail}`
+      : null,
     fetcher
   );
 

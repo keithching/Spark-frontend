@@ -10,13 +10,22 @@ import { EventProps } from "../../lib/customProp";
 import { useAuth } from "../../contexts/AuthContext";
 import { useRouter } from "next/router";
 
-export const Popup = ({ data, hamburgerIsClicked }) => {
-  const counter = useCart((state) => state.counter);
-  const eventIdsInCart = useCart((state) => state.events); // eventIds
-  const resetCart = useCart((state) => state.reset);
-  const { currentUser } = useAuth();
-  const { role } = useRole(currentUser?.email);
-  const router = useRouter();
+export const Popup = ({
+  data,
+  hamburgerIsClicked,
+  currentUser,
+  role,
+  router,
+  counter,
+  eventIdsInCart,
+  resetCart,
+}) => {
+  // const counter = useCart((state) => state.counter);
+  // const eventIdsInCart = useCart((state) => state.events); // eventIds
+  // const resetCart = useCart((state) => state.reset);
+  // const { currentUser } = useAuth();
+  // const { role } = useRole(currentUser?.email);
+  // const router = useRouter();
 
   const handleSendEventsBtnClick = async () => {
     try {
