@@ -2,17 +2,25 @@ import classNames from "classnames";
 import { useEffect, useState, useRef } from "react";
 import { BsCart3 } from "react-icons/bs";
 import CartStyles from "../../styles/cart.module.css";
-import { useEvents } from "../../utils/helper";
+import { useAuth } from "../../contexts/AuthContext";
+import { useEvents, useRole } from "../../utils/helper";
 import { useCart } from "../../utils/store";
 import { Popup } from "./Popup";
+import { useRouter } from "next/router";
 
 export const Cart = ({ hamburgerIsClicked }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
+  const cartRef = useRef<HTMLDivElement>();
   const counter = useCart((state) => state.counter);
   const eventCartStore = useCart((state) => state.events);
   const removeFromEvents = useCart((state) => state.removeFromEvents);
   const updateCounter = useCart((state) => state.updateCounter);
+  const eventIdsInCart = useCart((state) => state.events); // eventIds
+  const resetCart = useCart((state) => state.reset);
   const { events, isError, isLoading } = useEvents();
+  const { currentUser } = useAuth();
+  const { role } = useRole(currentUser?.email);
+  const router = useRouter();
 
   const handleClick = () => {
     setIsClicked((prev) => !prev);
@@ -42,13 +50,9 @@ export const Cart = ({ hamburgerIsClicked }) => {
       "Loading"
     );
 
-  const CartDetails = () => {
-    return <Popup data={data} hamburgerIsClicked={hamburgerIsClicked} />;
-  };
-
   return (
     <>
-      <div className={CartStyles.cartDiv}>
+      <div className={CartStyles.cartDiv} ref={cartRef}>
         <button
           className={classNames(CartStyles.cartBtn)}
           onClick={handleClick}
@@ -56,14 +60,34 @@ export const Cart = ({ hamburgerIsClicked }) => {
           <BsCart3 />
           {counter}
         </button>
+
         {hamburgerIsClicked && isClicked && (
           <div className={classNames(CartStyles.cartDetail)}>
-            <CartDetails />
+            {/* <CartDetails /> */}
+            <Popup
+              data={data}
+              hamburgerIsClicked={hamburgerIsClicked}
+              currentUser={currentUser}
+              role={role}
+              router={router}
+              counter={counter}
+              eventIdsInCart={eventIdsInCart}
+              resetCart={resetCart}
+            />
           </div>
         )}
       </div>
       {!hamburgerIsClicked && isClicked && (
-        <Popup data={data} hamburgerIsClicked={hamburgerIsClicked} />
+        <Popup
+          data={data}
+          hamburgerIsClicked={hamburgerIsClicked}
+          currentUser={currentUser}
+          role={role}
+          router={router}
+          counter={counter}
+          eventIdsInCart={eventIdsInCart}
+          resetCart={resetCart}
+        />
       )}
     </>
   );

@@ -10,6 +10,8 @@ import { RxCross1 } from "react-icons/rx";
 import classNames from "classnames";
 import { useRole } from "../../utils/helper";
 import { ThemeSwitch } from "./ThemeSwitch";
+import { LogInBtn } from "./LogInBtn";
+import { SignUpBtn } from "./SignUpBtn";
 
 const Header = () => {
   const router = useRouter();
@@ -121,18 +123,8 @@ const Header = () => {
               </>
             ) : (
               <>
-                <button
-                  className={headerStyles["login-btn"]}
-                  onClick={() => router.push("/login")}
-                >
-                  Log In
-                </button>
-                <button
-                  className={headerStyles["signup-btn"]}
-                  onClick={() => router.push("/signup")}
-                >
-                  Sign Up
-                </button>
+                <LogInBtn />
+                <SignUpBtn />
               </>
             )}
             {role.role !== "provider" && (
