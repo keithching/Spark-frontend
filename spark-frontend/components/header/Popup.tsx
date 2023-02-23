@@ -2,43 +2,28 @@ import { useEffect, useState } from "react";
 import PopupStyles from "../../styles/popup.module.css";
 import {
   createEventsJoinEventConsumer,
-  useEvents,
-  useRole,
+  useEventConsumer,
 } from "../../utils/helper";
 import { useCart } from "../../utils/store";
-import { EventProps } from "../../lib/customProp";
-import { useAuth } from "../../contexts/AuthContext";
 import { useRouter } from "next/router";
 
-export const Popup = ({
-  data,
-  hamburgerIsClicked,
-  currentUser,
-  role,
-  router,
-  counter,
-  eventIdsInCart,
-  resetCart,
-}) => {
-  // const counter = useCart((state) => state.counter);
-  // const eventIdsInCart = useCart((state) => state.events); // eventIds
-  // const resetCart = useCart((state) => state.reset);
-  // const { currentUser } = useAuth();
-  // const { role } = useRole(currentUser?.email);
-  // const router = useRouter();
+export const Popup = ({ data, hamburgerIsClicked, currentUser }) => {
+  const counter = useCart((state) => state.counter);
+  const eventIdsInCart = useCart((state) => state.events); // eventIds
+  const resetCart = useCart((state) => state.reset);
+  const { eventConsumer } = useEventConsumer(currentUser?.email);
+  const router = useRouter();
 
   const handleSendEventsBtnClick = async () => {
     try {
-      if (role.role !== "consumer") {
-        console.log("not consumer. aborted submission");
-        return;
-      }
-
+      // if (role.role !== "consumer") {
+      //   console.log("not consumer. aborted submission");
+      //   return;
+      // }
       const data = {
         eventIds: eventIdsInCart,
-        consumerId: role.id,
+        consumerId: eventConsumer.id,
       };
-
       await createEventsJoinEventConsumer(data);
       alert(`joined ${eventIdsInCart.length} events successfully`);
       resetCart(); // reset cart after successful POST request

@@ -28,7 +28,8 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 export function useEventProvider(email) {
   const { data, error, isLoading } = useSWR(
     email !== undefined ? `${EVENT_PROVIDER_URL}/${email}` : null,
-    fetcher
+    fetcher,
+    { shouldRetryOnError: false }
   );
 
   return {
@@ -41,7 +42,8 @@ export function useEventProvider(email) {
 export function useEventConsumer(email) {
   const { data, error, isLoading } = useSWR(
     email !== undefined ? `${EVENT_CONSUMER_URL}/${email}` : null,
-    fetcher
+    fetcher,
+    { shouldRetryOnError: false }
   );
 
   return {
@@ -86,7 +88,8 @@ export function useEventsJoinEventConsumerByEmail(consumerEmail) {
     consumerEmail !== undefined
       ? `${EVENTS_JOIN_EVENT_CONSUMER_URL}/${consumerEmail}`
       : null,
-    fetcher
+    fetcher,
+    { shouldRetryOnError: false }
   );
 
   return {
@@ -117,7 +120,8 @@ export function useEventsJoinEventConsumerByEventId(
     eventId !== undefined
       ? `${EVENTS_JOIN_EVENT_CONSUMER_URL}/${eventId}`
       : null,
-    fetcher
+    fetcher,
+    { shouldRetryOnError: false }
   );
 
   return {
@@ -143,7 +147,9 @@ const getEventProviders = async () => {
 };
 
 export function useEventProviders() {
-  const { data, error, isLoading } = useSWR(`${EVENT_PROVIDER_URL}`, fetcher);
+  const { data, error, isLoading } = useSWR(`${EVENT_PROVIDER_URL}`, fetcher, {
+    shouldRetryOnError: false,
+  });
 
   return {
     eventProviders: data,
@@ -165,7 +171,9 @@ const getEvents = async () => {
 };
 
 export function useEvents() {
-  const { data, error, isLoading } = useSWR(`${EVENT_URL}`, fetcher);
+  const { data, error, isLoading } = useSWR(`${EVENT_URL}`, fetcher, {
+    shouldRetryOnError: false,
+  });
 
   return {
     events: data,
