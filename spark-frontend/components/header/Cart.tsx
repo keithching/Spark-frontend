@@ -19,7 +19,6 @@ export const Cart = ({ hamburgerIsClicked }) => {
   const resetCart = useCart((state) => state.reset);
   const { events, isError, isLoading } = useEvents();
   const { currentUser } = useAuth();
-  const { role } = useRole(currentUser?.email);
   const router = useRouter();
 
   const handleClick = () => {
@@ -38,7 +37,6 @@ export const Cart = ({ hamburgerIsClicked }) => {
       eventCartStore.map((event) => {
         return (
           <div key={event}>
-            {/* <div>id: {event}</div> */}
             <div>{events.find((eve) => eve.id === event).title}</div>
             <button onClick={() => handleRemoveEventClick(event)}>
               remove
@@ -63,16 +61,10 @@ export const Cart = ({ hamburgerIsClicked }) => {
 
         {hamburgerIsClicked && isClicked && (
           <div className={classNames(CartStyles.cartDetail)}>
-            {/* <CartDetails /> */}
             <Popup
               data={data}
               hamburgerIsClicked={hamburgerIsClicked}
               currentUser={currentUser}
-              role={role}
-              router={router}
-              counter={counter}
-              eventIdsInCart={eventIdsInCart}
-              resetCart={resetCart}
             />
           </div>
         )}
@@ -82,11 +74,6 @@ export const Cart = ({ hamburgerIsClicked }) => {
           data={data}
           hamburgerIsClicked={hamburgerIsClicked}
           currentUser={currentUser}
-          role={role}
-          router={router}
-          counter={counter}
-          eventIdsInCart={eventIdsInCart}
-          resetCart={resetCart}
         />
       )}
     </>

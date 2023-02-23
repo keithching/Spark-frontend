@@ -37,7 +37,7 @@ const Header = () => {
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
-  });
+  }, []);
 
   const UserAvatarName = () => {
     return (

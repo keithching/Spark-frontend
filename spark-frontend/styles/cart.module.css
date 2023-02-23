@@ -17,9 +17,9 @@
 
 .cartDetail {
   border: 0.5px solid var(--background-color-medium);
+  background-color: var(--background-color-medium);
   border-left: 0px;
   border-right: 0px;
-  background-color: white;
   padding: 20px;
   display: flex;
   flex-direction: column;
