@@ -12,6 +12,7 @@ import { useRole } from "../../utils/helper";
 import { ThemeSwitch } from "./ThemeSwitch";
 import { LogInBtn } from "./LogInBtn";
 import { SignUpBtn } from "./SignUpBtn";
+import Brand from "./Brand";
 
 const Header = () => {
   const router = useRouter();
@@ -105,9 +106,7 @@ const Header = () => {
 
   return (
     <div className={headerStyles.Header}>
-      <nav className={headerStyles.brand}>
-        <Link href="/">Spark</Link>
-      </nav>
+      <Brand />
       <div className={headerStyles["nav-utilities"]}>
         {!isLoading && (
           <>

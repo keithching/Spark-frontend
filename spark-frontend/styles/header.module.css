@@ -16,10 +16,6 @@
   z-index: 1000;
 }
 
-.brand {
-  color: var(--font-color-primary);
-}
-
 .Header .nav-utilities {
   display: flex;
   align-items: center;
