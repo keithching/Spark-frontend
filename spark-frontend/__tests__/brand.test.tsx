@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Brand from "../components/header/Brand";
 
-describe("Header", () => {
+describe("Brand", () => {
   test("contains brand name", () => {
     render(<Brand />);
 
