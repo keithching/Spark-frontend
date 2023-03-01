@@ -1,0 +1,48 @@
+.profile-image {
+  width: 30px;
+  height: 30px;
+  border: 0.5px solid var(--border-color-light);
+  border-radius: 50%;
+}
+
+.profile-image img {
+  border-radius: 50%;
+}
+
+.user-greeting {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--font-color-secondary);
+}
+
+.userGreetingSideMenu {
+  display: none;
+  background-color: var(--background-color-light);
+  padding: 5px;
+}
+
+.userGreetingSideMenu .profile-image {
+  width: 50px;
+  height: 50px;
+}
+
+.userGreetingSideMenu span {
+  padding: 5px;
+  font-size: 1.5rem;
+  text-decoration: none;
+  cursor: auto;
+}
+
+.guestGreeting {
+  padding: 20px;
+  text-align: center;
+  color: var(--font-color-primary);
+}
+
+@media screen and (max-width: 800px) {
+  .userGreetingSideMenu {
+    display: flex;
+    flex-direction: column;
+  }
+}
