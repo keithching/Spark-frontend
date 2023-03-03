@@ -8,6 +8,7 @@ export const LogInBtn = () => {
     <button
       className={LogInBtnStyles["login-btn"]}
       onClick={() => router.push("/login")}
+      data-cy="header-login-btn"
     >
       Log In
     </button>

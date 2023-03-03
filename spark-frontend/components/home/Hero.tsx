@@ -6,27 +6,40 @@ import { SignUpBtn } from "../header/SignUpBtn";
 import useOnScreen from "../../utils/useOnScreen";
 
 const Child = ({ loaded }) => {
-  const divRef = useRef<HTMLDivElement>();
+  const containerRef = useRef<HTMLDivElement>();
   const headerRef = useRef<HTMLHeadingElement>();
   const subheaderRef = useRef<HTMLHeadingElement>();
 
+  function addContainerLoadedClass() {
+    containerRef.current.classList.add(HeroStyles["lazy_div--loaded"]);
+  }
+  function addHeaderLoadedClass() {
+    headerRef.current.classList.add(HeroStyles["header--loaded"]);
+  }
+  function addSubheaderLoadedClass() {
+    subheaderRef.current.classList.add(HeroStyles["subheader--loaded"]);
+  }
+
   useEffect(() => {
+    let containerTimeoutId, headerTimeoutId, subheaderTimeoutId;
+
     if (!loaded.current && headerRef.current) {
       loaded.current = true;
-      setTimeout(() => {
-        divRef.current.classList.add(HeroStyles["lazy_div--loaded"]);
-      }, 500);
-      setTimeout(() => {
-        headerRef.current.classList.add(HeroStyles["header--loaded"]);
-      }, 500);
-      setTimeout(() => {
-        subheaderRef.current.classList.add(HeroStyles["subheader--loaded"]);
-      }, 1000);
+
+      containerTimeoutId = setTimeout(addContainerLoadedClass, 500);
+      headerTimeoutId = setTimeout(addHeaderLoadedClass, 500);
+      subheaderTimeoutId = setTimeout(addSubheaderLoadedClass, 1000);
     }
+
+    return () => {
+      if (containerTimeoutId) clearTimeout(containerTimeoutId);
+      if (headerTimeoutId) clearTimeout(headerTimeoutId);
+      if (subheaderTimeoutId) clearTimeout(subheaderTimeoutId);
+    };
   });
 
   return (
-    <div ref={divRef} className={classNames(HeroStyles.lazy_div)}>
+    <div ref={containerRef} className={classNames(HeroStyles.lazy_div)}>
       <h1 ref={headerRef} className={classNames(HeroStyles.header)}>
         your next adventure awaits.
       </h1>
