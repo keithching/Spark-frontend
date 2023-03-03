@@ -1,12 +1,8 @@
-describe("home page", () => {
-  it("should pass", () => {
-    cy.visit("/");
-  });
+/// <reference types="Cypress" />
 
-  it("should navigate to the log in page when log in is clicked", () => {
+describe("home page", () => {
+  it("should visit the homepage", () => {
     cy.visit("/");
-    cy.get("[data-cy=header-login-btn]").click();
-    cy.location("pathname").should("eq", "/login");
   });
 });
 

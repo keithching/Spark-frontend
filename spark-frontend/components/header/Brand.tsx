@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Brand = () => {
   return (
-    <nav className={brandStyles.brand}>
+    <nav className={brandStyles.brand} data-cy="header-brand-nav">
       <Link href="/">Spark</Link>
     </nav>
   );
