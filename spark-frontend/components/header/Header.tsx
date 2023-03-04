@@ -12,6 +12,8 @@ import { useRole } from "../../utils/helper";
 import { ThemeSwitch } from "./ThemeSwitch";
 import { LogInBtn } from "./LogInBtn";
 import { SignUpBtn } from "./SignUpBtn";
+import Brand from "./Brand";
+import UserGreeting from "./UserGreeting";
 
 const Header = () => {
   const router = useRouter();
@@ -39,36 +41,6 @@ const Header = () => {
     };
   }, []);
 
-  const UserAvatarName = () => {
-    return (
-      <div
-        className={classNames(
-          headerStyles["user-greeting"],
-          hamburgerIsClicked && headerStyles.userGreetingSideMenu
-        )}
-      >
-        <div className={headerStyles["profile-image"]}>
-          <Image
-            src={currentUser.photoURL ? currentUser.photoURL : ""}
-            alt=""
-            width={hamburgerIsClicked ? 50 : 30}
-            height={hamburgerIsClicked ? 50 : 30}
-            objectFit="cover"
-          />
-        </div>
-        <span>{currentUser.displayName}</span>
-      </div>
-    );
-  };
-
-  const UserGreeting = () => {
-    return currentUser ? (
-      <UserAvatarName />
-    ) : (
-      <div className={classNames(headerStyles.guestGreeting)}>こんにちは！</div>
-    );
-  };
-
   const Hamburger = () => {
     return (
       <div
@@ -83,7 +55,7 @@ const Header = () => {
   const SideMenu = () => {
     return (
       <div className={classNames(headerStyles.sideMenu)}>
-        <UserGreeting />
+        <UserGreeting hamburgerIsClicked={hamburgerIsClicked} />
         {role.role !== "provider" && (
           <Cart hamburgerIsClicked={hamburgerIsClicked} />
         )}
@@ -105,14 +77,12 @@ const Header = () => {
 
   return (
     <div className={headerStyles.Header}>
-      <nav className={headerStyles.brand}>
-        <Link href="/">Spark</Link>
-      </nav>
+      <Brand />
       <div className={headerStyles["nav-utilities"]}>
         {!isLoading && (
           <>
             {error && <span>{error}</span>}
-            <UserGreeting />
+            <UserGreeting hamburgerIsClicked={hamburgerIsClicked} />
             {currentUser ? (
               <>
                 <button onClick={() => router.push("/dashboard")}>
