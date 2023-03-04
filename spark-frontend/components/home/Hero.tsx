@@ -11,24 +11,33 @@ const Child = ({ loaded }) => {
   const subheaderRef = useRef<HTMLHeadingElement>();
 
   function addContainerLoadedClass() {
-    containerRef.current.classList.add(HeroStyles["lazy_div--loaded"]);
+    if (containerRef.current) {
+      containerRef.current.classList.add(HeroStyles["lazy_div--loaded"]);
+    }
   }
   function addHeaderLoadedClass() {
-    headerRef.current.classList.add(HeroStyles["header--loaded"]);
+    if (headerRef.current) {
+      headerRef.current.classList.add(HeroStyles["header--loaded"]);
+    }
   }
   function addSubheaderLoadedClass() {
-    subheaderRef.current.classList.add(HeroStyles["subheader--loaded"]);
+    if (subheaderRef.current) {
+      subheaderRef.current.classList.add(HeroStyles["subheader--loaded"]);
+    }
   }
 
+  const [containerTimeoutId, setContainerTimeoutId] = useState<any>();
+  const [headerTimeoutId, setHeaderTimeoutId] = useState<any>();
+  const [subheaderTimeoutId, setSubheaderTimeoutId] = useState<any>();
+
   useEffect(() => {
-    let containerTimeoutId, headerTimeoutId, subheaderTimeoutId;
+    // let containerTimeoutId, headerTimeoutId, subheaderTimeoutId;
 
-    if (!loaded.current && headerRef.current) {
+    if (!loaded.current) {
+      setContainerTimeoutId(setTimeout(addContainerLoadedClass, 500));
+      setHeaderTimeoutId(setTimeout(addHeaderLoadedClass, 500));
+      setSubheaderTimeoutId(setTimeout(addSubheaderLoadedClass, 1000));
       loaded.current = true;
-
-      containerTimeoutId = setTimeout(addContainerLoadedClass, 500);
-      headerTimeoutId = setTimeout(addHeaderLoadedClass, 500);
-      subheaderTimeoutId = setTimeout(addSubheaderLoadedClass, 1000);
     }
 
     return () => {
@@ -36,14 +45,22 @@ const Child = ({ loaded }) => {
       if (headerTimeoutId) clearTimeout(headerTimeoutId);
       if (subheaderTimeoutId) clearTimeout(subheaderTimeoutId);
     };
-  });
+  }, []);
 
   return (
     <div ref={containerRef} className={classNames(HeroStyles.lazy_div)}>
-      <h1 ref={headerRef} className={classNames(HeroStyles.header)}>
+      <h1
+        ref={headerRef}
+        className={classNames(HeroStyles.header)}
+        data-cy="hero-header"
+      >
         your next adventure awaits.
       </h1>
-      <div ref={subheaderRef} className={classNames(HeroStyles.subheader)}>
+      <div
+        ref={subheaderRef}
+        className={classNames(HeroStyles.subheader)}
+        data-cy="hero-subheader"
+      >
         <h2>choose your next destination by picking your favourite events</h2>
         <div className={classNames(HeroStyles.buttons)}>
           {/* <LogInBtn /> */}
