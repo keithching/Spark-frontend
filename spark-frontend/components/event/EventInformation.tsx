@@ -4,7 +4,7 @@ import { parseISO, formatISO } from "date-fns";
 export const EventInformation = ({ eventData }) => {
   return (
     <>
-      <h1>{eventData.title}</h1>
+      <h1 data-cy="event-title">{eventData.title}</h1>
       <div className={eventInformationStyles.providerTitle}>Provider</div>
       <div className={eventInformationStyles.providerContent}>
         {eventData.eventProvider}

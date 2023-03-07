@@ -12,15 +12,26 @@ describe("Event", () => {
     cy.get('[data-cy="event-joiners"]').should("be.visible");
   });
   it("should add event to the cart", () => {
-    cy.get('[data-cy="add-to-cart-button"]')
-      .as("addToCartButton")
-      .contains("add to cart")
-      .should("be.visible"); // make sure is rendered and visible
-    // https://github.com/cypress-io/cypress/issues/5275
-    cy.get('[data-cy="add-to-cart-button"]')
-      .as("addToCartButton")
-      .click({ force: true });
-    cy.get("@addToCartButton").contains("added to cart");
+    cy.addToCart();
+    cy.get('[data-cy="cart"]').contains(1);
+    cy.get('[data-cy="cart"]').click();
+    // make sure current event page's title is included in the cart popup
+    cy.get('[data-cy="event-title"]').then((el) => {
+      cy.get('[data-cy="popup"]').contains(el.text());
+    });
+  });
+  it.only('should display "add to cart" from "added to cart" when in-cart item is removed', () => {
+    cy.addToCart();
+    cy.get('[data-cy="cart"]').click();
+    cy.get('[data-cy="event-title"]').then((el) => {
+      cy.get('[data-cy="popup-event"]')
+        .contains(el.text())
+        .parent()
+        .contains("remove")
+        .click();
+    });
+    cy.get('[data-cy="add-to-cart-button"]').contains("add to cart");
+    cy.get('[data-cy="cart"]').contains(0);
   });
 });
 

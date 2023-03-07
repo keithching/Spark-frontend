@@ -36,7 +36,7 @@ export const Cart = ({ hamburgerIsClicked }) => {
     ) : !isLoading ? (
       eventCartStore.map((event) => {
         return (
-          <div key={event}>
+          <div key={event} data-cy="popup-event">
             <div>{events.find((eve) => eve.id === event).title}</div>
             <button onClick={() => handleRemoveEventClick(event)}>
               remove
@@ -50,7 +50,7 @@ export const Cart = ({ hamburgerIsClicked }) => {
 
   return (
     <>
-      <div className={CartStyles.cartDiv} ref={cartRef}>
+      <div className={CartStyles.cartDiv} ref={cartRef} data-cy="cart">
         <button
           className={classNames(CartStyles.cartBtn)}
           onClick={handleClick}
