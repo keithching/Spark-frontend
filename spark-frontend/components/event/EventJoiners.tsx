@@ -42,7 +42,10 @@ export const EventJoiners = ({ eventData }) => {
   });
 
   return (
-    <div className={classNames(eventJoinerStyles.joinersDiv)}>
+    <div
+      className={classNames(eventJoinerStyles.joinersDiv)}
+      data-cy="event-joiners"
+    >
       {eventsJoinEventConsumer && eventsJoinEventConsumer.length === 0 && (
         <div className={classNames(eventJoinerStyles.firstJoinerDiv)}>
           Become the first one to join this event!
