@@ -62,6 +62,7 @@ const EventCard = ({ event }) => {
     <div
       className={EventCardsStyles["event-card-display"]}
       onClick={() => navigateToEventPage(id)}
+      data-cy={`event-card-${id}`}
     >
       <EventImage imageURL={event.imageURL} />
       <EventTitle title={event.title} />

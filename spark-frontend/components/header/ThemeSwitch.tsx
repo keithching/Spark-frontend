@@ -32,6 +32,7 @@ export const ThemeSwitch = () => {
   return (
     <>
       <MuiSwitchLarge
+        data-cy="theme-switch"
         checked={darkTheme}
         onChange={toggleTheme}
         color="warning"
