@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -18,13 +14,15 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve"
+    // "types": ["node", "jest", "@types/testing-library__jest-dom"]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "contexts/AuthContext.ts"  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "**/*.tsx",
+    "contexts/AuthContext.ts",
+    "./node_modules/cypress"
+  ],
+  // https://github.com/cypress-io/cypress/issues/22059#issuecomment-1218165274
+  "exclude": ["node_modules", "./cypress.config.ts", "**/*.spec.ts", "cypress"]
 }
