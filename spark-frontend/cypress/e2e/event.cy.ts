@@ -2,7 +2,7 @@
 
 describe("Event", () => {
   beforeEach(() => {
-    cy.visit("/events/17");
+    cy.visit("/events/17"); // TO REFACTOR to use testing database
   });
   it("should show add to cart button and join event button", () => {
     cy.get('[data-cy="add-to-cart-button"]').should("be.visible");
@@ -20,7 +20,7 @@ describe("Event", () => {
       cy.get('[data-cy="popup"]').contains(el.text());
     });
   });
-  it.only('should display "add to cart" from "added to cart" when in-cart item is removed', () => {
+  it('should display "add to cart" from "added to cart" when in-cart item is removed', () => {
     cy.addToCart();
     cy.get('[data-cy="cart"]').click();
     cy.get('[data-cy="event-title"]').then((el) => {
