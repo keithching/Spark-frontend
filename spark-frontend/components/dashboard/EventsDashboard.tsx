@@ -5,6 +5,11 @@ import { useRole } from "../../utils/helper";
 import { ProviderEvents } from "./ProviderEvents";
 import { ConsumerEvents } from "./ConsumerEvents";
 import { Loading } from "../Loading";
+import { Dancing_Script } from "next/font/google";
+import classNames from "classnames";
+
+// https://nextjs.org/docs/basic-features/font-optimization#single-page-usage
+const dancingScript = Dancing_Script({ subsets: ["latin"] });
 
 export const EventsDashboard = ({
   loading,
@@ -28,7 +33,12 @@ export const EventsDashboard = ({
 
   return (
     <section className={userDashboardStyles.eventsContainer}>
-      <header className={userDashboardStyles["events-header"]}>
+      <header
+        className={classNames(
+          userDashboardStyles["events-header"],
+          dancingScript.className
+        )}
+      >
         <h1>Events</h1>
         {role === "provider" && (
           <GrAddCircle onClick={handleAddEventClick} id="add-event-btn" />

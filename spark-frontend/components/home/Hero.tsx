@@ -4,6 +4,10 @@ import HeroStyles from "../../styles/hero.module.css";
 import { LogInBtn } from "../header/LogInBtn";
 import { SignUpBtn } from "../header/SignUpBtn";
 import useOnScreen from "../../utils/useOnScreen";
+import { Dancing_Script } from "next/font/google";
+
+// https://nextjs.org/docs/basic-features/font-optimization#single-page-usage
+const dancingScript = Dancing_Script({ subsets: ["latin"] });
 
 const Child = ({ loaded }) => {
   const containerRef = useRef<HTMLDivElement>();
@@ -51,14 +55,14 @@ const Child = ({ loaded }) => {
     <div ref={containerRef} className={classNames(HeroStyles.lazy_div)}>
       <h1
         ref={headerRef}
-        className={classNames(HeroStyles.header)}
+        className={classNames(HeroStyles.header, dancingScript.className)}
         data-cy="hero-header"
       >
         your next adventure awaits.
       </h1>
       <div
         ref={subheaderRef}
-        className={classNames(HeroStyles.subheader)}
+        className={classNames(HeroStyles.subheader, dancingScript.className)}
         data-cy="hero-subheader"
       >
         <h2>choose your next destination by picking your favourite events</h2>

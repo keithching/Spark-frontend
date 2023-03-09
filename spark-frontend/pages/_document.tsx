@@ -1,5 +1,5 @@
 // https://nextjs.org/docs/advanced-features/custom-document
-import { Html, Head, Main, NextScript } from 'next/document'
+import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
   return (
@@ -10,19 +10,16 @@ export default function Document() {
         {/* https://github.com/vercel/next.js/blob/deprecated-main/errors/static-dir-deprecated.md */}
         <link rel="icon" href="/favicon.ico" />
         <meta name="theme-color" content="#000000" />
-        <meta
-          name="description"
-          content="Spark frontend built using Next.js"
-        />
+        <meta name="description" content="Spark frontend built using Next.js" />
         <link rel="apple-touch-icon" href="/logo192.png" />
         <link rel="manifest" href="/manifest.json" />
         {/* https://nextjs.org/docs/basic-features/font-optimization */}
-        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+        {/* <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet" /> */}
       </Head>
       <body>
         <Main />
         <NextScript />
       </body>
     </Html>
-  )
+  );
 }

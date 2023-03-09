@@ -7,9 +7,8 @@ export const EventPhotoDisplay = (eventData) => {
       {eventData.imageURL && (
         <Image
           src={eventData.imageURL}
-          width={400}
-          height={400}
-          objectFit="cover"
+          fill
+          sizes="50vw"
           alt={eventData.title}
         />
       )}

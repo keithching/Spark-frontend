@@ -1,6 +1,8 @@
 .event-image {
   height: 400px;
   width: 400px;
+  overflow: hidden;
+  position: relative;
 }
 
 @media screen and (max-width: 750px) {

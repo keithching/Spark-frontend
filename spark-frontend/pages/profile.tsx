@@ -119,13 +119,7 @@ export default function Profile() {
           </div>
           <PhotoInput />
           {photoURL ? (
-            <Image
-              src={photoURL}
-              alt=""
-              width={400}
-              height={400}
-              objectFit="cover"
-            />
+            <Image src={photoURL} alt="profile image" fill sizes="100vw" />
           ) : null}
         </div>
         {photoURL !== "" && isClick.current ? (

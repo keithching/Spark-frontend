@@ -8,13 +8,12 @@
 }
 
 .joinerProfilePic {
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
   border: 0.5px solid rgb(100, 100, 100);
   border-radius: 50%;
   width: 50px;
   height: 50px;
+  position: relative;
+  overflow: hidden;
 }
 
 .joinerProfilePic img {

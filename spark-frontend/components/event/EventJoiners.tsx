@@ -33,9 +33,8 @@ export const EventJoiners = ({ eventData }) => {
         <Image
           src={props.joiner.profile_pic_url}
           alt={props.joiner.consumer_name}
-          width={50}
-          height={50}
-          objectFit="cover"
+          fill
+          sizes="50vw"
         />
       </div>
     );

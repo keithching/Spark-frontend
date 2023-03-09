@@ -48,6 +48,9 @@
   width: 400px;
   display: flex;
   align-items: center;
+  object-fit: contain;
+  position: relative;
+  overflow: hidden;
 }
 
 .eventCategory {

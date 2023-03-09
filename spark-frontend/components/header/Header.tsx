@@ -14,6 +14,7 @@ import Brand from "./Brand";
 import UserGreeting from "./UserGreeting";
 import { AuthBtns } from "./AuthBtns";
 import AuthenticatedUtilites from "./AuthenticatedUtilities";
+import { Dancing_Script } from "next/font/google";
 
 const Header = () => {
   const router = useRouter();
