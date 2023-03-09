@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { AuthBtns } from "../components/header/AuthBtns";
 
+// TO REFACTOR: make these typings & logic into reusable modules
 interface User {
   displayName: string;
   photoURL: string;
@@ -68,7 +69,7 @@ describe("Auth Buttons", () => {
     test("should not display login button", () => {
       renderComponent(true);
 
-      const loginButton = screen.queryByRole("button", {
+      const loginButton = screen.queryByRole("link", {
         name: /log in/i,
       });
       expect(loginButton).not.toBeInTheDocument();
@@ -76,7 +77,7 @@ describe("Auth Buttons", () => {
     test("should not display signup button", () => {
       renderComponent(true);
 
-      const signupButton = screen.queryByRole("button", {
+      const signupButton = screen.queryByRole("link", {
         name: /sign up/i,
       });
       expect(signupButton).not.toBeInTheDocument();
