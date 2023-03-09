@@ -9,7 +9,7 @@ interface User {
 
 type CurrentUser = User | undefined | null;
 
-interface Props {
+interface ImageProps {
   src: string;
   alt: string;
   width: number;
@@ -34,7 +34,7 @@ jest.mock("../contexts/AuthContext", () => ({
 // https://github.com/vercel/next.js/discussions/32325
 jest.mock("next/image", () => ({
   __esModule: true,
-  default: (props: Props) => {
+  default: (props: ImageProps) => {
     const modProps = {
       ...props,
       objectfit: props.objectFit,

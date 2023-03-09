@@ -1,3 +1,9 @@
-.login-btn {
+button.login-btn {
   background-color: var(--background-color-medium);
+  cursor: pointer;
+}
+
+button.login-btn a {
+  display: block;
+  padding: 10px 20px;
 }

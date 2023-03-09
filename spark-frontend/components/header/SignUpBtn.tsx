@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import signUpBtnStyles from "../../styles/signUpBtn.module.css";
 
@@ -6,10 +7,10 @@ export const SignUpBtn = () => {
   return (
     <button
       className={signUpBtnStyles["signup-btn"]}
-      onClick={() => router.push("/signup")}
+      // onClick={() => router.push("/signup")}
       data-cy="header-signup-btn"
     >
-      Sign Up
+      <Link href="/signup">Sign Up</Link>
     </button>
   );
 };

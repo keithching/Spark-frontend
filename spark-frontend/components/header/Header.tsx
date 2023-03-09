@@ -10,10 +10,9 @@ import { RxCross1 } from "react-icons/rx";
 import classNames from "classnames";
 import { useRole } from "../../utils/helper";
 import { ThemeSwitch } from "./ThemeSwitch";
-import { LogInBtn } from "./LogInBtn";
-import { SignUpBtn } from "./SignUpBtn";
 import Brand from "./Brand";
 import UserGreeting from "./UserGreeting";
+import { AuthBtns } from "./AuthBtns";
 
 const Header = () => {
   const router = useRouter();
@@ -75,6 +74,27 @@ const Header = () => {
     );
   };
 
+  const AuthenticatedUtilites = () => {
+    return (
+      currentUser && (
+        <>
+          <button
+            onClick={() => router.push("/dashboard")}
+            className={headerStyles.utilButton}
+          >
+            Dashboard
+          </button>
+          <button
+            onClick={() => router.push("/profile")}
+            className={headerStyles.utilButton}
+          >
+            Profile
+          </button>
+        </>
+      )
+    );
+  };
+
   return (
     <div className={headerStyles.Header}>
       <Brand />
@@ -83,20 +103,8 @@ const Header = () => {
           <>
             {error && <span>{error}</span>}
             <UserGreeting hamburgerIsClicked={hamburgerIsClicked} />
-            {currentUser ? (
-              <>
-                <button onClick={() => router.push("/dashboard")}>
-                  Dashboard
-                </button>
-                <button onClick={() => router.push("/profile")}>Profile</button>
-                <button onClick={handleLogout}>Log Out</button>
-              </>
-            ) : (
-              <>
-                <LogInBtn />
-                <SignUpBtn />
-              </>
-            )}
+            <AuthenticatedUtilites />
+            <AuthBtns />
             {role.role !== "provider" && (
               <Cart hamburgerIsClicked={hamburgerIsClicked} />
             )}

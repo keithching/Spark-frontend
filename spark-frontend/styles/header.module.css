@@ -24,11 +24,15 @@
 
 .Header .nav-utilities button {
   border-style: none;
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
   border-radius: 20px;
   font-size: 1rem;
   font-weight: bold;
-  cursor: pointer;
+  /* cursor: pointer; */
+}
+
+.utilButton {
+  padding: 10px 20px;
 }
 
 .Header .nav-utilities button:hover {
