@@ -36,6 +36,7 @@ export const ThemeSwitch = () => {
         checked={darkTheme}
         onChange={toggleTheme}
         color="warning"
+        inputProps={{ "aria-label": "Theme Switch" }}
         className={
           darkTheme ? themeSwitchStyles.switchChecked : themeSwitchStyles.switch
         }
