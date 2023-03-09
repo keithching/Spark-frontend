@@ -1,15 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { AuthBtns } from "../components/header/AuthBtns";
+import { CurrentUser } from "./testProps";
 
-// TO REFACTOR: make these typings & logic into reusable modules
-interface User {
-  displayName: string;
-  photoURL: string;
-}
-
-type CurrentUser = User | undefined | null;
-
+// TO REFACTOR: make logic into reusable modules
 let MOCK_CURRENT_USER: CurrentUser = undefined;
 let MOCK_DISPLAY_NAME: string = "Test";
 let MOCK_PHOTO_URL: string = "/images/linkedin.png";

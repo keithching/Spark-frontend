@@ -13,6 +13,7 @@ import { ThemeSwitch } from "./ThemeSwitch";
 import Brand from "./Brand";
 import UserGreeting from "./UserGreeting";
 import { AuthBtns } from "./AuthBtns";
+import AuthenticatedUtilites from "./AuthenticatedUtilities";
 
 const Header = () => {
   const router = useRouter();
@@ -71,27 +72,6 @@ const Header = () => {
           </>
         )}
       </div>
-    );
-  };
-
-  const AuthenticatedUtilites = () => {
-    return (
-      currentUser && (
-        <>
-          <button
-            onClick={() => router.push("/dashboard")}
-            className={headerStyles.utilButton}
-          >
-            Dashboard
-          </button>
-          <button
-            onClick={() => router.push("/profile")}
-            className={headerStyles.utilButton}
-          >
-            Profile
-          </button>
-        </>
-      )
     );
   };
 

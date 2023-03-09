@@ -24,14 +24,13 @@
 
 .Header .nav-utilities button {
   border-style: none;
-  /* padding: 10px 20px; */
   border-radius: 20px;
   font-size: 1rem;
   font-weight: bold;
-  /* cursor: pointer; */
 }
 
-.utilButton {
+.utilButton > a {
+  display: block;
   padding: 10px 20px;
 }
 

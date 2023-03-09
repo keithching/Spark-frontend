@@ -1,21 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import UserGreeting from "../components/header/UserGreeting";
-
-interface User {
-  displayName: string;
-  photoURL: string;
-}
-
-type CurrentUser = User | undefined | null;
-
-interface ImageProps {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-  objectFit: string;
-}
+import { CurrentUser, ImageProps } from "./testProps";
 
 let MOCK_CURRENT_USER: CurrentUser = undefined;
 let MOCK_DISPLAY_NAME: string = "Test";
