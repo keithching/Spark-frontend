@@ -32,9 +32,11 @@ export const ThemeSwitch = () => {
   return (
     <>
       <MuiSwitchLarge
+        data-cy="theme-switch"
         checked={darkTheme}
         onChange={toggleTheme}
         color="warning"
+        inputProps={{ "aria-label": "Theme Switch" }}
         className={
           darkTheme ? themeSwitchStyles.switchChecked : themeSwitchStyles.switch
         }

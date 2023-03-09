@@ -10,10 +10,11 @@ import { RxCross1 } from "react-icons/rx";
 import classNames from "classnames";
 import { useRole } from "../../utils/helper";
 import { ThemeSwitch } from "./ThemeSwitch";
-import { LogInBtn } from "./LogInBtn";
-import { SignUpBtn } from "./SignUpBtn";
 import Brand from "./Brand";
 import UserGreeting from "./UserGreeting";
+import { AuthBtns } from "./AuthBtns";
+import AuthenticatedUtilites from "./AuthenticatedUtilities";
+import { Dancing_Script } from "next/font/google";
 
 const Header = () => {
   const router = useRouter();
@@ -83,20 +84,8 @@ const Header = () => {
           <>
             {error && <span>{error}</span>}
             <UserGreeting hamburgerIsClicked={hamburgerIsClicked} />
-            {currentUser ? (
-              <>
-                <button onClick={() => router.push("/dashboard")}>
-                  Dashboard
-                </button>
-                <button onClick={() => router.push("/profile")}>Profile</button>
-                <button onClick={handleLogout}>Log Out</button>
-              </>
-            ) : (
-              <>
-                <LogInBtn />
-                <SignUpBtn />
-              </>
-            )}
+            <AuthenticatedUtilites />
+            <AuthBtns />
             {role.role !== "provider" && (
               <Cart hamburgerIsClicked={hamburgerIsClicked} />
             )}

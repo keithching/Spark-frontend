@@ -33,11 +33,14 @@
 .sendEventsToServerBtn {
   background-color: var(--background-color-flavor);
   width: 200px;
+  padding: 10px 20px;
   color: var(--font-color-secondary);
+  cursor: pointer;
 }
 
 .sendEventsToServerBtn:disabled {
-  background-color: var(--background-color-medium);
+  background-color: var(--background-color-light);
+  cursor: not-allowed;
 }
 
 .inSideMenu {
@@ -59,6 +62,7 @@
   border-style: none;
   padding: 10px;
   border-radius: 20px;
+  cursor: pointer;
 }
 
 .inSideMenu .sendEventsToServerBtn {

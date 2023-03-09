@@ -24,13 +24,7 @@ const EventCard = ({ event }) => {
   const EventImage = ({ imageURL }) => {
     return (
       <div className={EventCardsStyles["event-image"]}>
-        <Image
-          src={imageURL}
-          alt=""
-          width={400}
-          height={400}
-          objectFit="cover"
-        />
+        <Image src={imageURL} alt="" fill sizes="33vw" />
       </div>
     );
   };
@@ -62,6 +56,7 @@ const EventCard = ({ event }) => {
     <div
       className={EventCardsStyles["event-card-display"]}
       onClick={() => navigateToEventPage(id)}
+      data-cy={`event-card-${id}`}
     >
       <EventImage imageURL={event.imageURL} />
       <EventTitle title={event.title} />

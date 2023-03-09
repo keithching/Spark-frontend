@@ -33,16 +33,18 @@ export const EventJoiners = ({ eventData }) => {
         <Image
           src={props.joiner.profile_pic_url}
           alt={props.joiner.consumer_name}
-          width={50}
-          height={50}
-          objectFit="cover"
+          fill
+          sizes="50vw"
         />
       </div>
     );
   });
 
   return (
-    <div className={classNames(eventJoinerStyles.joinersDiv)}>
+    <div
+      className={classNames(eventJoinerStyles.joinersDiv)}
+      data-cy="event-joiners"
+    >
       {eventsJoinEventConsumer && eventsJoinEventConsumer.length === 0 && (
         <div className={classNames(eventJoinerStyles.firstJoinerDiv)}>
           Become the first one to join this event!

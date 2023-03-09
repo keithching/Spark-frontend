@@ -39,6 +39,7 @@ export const Popup = ({ data, hamburgerIsClicked, currentUser }) => {
         className={
           !hamburgerIsClicked ? PopupStyles["popup"] : PopupStyles.inSideMenu
         }
+        data-cy="popup"
       >
         <div
           className={

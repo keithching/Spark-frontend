@@ -1,16 +1,10 @@
-import { useRouter } from "next/router";
+import Link from "next/link";
 import LogInBtnStyles from "../../styles/logInBtn.module.css";
 
 export const LogInBtn = () => {
-  const router = useRouter();
-
   return (
-    <button
-      className={LogInBtnStyles["login-btn"]}
-      onClick={() => router.push("/login")}
-      data-cy="header-login-btn"
-    >
-      Log In
+    <button className={LogInBtnStyles["login-btn"]} data-cy="header-login-btn">
+      <Link href="/login">Log In</Link>
     </button>
   );
 };

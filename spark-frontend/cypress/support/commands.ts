@@ -25,15 +25,44 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      //       login(email: string, password: string): Chainable<void>
+      //       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
+      //       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
+      //       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
+      addToCart(): Chainable<void>;
+    }
+  }
+}
+
+Cypress.Commands.add("addToCart", () => {
+  cy.get('[data-cy="cart"]').should("be.visible");
+  cy.get('[data-cy="cart"]').contains(0);
+  cy.get('[data-cy="add-to-cart-button"]')
+    .as("addToCartButton")
+    .contains("add to cart")
+    .should("be.visible"); // make sure is rendered and visible
+  // https://github.com/cypress-io/cypress/issues/5275
+  cy.get('[data-cy="add-to-cart-button"]')
+    .as("addToCartButton")
+    .click({ force: true });
+  cy.get("@addToCartButton").contains("added to cart");
+});
+
+// the below code snippet is required to handle a React hydration bug that would cause tests to fail
+// it's only a workaround until this React behavior / bug is fixed
+// Cypress.on("uncaught:exception", (err) => {
+//   // we check if the error is
+//   if (
+//     err.message.includes("Minified React error #418;") ||
+//     err.message.includes("Minified React error #423;") ||
+//     err.message.includes("hydrating") ||
+//     err.message.includes("Hydration")
+//   ) {
+//     return false;
 //   }
-// }
+// });
 
 export {};

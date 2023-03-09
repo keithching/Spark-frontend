@@ -1,21 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import UserGreeting from "../components/header/UserGreeting";
-
-interface User {
-  displayName: string;
-  photoURL: string;
-}
-
-type CurrentUser = User | undefined | null;
-
-interface Props {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-  objectFit: string;
-}
+import { CurrentUser, ImageProps } from "./testProps";
 
 let MOCK_CURRENT_USER: CurrentUser = undefined;
 let MOCK_DISPLAY_NAME: string = "Test";
@@ -34,7 +20,7 @@ jest.mock("../contexts/AuthContext", () => ({
 // https://github.com/vercel/next.js/discussions/32325
 jest.mock("next/image", () => ({
   __esModule: true,
-  default: (props: Props) => {
+  default: (props: ImageProps) => {
     const modProps = {
       ...props,
       objectfit: props.objectFit,

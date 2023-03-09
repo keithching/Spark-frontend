@@ -1,3 +1,9 @@
 .signup-btn {
   background-color: var(--background-color-flavor);
+  cursor: pointer;
+}
+
+button.signup-btn a {
+  display: block;
+  padding: 10px 20px;
 }

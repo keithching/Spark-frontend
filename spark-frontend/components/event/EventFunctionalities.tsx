@@ -100,6 +100,7 @@ export const EventFunctionalities = ({ eventData }) => {
           [eventFunctionalitiesStyles.addToCart]: !isClicked,
           [eventFunctionalitiesStyles.addedToCart]: isClicked,
         })}
+        data-cy="add-to-cart-button"
       >
         {!isClicked ? "add to cart" : "added to cart"}
       </button>
@@ -135,6 +136,7 @@ export const EventFunctionalities = ({ eventData }) => {
           eventFunctionalitiesStyles.joinEventBtn
         )}
         onClick={handleJoinEventClick}
+        data-cy="join-event-button"
       >
         join event
       </button>
@@ -168,6 +170,7 @@ export const EventFunctionalities = ({ eventData }) => {
         <button
           className={classNames(eventFunctionalitiesStyles.leaveEventBtn)}
           onClick={handleLeaveEventClick}
+          data-cy="leave-event-button"
         >
           leave event
         </button>

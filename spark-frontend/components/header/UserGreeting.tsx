@@ -17,7 +17,6 @@ const UserAvatarName = ({ hamburgerIsClicked, currentUser }) => {
           alt=""
           width={hamburgerIsClicked ? 50 : 30}
           height={hamburgerIsClicked ? 50 : 30}
-          objectFit="cover"
         />
       </div>
       <span>{currentUser.displayName}</span>
